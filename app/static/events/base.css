@@ -1,0 +1,58 @@
+@import url("https://use.typekit.net/wme5som.css");
+
+.event {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 4px solid darkgoldenrod;
+}
+
+.eventname {
+    font-family: aileron, Arial;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: .25rem;
+    border-bottom: 4px solid black;
+}
+
+.eventdate {
+    padding-top: .25rem;
+    display: flex;
+    font-size: .8rem;
+    color: gray;
+    margin-bottom: .5rem;
+}
+
+.eventtype {
+    font-size: .9rem;
+    color: black;
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: .15rem .45rem;
+    text-decoration: none;
+}
+
+.eventtype:hover {
+    background: black;
+    color: white;
+}
+
+.register_and_price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.eventregister {
+    font-size: .9rem;
+    font-family: aileron, Arial;
+    font-weight: 300;
+    margin: 0;
+}
+
+.eventcost {
+    font-size: .9rem;
+    font-family: aileron, Arial;
+    font-weight: 300;
+    margin: 0;
+}

@@ -1,0 +1,117 @@
+@import url("https://use.typekit.net/wme5som.css");
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.pagecontent {
+    flex: 1;
+    padding: 1rem;
+}
+
+.pageheader {
+    margin-bottom: 3rem;
+}
+
+.pagetitle {
+    margin: 0;
+    font-family: aileron, Arial;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.pagesubtitle {
+    margin: 0;
+    margin-top: .5rem;
+    color: #666;
+    font-family: aileron, Arial;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.pagesection {
+    margin-bottom: 2rem;
+}
+
+.sectiontitle {
+    margin: 0;
+    margin-bottom: .5rem;
+    font-family: aileron, Arial;
+    font-weight: 500;
+    border-bottom: 4px solid darkgoldenrod;
+}
+
+.sectiontext {
+    margin: 0;
+    margin-bottom: .75rem;
+    line-height: 1.5rem;
+}
+
+.sidebar {
+    flex: 0 0 30%;
+    margin-top: 4rem;
+    padding: 1rem;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu a {
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: lowercase;
+    margin-bottom: .5rem;
+    text-decoration: none;
+}
+
+.menu a.active {
+    opacity: 50%;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.generallist  {
+    margin: 0;
+}
+
+.generallist li {
+    margin-bottom: .5rem;
+    line-height: 1.3rem;
+}
+
+@media (max-width: 680px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        order: -1;
+        margin-top: 0;
+    }
+
+    .menu {
+        flex-direction: row;
+        gap: .5rem;
+    }
+
+    .menu a {
+        margin: 0;
+    }
+}

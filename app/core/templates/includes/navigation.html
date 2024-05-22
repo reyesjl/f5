@@ -1,0 +1,8 @@
+<nav class="menu">
+    <a {% if request.path == '/' %}class="active"{% endif %} href="/">Home</a>
+    <a {% if request.path == '/events/' %}class="active"{% endif %} href="/events">Events</a>
+    <a {% if request.path == '/clubs/' %}class="active"{% endif %} href="/clubs">Clubs</a>
+    <a {% if request.path == '/health/' %}class="active"{% endif %} href="/clubs">Health</a>
+    <a {% if request.path == '/tours/' %}class="active"{% endif %} href="/clubs">Tours</a>
+    <a {% if request.path == '/kits/' %}class="active"{% endif %} href="/clubs">Kits</a>
+</nav>
