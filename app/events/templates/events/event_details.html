@@ -18,7 +18,7 @@
             <div class="pageheader">
                 <h1 class="pagetitle">{{ event.name }}</h1>
                 <div class="splitshot">
-                    <p class="pagesubtitle">{{ event.start_date }} to {{ event.end_date }}</p>
+                    <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
                     
                     {% if event.cost %}
                         <p class="pagesubtitle">Cost: ${{ event.cost }}</p>
@@ -29,9 +29,9 @@
 
                 <div class="detailregister">
                     {% if event.registration_required %}
-                        <a class="button" href="">Get Ticket</a>
+                        <a class="button" href="{% url 'rsvp_create' event_id=event.id %}">RSVP</a>
                     {% else %}
-                        <a class="button disabled" href="">Get Ticket</a>
+                        <a class="button disabled" href="">RSVP</a>
                     {% endif %}
                 </div>
                 
@@ -43,6 +43,27 @@
 
             <div class="pagesection eventdesc">
                 {{ event.detailed_description | safe }}
+            </div>
+
+
+            <div class="pagesection">
+                <div class="splitshot">
+                    <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
+                    
+                    {% if event.cost %}
+                        <p class="pagesubtitle">Cost: ${{ event.cost }}</p>
+                    {% else %}
+                        <p class="pagesubtitle">Cost: Free</p>
+                    {% endif %}
+                </div>
+
+                <div class="detailregister">
+                    {% if event.registration_required %}
+                        <a class="button" href="{% url 'rsvp_create' event_id=event.id %}">RSVP</a>
+                    {% else %}
+                        <a class="button disabled" href="">RSVP</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
