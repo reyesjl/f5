@@ -45,6 +45,7 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     event_type = models.CharField(max_length=50, choices=EVENT_TYPES)
+    featured = models.BooleanField(default=False)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
     location = models.CharField(max_length=255)
