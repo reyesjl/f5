@@ -11,7 +11,10 @@ def index(request):
     return render(request, 'events/index.html', context)
 
 def event_details(request, event_id):
-    event = Event.objects.by_event_id(event_id)
+    try:
+        event = Event.objects.by_event_id(event_id)
+    except Event.DoesNotExist:
+        return render(request, 'events/event_not_found.html')
 
     context = {'event': event}
 
