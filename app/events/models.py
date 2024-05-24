@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
@@ -64,3 +65,50 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    
+class RsvpQuerySet(models.QuerySet):
+    def by_token(self, token):
+        return self.get(token=token)
+    
+    def email_exists_for_event(self, event, email):
+        return self.filter(event=event, email__iexact=email).exists()
+    
+    def phone_exists_for_event(self, event, phone_number):
+        return self.filter(event=event, phone_number__iexact=phone_number).exists()
+
+class RsvpManager(models.Manager):
+    def get_queryset(self):
+        return RsvpQuerySet(self.model, using=self._db)
+    
+    def by_token(self, token):
+        return self.get_queryset().by_token(token)
+    
+    def email_exists_for_event(self, event, email):
+        return self.get_queryset().email_exists_for_event(event, email)
+
+    def phone_exists_for_event(self, event, phone_number):
+        return self.get_queryset().phone_exists_for_event(event, phone_number)
+
+class Rsvp(models.Model):
+    ROLE_CHOICES = (
+        ('player', 'Player'),
+        ('coach', 'Coach'),
+        ('spectator', 'Spectator'),
+    )
+    
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='rsvps')
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=20)
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    has_paid = models.BooleanField(default=False)
+
+    objects = RsvpManager()
+    
+    def __str__(self):
+        return f'{self.name} - {self.event.name}'
+
+    class Meta:
+        unique_together = ('event', 'email')

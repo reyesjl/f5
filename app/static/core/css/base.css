@@ -22,6 +22,7 @@ body {
 .button:hover {
     background: black;
     color: white;
+    cursor: pointer;
 }
 
 .button.disabled {

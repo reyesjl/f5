@@ -18,19 +18,9 @@
             <div class="pageheader">
                 <h1 class="pagetitle">Events</h1>
                 <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and play local rugby.</p>
-            </div>
+            </div> 
 
-            <div class="eventfilters">
-                <p>Filters</p>
-                <ul class="filterlist">
-                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='camp' %}">#camps</a></li>
-                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='game' %}">#games</a></li>
-                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='clinic' %}">#clinics</a></li>
-                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='training' %}">#trainings</a></li>
-                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='combine' %}">#combines</a></li>
-                </ul>
-            </div>
-
+            {% include 'events/_filters_snippet.html' %}
 
             <div class="pagesection">
                 <h3 class="sectiontitle">Featured Events</h3>

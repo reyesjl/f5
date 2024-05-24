@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Event
+from django.shortcuts import redirect, render
+from .models import Event, Rsvp
+from .forms import RsvpForm
+from .decorator import validate_rsvp_token
 
 
 def index(request):
@@ -33,3 +34,43 @@ def events_by_type(request, event_type):
     }
 
     return render(request, 'events/events_by_type.html', context)
+
+def rsvp_create(request, event_id):
+    try:
+        event = Event.objects.by_event_id(event_id)
+    except Event.DoesNotExist:
+        return render(request, 'events/event_not_found.html')
+    
+    if request.method == 'POST':
+        form = RsvpForm(request.POST)
+        if form.is_valid():
+            rsvp = form.save(commit=False)
+            rsvp.event = event
+            cleaned_data = form.validate_rsvp(event)
+            if form.errors:
+                return render(request, 'events/rsvp_create.html', {'event': event, 'form': form})
+            rsvp.save()
+            return redirect('rsvp_receipt', token=rsvp.token)
+    else:
+        form = RsvpForm()
+        
+    context = {
+        'event': event,
+        'form': form
+    }
+
+    return render(request, 'events/rsvp_create.html', context)
+
+@validate_rsvp_token
+def rsvp_receipt(request, token):
+    try:
+        rsvp = Rsvp.objects.by_token(token)
+    except Rsvp.DoesNotExist:
+        return render(request, 'events/rsvp_not_found.html')
+    
+    context = {
+        'rsvp': rsvp,
+        'token': token,
+    }
+
+    return render(request, 'events/rsvp_receipt.html', context)
