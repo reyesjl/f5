@@ -5,49 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'core/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Events</title>
 </head>
 <body>
-   <div class="container">
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Events</h1>
                 <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and play local rugby.</p>
             </div>
 
-            {% for event in upcoming_events %}
-                <div class="event">
-                    <h3 class="eventname">{{ event.name }}</h3>
-                    <div class="eventdate">
-                        <span>{{ event.start_date }} to {{ event.end_date }}</span>
-                    </div>
-                    <a class="eventtype" href="#">#{{ event.event_type }}</a>
-                    <p class="eventdesc">{{ event.description }}</p>
-
-                    <div class="register_and_price">
-                    {% if event.registration_required %}
-                        <p class="eventregister">*Must register for event.</p>
-                    {% else %}
-                        <p class="eventregister">*No registration needed.</p>
-                    {% endif %}
-
-                    {% if event.cost %}
-                        <p class="eventcost">Cost: Free</p>
-                    {% else %}
-                        <p class="eventcost">Cost: ${{ event.cost }}</p>
-                    {% endif %}
-                    </div>
-                </div>
+            {% for event in events %}
+                {% include 'events/_event_snippet.html' %}
             {% empty %}
                 <p>No upcoming events.</p>
             {% endfor %}
 
-        </div>
-        <div class="sidebar">
-            {% include 'includes/navigation.html' %} 
         </div>
     </div>
 </body>

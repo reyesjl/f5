@@ -1,0 +1,167 @@
+@import url("https://use.typekit.net/wme5som.css");
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.button {
+    padding: .25rem .75rem;
+    border: 2px solid black;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: black;
+    color: white;
+}
+
+.button.disabled {
+    opacity: 50%;
+    pointer-events: none;
+}
+
+.splitshot {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navlist {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 1rem;
+    gap: var(--gap, 1rem);
+    background: hsla(0, 0%, 100%, 0.5);
+    backdrop-filter: blur(.5rem);
+}
+
+.navlink {
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.mobile-nav-toggle {
+    width: 3rem;
+    height: 2rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: none;
+    z-index: 99;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .3s;
+    border: none;
+    background: black;
+    color: white;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.pagecontent {
+    padding: 1rem;
+}
+
+.pageheader {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+.pagetitle {
+    margin: 0;
+    font-family: aileron, Arial;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.pagesubtitle {
+    margin: 0;
+    margin-top: .5rem;
+    color: #666;
+    font-family: aileron, Arial;
+    font-style: italic;
+    font-weight: 300;
+}
+
+.pagesection {
+    margin-bottom: 3rem;
+}
+
+.sectiontitle {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-family: aileron, Arial;
+    font-weight: 600;
+}
+
+.sectiontext {
+    margin: 0;
+    margin-bottom: .75rem;
+    line-height: 1.5rem;
+}
+
+.generallist  {
+    margin: 0;
+}
+
+.generallist li {
+    margin-bottom: .5rem;
+    line-height: 1.3rem;
+}
+
+@media (max-width: 680px) {
+    .navlist {
+        --gap: 2rem;
+        position: fixed;
+        inset: 0 0 0 40%;
+        background: steelblue;
+        flex-direction: column;
+        padding: min(30vh, 8rem) 1rem;
+        background: hsla(0, 0%, 0%, 0.5);
+        backdrop-filter: blur(.5rem);
+        transform: translateX(100%);
+        transition: transform 350ms ease-out;
+    }
+
+    .navlist[data-visible="true"] {
+        transform: translateX(0);
+    }
+
+    @supports (backdrop-filter: blur(.5rem)) {
+        .navlist {
+            background: hwb(0 0% 100% / 0.5);
+            backdrop-filter: blur(.5rem);
+        }
+    }
+
+    .navlink {
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .mobile-nav-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pageheader {
+        margin-top: 3rem;
+    }
+}

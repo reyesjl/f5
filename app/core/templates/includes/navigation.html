@@ -1,8 +1,8 @@
-<nav class="menu">
-    <a {% if request.path == '/' %}class="active"{% endif %} href="/">Home</a>
-    <a {% if request.path == '/events/' %}class="active"{% endif %} href="/events">Events</a>
-    <a {% if request.path == '/clubs/' %}class="active"{% endif %} href="/clubs">Clubs</a>
-    <a {% if request.path == '/health/' %}class="active"{% endif %} href="/clubs">Health</a>
-    <a {% if request.path == '/tours/' %}class="active"{% endif %} href="/clubs">Tours</a>
-    <a {% if request.path == '/kits/' %}class="active"{% endif %} href="/clubs">Kits</a>
+<nav>
+    <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false" class="">Menu</button>
+    <ul data-visible="false" id="primary-navigation" class="navlist">
+        <li class="navitem"><a class="navlink" href="/">Home</a></li>
+        <li class="navitem"><a class="navlink" href="/events">Events</a></li>
+        <li class="navitem"><a class="navlink" href="/clubs">Clubs</a></li>
+    </ul>
 </nav>

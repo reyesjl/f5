@@ -1,19 +1,28 @@
 @import url("https://use.typekit.net/wme5som.css");
 
 .event {
-    margin-bottom: 2rem;
-    padding-left: 1rem;
-    border-left: 4px solid darkgoldenrod;
+    margin-bottom: 3rem;
 }
 
 .eventname {
     font-family: aileron, Arial;
-    font-weight: 600;
-    font-size: 1rem;
+    font-weight: 800;
+    font-size: 1.4rem;
     text-transform: uppercase;
     margin: 0;
     padding-bottom: .25rem;
     border-bottom: 4px solid black;
+}
+
+.eventname a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
+.eventname a:hover {
+    background: darkred;
+    color: white;
 }
 
 .eventdate {
@@ -25,6 +34,10 @@
 }
 
 .eventtype {
+    margin-top: .75rem;
+}
+
+.eventtag {
     font-size: .9rem;
     color: black;
     border: 1px solid black;
@@ -33,7 +46,7 @@
     text-decoration: none;
 }
 
-.eventtype:hover {
+.eventtag:hover {
     background: black;
     color: white;
 }
