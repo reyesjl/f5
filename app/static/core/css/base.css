@@ -107,7 +107,9 @@ body {
     margin: 0;
     margin-bottom: 1rem;
     font-family: aileron, Arial;
-    font-weight: 600;
+    font-weight: 800;
+    font-style: italic;
+    color: darkred;
 }
 
 .sectiontext {

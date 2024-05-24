@@ -1,4 +1,7 @@
 <div class="event">
+    {% if event.featured %}
+        <div class="eventfeatured">Featured!</div>
+    {% endif %}
     <h3 class="eventname"><a href="{% url 'event_details' event.id %}"><span>&#9737;</span> {{ event.name }}</a></h3>
     <div class="eventdate">
         <span>{{ event.start_date }} to {{ event.end_date }}</span>

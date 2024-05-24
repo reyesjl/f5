@@ -15,6 +15,9 @@ class EventQuerySet(models.QuerySet):
     def upcoming_events(self):
         now = timezone.now()
         return self.filter(start_date__gte=now)
+    
+    def featured_events(self):
+        return self.filter(featured=True)
 
 class EventManager(models.Manager):
     def get_queryset(self):
@@ -31,6 +34,9 @@ class EventManager(models.Manager):
     
     def upcoming_events(self):
         return self.get_queryset().upcoming_events()
+    
+    def featured_events(self):
+        return self.get_queryset().featured_events()
 
 class Event(models.Model):
     EVENT_TYPES = (
