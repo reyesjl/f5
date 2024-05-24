@@ -40,6 +40,10 @@
                 <h3 class="sectiontitle">Quickview</h3>
                 <p class="sectiontext">{{ event.description }}</p>
             </div>
+
+            <div class="pagesection eventdesc">
+                {{ event.detailed_description | safe }}
+            </div>
         </div>
     </div>
 </body>
