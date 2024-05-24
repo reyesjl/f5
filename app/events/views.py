@@ -4,9 +4,13 @@ from .models import Event
 
 
 def index(request):
-    upcoming_events = Event.objects.upcoming_events()
+    featured_events = Event.objects.upcoming_events().featured_events()
+    upcoming_events = Event.objects.upcoming_events().exclude(featured=True)
     
-    context = {'events': upcoming_events}
+    context = {
+        'featured_events': featured_events,
+        'upcoming_events': upcoming_events
+    }
 
     return render(request, 'events/index.html', context)
 
