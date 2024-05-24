@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/details.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Events</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                <h1 class="pagetitle">{{ event.name }}</h1>
+                <div class="splitshot">
+                    <p class="pagesubtitle">{{ event.start_date }} to {{ event.end_date }}</p>
+                    
+                    {% if event.cost %}
+                        <p class="pagesubtitle">Cost: ${{ event.cost }}</p>
+                    {% else %}
+                        <p class="pagesubtitle">Cost: Free</p>
+                    {% endif %}
+                </div>
+
+                <div class="detailregister">
+                    {% if event.registration_required %}
+                        <a class="button" href="">Get Ticket</a>
+                    {% else %}
+                        <a class="button disabled" href="">Get Ticket</a>
+                    {% endif %}
+                </div>
+                
+            </div>
+            <div class="pagesection">
+                <h3 class="sectiontitle">Quickview</h3>
+                <p class="sectiontext">{{ event.description }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

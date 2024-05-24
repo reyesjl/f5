@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'core/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>Core</title>
+    <title>F5</title>
 </head>
 <body>
     <div class="container">
+        {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">First Five Rugby</h1>
@@ -20,7 +22,7 @@
             <div class="pagesection">
                 <h3 class="sectiontitle">Mission & Vision</h3>
                 <p class="sectiontext">Our <strong>mission</strong> is to promote and grow the game of rugby by providing accessible resources, organizing community events, and fostering a supportive environment for players of all levels.</p>
-                <p class="sectiontext">Our <strong>vision</strong> is to become the leading platform for rugby enthusiasts, offering comprehensive services ranging from event organization to custom kit design, while continuously innovating and expanding our offerings to meet the evolving needs of the rugby community.</p>
+                <p class="sectiontext">Our <strong>vision</strong> is to become the leading platform for rugby enthusiasts, offering comprehensive services with continuous innovation to meet the evolving needs of the rugby community.</p>
             </div>
 
 
@@ -28,7 +30,7 @@
                 <h3 class="sectiontitle">Key Initiatives</h3>
                 <ul class="generallist">
                     <li><strong>Events / Camps:</strong> General events, rugby camps, and featured events.</li>
-                    <li><strong>Blogs and News:</strong> Coverage of explorative topics, unnoticed news, and interesting rugby developments.</li>
+                    <li><strong>Blog and News:</strong> Coverage of explorative topics, unnoticed news, and interesting rugby developments.</li>
                     <li><strong>Health Plans and Sessions:</strong> Free resources for all levels of the game, public plans, and tailored sessions with experts.</li>
                     <li><strong>Team Tour Service:</strong> All-inclusive rugby tours with activities, exclusive tours, history lessons, and accommodations.</li>
                     <li><strong>Custom Kit Service:</strong> Custom STC branded rugby kits with free design, simple process, and prompt delivery.</li>
@@ -39,10 +41,6 @@
                 <h3 class="sectiontitle">Conclusion</h3>
                 <p class="sectiontext">We aim to provide the highest quality in all our services, from accurate news to high-quality kits. Our goal is to grow positively and be the best in everything we do.</p>
             </div>
-
-        </div>
-        <div class="sidebar">
-           {% include 'includes/navigation.html' %} 
         </div>
     </div>
 </body>

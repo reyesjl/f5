@@ -2,8 +2,15 @@ from django.db import models
 from django.utils import timezone
 
 class EventQuerySet(models.QuerySet):
+    def by_event_id(self, event_id):
+        return self.get(pk=event_id)
+
     def by_event_type(self, event_type):
         return self.filter(event_type=event_type)
+    
+    def past_events(self):
+        now = timezone.now()
+        return self.filter(start_date__lte=now)
     
     def upcoming_events(self):
         now = timezone.now()
@@ -12,9 +19,15 @@ class EventQuerySet(models.QuerySet):
 class EventManager(models.Manager):
     def get_queryset(self):
         return EventQuerySet(self.model, using=self._db)
+    
+    def by_event_id(self, event_id):
+        return self.get_queryset().by_event_id(event_id)
 
     def by_event_type(self, event_type):
-        return self.get_queryset().by_event_type()
+        return self.get_queryset().by_event_type(event_type)
+    
+    def past_events(self):
+        return self.get_queryset().past_events()
     
     def upcoming_events(self):
         return self.get_queryset().upcoming_events()

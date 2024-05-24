@@ -1,0 +1,24 @@
+<div class="event">
+    <h3 class="eventname"><a href="{% url 'event_details' event.id %}"><span>&#9737;</span> {{ event.name }}</a></h3>
+    <div class="eventdate">
+        <span>{{ event.start_date }} to {{ event.end_date }}</span>
+    </div>
+    <div class="eventtype">
+        <a class="eventtag" href="{% url 'events_by_type' event_type=event.event_type %}">#{{ event.event_type }}</a>
+    </div>
+    <p class="eventdesc">{{ event.description }}</p>
+
+    <div class="register_and_price">
+        {% if event.registration_required %}
+            <p class="eventregister">*Must register for event.</p>
+        {% else %}
+            <p class="eventregister">*No registration needed.</p>
+        {% endif %}
+
+        {% if event.cost %}
+            <p class="eventcost">Cost: ${{ event.cost }}</p>
+        {% else %}
+            <p class="eventcost">Cost: Free</p>
+        {% endif %}
+    </div>
+</div>
