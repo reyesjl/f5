@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django_ckeditor_5.fields import CKEditor5Field
 
 class EventQuerySet(models.QuerySet):
     def by_event_id(self, event_id):
@@ -50,6 +51,7 @@ class Event(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
+    detailed_description = CKEditor5Field('Text', config_name='extends', default=None, blank=True, null=True)
     event_type = models.CharField(max_length=50, choices=EVENT_TYPES)
     featured = models.BooleanField(default=False)
     start_date = models.DateTimeField()
