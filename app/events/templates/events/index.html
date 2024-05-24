@@ -20,6 +20,15 @@
                 <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and play local rugby.</p>
             </div>
 
+            <div class="eventfilters">
+                <p>Filters</p>
+                <ul class="filterlist">
+                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='camp' %}">#camps</a></li>
+                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='game' %}">#games</a></li>
+                    <li class="filteritem"><a class="filterlink" href="{% url 'events_by_type' event_type='training' %}">#training</a></li>
+                </ul>
+            </div>
+
             {% for event in events %}
                 {% include 'events/_event_snippet.html' %}
             {% empty %}

@@ -36,7 +36,8 @@ class Event(models.Model):
     EVENT_TYPES = (
         ('camp', 'Camp'),
         ('game', 'Game'),
-        ('practice', 'Practice'),
+        ('training', 'Training'),
+        ('clinic', 'Clinic'),
         ('combine', 'Combine'),
         ('other', 'Other'),
     )
