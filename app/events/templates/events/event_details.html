@@ -31,7 +31,7 @@
                     {% if event.registration_required %}
                         <a class="button" href="{% url 'rsvp_create' event_id=event.id %}">RSVP</a>
                     {% else %}
-                        <a class="button disabled" href="">RSVP</a>
+                        <a class="button disabled" href="">No RSVP Required</a>
                     {% endif %}
                 </div>
                 
@@ -61,7 +61,7 @@
                     {% if event.registration_required %}
                         <a class="button" href="{% url 'rsvp_create' event_id=event.id %}">RSVP</a>
                     {% else %}
-                        <a class="button disabled" href="">RSVP</a>
+                        <a class="button disabled" href="">No RSVP Required</a>
                     {% endif %}
                 </div>
             </div>

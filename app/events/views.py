@@ -41,6 +41,9 @@ def rsvp_create(request, event_id):
     except Event.DoesNotExist:
         return render(request, 'events/event_not_found.html')
     
+    if not event.registration_required:
+        return render(request, 'events/rsvp_no_register.html', {'event':event})
+    
     if request.method == 'POST':
         form = RsvpForm(request.POST)
         if form.is_valid():
@@ -68,9 +71,24 @@ def rsvp_receipt(request, token):
     except Rsvp.DoesNotExist:
         return render(request, 'events/rsvp_not_found.html')
     
+    payment_info = rsvp.payment_status_and_cost()
+    
     context = {
         'rsvp': rsvp,
         'token': token,
+        'payment_info': payment_info,
     }
 
     return render(request, 'events/rsvp_receipt.html', context)
+
+@validate_rsvp_token
+def generate_pdf(request, token):
+    try:
+        rsvp = Rsvp.objects.by_token(token)
+    except Rsvp.DoesNotExist:
+        return render(request, 'events/rsvp_not_found.html')
+
+    pdf_response = rsvp.generate_pdf_receipt()
+
+    # If you want to return the PDF directly
+    return pdf_response

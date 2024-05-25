@@ -1,7 +1,13 @@
 import uuid
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
+from django.http import HttpResponse
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import Paragraph, Spacer, SimpleDocTemplate
 
 class EventQuerySet(models.QuerySet):
     def by_event_id(self, event_id):
@@ -59,7 +65,9 @@ class Event(models.Model):
     end_date = models.DateTimeField()
     location = models.CharField(max_length=255)
     registration_required = models.BooleanField(default=False)
+    payment_required = models.BooleanField(default=False)
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    cost_secondary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     objects = EventManager()
 
@@ -112,3 +120,65 @@ class Rsvp(models.Model):
 
     class Meta:
         unique_together = ('event', 'email')
+
+    def payment_status_and_cost(self):
+        if self.event.payment_required:
+            if not self.has_paid:
+                cost = self.event.cost if self.role == 'player' else self.event.cost_secondary
+                return {'status': 'Not Paid', 'cost': cost}
+            else:
+                return {'status': 'Paid', 'cost': 0}
+        else:
+            return {'status': 'No Payment Required', 'cost': 0}
+        
+    def generate_pdf_receipt(self):
+        # Creating the PDF response
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="rsvp_receipt_{self.id}.pdf"'
+
+        # Setting up the PDF document
+        doc = SimpleDocTemplate(response, pagesize=letter)
+        styles = getSampleStyleSheet()
+        
+        # Custom style for the link
+        link_style = ParagraphStyle(
+            name='ClickableLink',
+            parent=styles['Normal'],
+            textColor=colors.blue,
+            underline=True,
+        )
+
+        content = []
+
+        # Adding content to the PDF
+        content.append(Paragraph("RSVP Receipt", styles['Title']))
+        content.append(Paragraph("Thank you for your RSVP!", styles['Heading3']))
+        content.append(Paragraph(f"You've successfully RSVP'd for the event: {self.event.name}", styles['Normal']))
+        content.append(Paragraph(f"Name: {self.name}", styles['Normal']))
+        content.append(Paragraph(f"Email: {self.email}", styles['Normal']))
+        content.append(Paragraph(f"Phone Number: {self.phone_number}", styles['Normal']))
+        content.append(Paragraph(f"Role: {self.get_role_display()}", styles['Normal']))
+        content.append(Spacer(1, 12))  # Adding spacing
+
+        # Adding a link to visit the receipt page again
+        domain = "127.0.0.1:8080"
+        receipt_url = f"http://{domain}{reverse('rsvp_receipt', kwargs={'token': self.token})}"
+        receipt_link = f'<a href="{receipt_url}">To view your receipt again or make payment, click here</a>'
+        content.append(Paragraph(receipt_link, link_style))
+        content.append(Spacer(1, 12))  # Adding spacing
+
+        # Describing event start and end dates
+        content.append(Paragraph(f"Event Start Date: {self.event.start_date}", styles['Normal']))
+        content.append(Paragraph(f"Event End Date: {self.event.end_date}", styles['Normal']))
+        content.append(Spacer(1, 12))  # Adding spacing
+
+        # Adding payment details
+        payment_info = self.payment_status_and_cost()
+        content.append(Paragraph("Payment Details", styles['Heading2']))
+        content.append(Paragraph(f"Payment Status: {payment_info['status']}", styles['Normal']))
+        content.append(Paragraph(f"Cost: ${payment_info['cost']}", styles['Normal']))
+
+        # Building the PDF document
+        doc.build(content)
+
+        return response

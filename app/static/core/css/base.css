@@ -128,6 +128,36 @@ body {
     line-height: 1.3rem;
 }
 
+.greentext {
+    color: darkgreen;
+    font-size: .8rem;
+    font-style: italic;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.redtext {
+    color: darkred;
+    font-size: .8rem;
+    font-style: italic;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.bluetext {
+    color: darkblue;
+    font-size: .8rem;
+    font-style: italic;
+    font-weight: bold;
+    text-transform: uppercase; 
+}
+
+.hiddentext {
+    font-weight: bold;
+    font-style: italic;
+    font-size: .9rem;
+}
+
 @media (max-width: 680px) {
     .navlist {
         --gap: 2rem;

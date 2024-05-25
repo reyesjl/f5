@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
+    <script src="{% static 'events/js/rsvp.js' %}" defer></script>
 
     <title>RSVP Receipt</title>
 </head>
@@ -15,38 +16,48 @@
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">RSVP Receipt</h1>
-                <p class="pagesubtitle">Success! You have RSVP'd to the event. This receipt will be sent to {{ rsvp.email }}</p>
+                <h1 class="pagetitle">RSVP Success!</h1>
+                <p class="pagesubtitle">You are now on the guest list. An email will be sent to {{ rsvp.email }}</p>
             </div>
 
 
             <div class="pagesection">
-                <h3 class="sectiontitle">Payment Status</h3>
+                <h3 class="sectiontitle">Payment</h3>
+                <p class="sectiontext">This is a live record of your account.</p>
 
-                {% if rsvp.has_paid %}
-                    <p class="sectiontext">The account for this RSVP has been paid in full.</p>
-                    <p class="sectiontext"><strong>Payment Due:</strong> $0.00</p>
+                {% if payment_info.status == 'No Payment Required' %}
+                    <p id="paymentStatus"><strong>Status:</strong> <span class="greentext">{{ payment_info.status }}</span></p>
+                {% elif payment_info.status == 'Not Paid' %}
+                    <p id="paymentStatus"><strong>Status:</strong> <span class="redtext">{{ payment_info.status }}</span></p>
+                    <p id="paymentCost"><strong>Cost:</strong> ${{ payment_info.cost }}</p>
                 {% else %}
-                    <p class="sectiontext">Check back here to view your payment status for this event.</p>
-                    <p class="sectiontext"><strong>Payment Due:</strong> {{ rsvp.event.cost }}</p>
+                    <p id="paymentStatus"><strong>Status:</strong> <span class="greentext">{{payment_info.status }}</span></p>
+                    <p id="paymentCost"><strong>Cost:</strong> $0.00</p>
                 {% endif %}
-                
             </div>
 
             <div class="pagesection">
                 <h3 class="sectiontitle">Download & Save</h3>
-                <p>You can always return to view your status and information. Save a copy for safe keeping.</p>
+                <p>You can always come back here by saving your token.</p>
+                
+
+                <p id="paymentToken" class="hiddentext" data="{{rsvp.token}}">*********************</p>
+
+                <p><button id="toggleTokenButton" class="button" onclick="showToken()">Show My Token</button></p>
+                <p><button class="button" onclick="copyToClipboard()">Copy This Link</button></p>
+                <p><a class="button" href="{% url 'generate_pdf' token=rsvp.token %}">Generate PDF</a></p>
+
             </div>
 
             <div class="pagesection">
                 <div class="ticket">
                     <h3 class="sectiontitle">Personal Details</h3>
-                    <p><strong>Event:</strong> {{ rsvp.event.name }}</p>
-                    <p><strong>Name:</strong> {{ rsvp.name }}</p>
-                    <p><strong>Phone Number:</strong> {{ rsvp.phone_number }}</p>
-                    <p><strong>Role:</strong> {{ rsvp.get_role_display }}</p>
-                    <p><strong>Start Date:</strong> {{ rsvp.event.start_date }}</p>
-                    <p><strong>End Date:</strong> {{ rsvp.event.end_date }}</p>
+                    <p id="eventName"><strong>Event:</strong> {{ rsvp.event.name }}</p>
+                    <p id="userName" ><strong>Name:</strong> {{ rsvp.name }}</p>
+                    <p id="userPhone"><strong>Phone Number:</strong> {{ rsvp.phone_number }}</p>
+                    <p id="userRole"><strong>Role:</strong> {{ rsvp.get_role_display }}</p>
+                    <p id="startDate"><strong>Start Date:</strong> {{ rsvp.event.start_date }}</p>
+                    <p id="endDate"><strong>End Date:</strong> {{ rsvp.event.end_date }}</p>
                 </div>
             </div>
 
