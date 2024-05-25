@@ -13,15 +13,20 @@
 
     <div class="register_and_price">
         {% if event.registration_required %}
-            <p class="eventregister">*Must register for event.</p>
-        {% else %}
-            <p class="eventregister">*No registration needed.</p>
+            <p class="eventregister">*Register to attend</p>
         {% endif %}
 
+        <div class="prices">
         {% if event.cost %}
-            <p class="eventcost">Cost: ${{ event.cost }}</p>
+            <p class="eventcost">Player: ${{ event.cost }}</p>
         {% else %}
-            <p class="eventcost">Cost: Free</p>
+            <p class="eventcost">Player: Free</p>
         {% endif %}
+        {% if event.secondary_cost %}
+            <p class="eventcost">Coach: ${{ event.secondary_cost }}</p>
+        {% else %}
+            <p class="eventcost">Coach: Free</p>
+        {% endif %}
+        </div>
     </div>
 </div>

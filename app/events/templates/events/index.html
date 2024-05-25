@@ -27,7 +27,7 @@
                 {% for event in featured_events %}
                     {% include 'events/_event_snippet.html' %}
                 {% empty %}
-                    <p>No featured events.</p>
+                    <p>Feature your upcoming event next.</p>
                 {% endfor %}
             </div>
 
@@ -36,7 +36,7 @@
                 {% for event in upcoming_events %}
                     {% include 'events/_event_snippet.html' %}
                 {% empty %}
-                    <p>No featured events.</p>
+                    <p>No events to display here.</p>
                 {% endfor %}
             </div>
 

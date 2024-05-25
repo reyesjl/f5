@@ -52,6 +52,7 @@ class Event(models.Model):
         ('game', 'Game'),
         ('training', 'Training'),
         ('clinic', 'Clinic'),
+        ('tournament', 'Tournament'),
         ('combine', 'Combine'),
         ('other', 'Other'),
     )

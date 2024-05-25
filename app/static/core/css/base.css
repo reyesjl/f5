@@ -35,6 +35,11 @@ body {
     justify-content: space-between;
 }
 
+.splitpole {
+    display: flex;
+    flex-direction: column;
+}
+
 .navlist {
     display: flex;
     list-style-type: none;
