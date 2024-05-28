@@ -17,6 +17,12 @@
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'event-update' slug=event.slug %}" class="button warning">Edit</a>
+                    <a href="{% url 'event-delete' slug=event.slug %}" class="button danger">Delete</a>
+                </p>
+                {% endif %}
                 <h1 class="pagetitle">{{ event.name }}</h1>
                 <div class="splitshot">
                     <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
@@ -37,7 +43,7 @@
 
                 <div class="detailregister">
                     {% if event.registration_required %}
-                        <a class="button" href="{% url 'rsvp_create' event_id=event.id %}">RSVP</a>
+                        <a class="button" href="#">RSVP</a>
                     {% else %}
                         <a class="button disabled" href="">No RSVP Required</a>
                     {% endif %}
@@ -51,34 +57,6 @@
 
             <div class="pagesection eventdesc">
                 {{ event.detailed_description | safe }}
-            </div>
-
-
-            <div class="pagesection">
-                <div class="splitshot">
-                    <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
-                    
-                    <div class="splitpole pagesubtitle">
-                    {% if event.cost %}
-                        <div class="eventcost">Player: ${{ event.cost }}</div>
-                    {% else %}
-                        <div class="eventcost">Player: Free</div>
-                    {% endif %}
-                    {% if event.cost_secondary %}
-                        <div class="eventcost">Coach: ${{ event.cost_secondary }}</div>
-                    {% else %}
-                        <div class="eventcost">Coach: Free</div>
-                    {% endif %}
-                    </div>
-                </div>
-
-                <div class="detailregister">
-                    {% if event.registration_required %}
-                        <a class="button" href="{% url 'rsvp_create' event_id=event.id %}">RSVP</a>
-                    {% else %}
-                        <a class="button disabled" href="">No RSVP Required</a>
-                    {% endif %}
-                </div>
             </div>
         </div>
     </div>

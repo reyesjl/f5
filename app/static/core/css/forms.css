@@ -2,6 +2,11 @@
     width: 400px;
     max-width: 90%;
     margin: 0 auto;
+    padding-bottom: 5rem;
+}
+
+.formwrapper.wide {
+    width: 100%;
 }
 
 .formwrapper form {
@@ -19,11 +24,32 @@
 
 .formwrapper input[type="text"],
 .formwrapper input[type="email"],
+.ck-editor-container,
 .formwrapper select {
     border: 2px solid black; 
     padding: .5rem; 
     margin-bottom: 10px; 
     width: 100%;
+    font-weight: bold;
+}
+
+.ck-editor-container {
+    font-weight: normal;
+}
+
+.formwrapper textarea {
+    border: 2px solid black; 
+    padding: .5rem; 
+    margin-bottom: 10px; 
+    width: 100%;
+}
+
+
+.formwrapper input[type="date"], 
+.formwrapper input[type="number"] {
+    border: 2px solid black; 
+    padding: .5rem; 
+    margin-bottom: 10px; 
     font-weight: bold;
 }
 

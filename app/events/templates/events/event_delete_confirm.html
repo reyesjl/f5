@@ -6,28 +6,26 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>RSVP</title>
+    <title>Delete Event</title>
 </head>
 <body>
     <div class="container">
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">RSVP for {{ event.name }}</h1>
-                <p class="pagesubtitle">Fill out the form below to RSVP to this event.</p>
-            </div>
-
-            <div class="formwrapper">
-                <form method="post">
+                <h1 class="pagetitle">Delete Event</h1>
+                <p class="pagesubtitle">Are you sure you want to delete this event forever! This action cannot be undone.</p>
+                <form action="{% url 'event-delete' event.slug %}" method="post">
                     {% csrf_token %}
-                    {{ form }}
-                    <button class="button" type="submit">Submit</button>
+                    
+                    <div class="buttongroup">
+                        <a class="button" href="{% url 'event-detail' event.slug %}">Nooooo!</a>
+                        <button class="button danger" type="submit">Yes</button>
+                    </div>
                 </form>
             </div>
-            
         </div>
     </div>
 </body>

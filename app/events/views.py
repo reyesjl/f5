@@ -1,94 +1,135 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from .models import Event, Rsvp
-from .forms import RsvpForm
-from .decorator import validate_rsvp_token
+from .forms import EventForm, RsvpForm
+from .decorator import user_has_role
+from core.utils import check_user
 
 
-def index(request):
-    featured_events = Event.objects.upcoming_events().featured_events()
-    upcoming_events = Event.objects.upcoming_events().exclude(featured=True)
-    
+def event_list(request):
+    """
+    Renders a list of events, including featured and upcoming events.
+
+    Parameters:
+    - request: HTTP request object
+
+    Returns:
+    - Rendered HTML template with event list
+    """
+    featured_events = Event.objects.featured()
+    upcoming_events = Event.objects.upcoming().exclude(featured=True)
+
     context = {
-        'featured_events': featured_events,
-        'upcoming_events': upcoming_events
+        "featured_events": featured_events,
+        "upcoming_events": upcoming_events,
     }
-
-    return render(request, 'events/index.html', context)
-
-def event_details(request, event_id):
-    try:
-        event = Event.objects.by_event_id(event_id)
-    except Event.DoesNotExist:
-        return render(request, 'events/event_not_found.html')
-
-    context = {'event': event}
-
-    return render(request, 'events/event_details.html', context)
+    return render(request, "events/event_list.html", context)
 
 def events_by_type(request, event_type):
-    events_by_type = Event.objects.upcoming_events().by_event_type(event_type)
-    
+    """
+    Renders a list of events filtered by event type.
+
+    Parameters:
+    - request: HTTP request object
+    - event_type: Type of events to filter by
+
+    Returns:
+    - Rendered HTML template with filtered event list
+    """
+    events = Event.objects.by_type(event_type)
+
     context = {
-        'events': events_by_type,
-        'event_type': event_type
+        "events": events,
+        "event_type": event_type,
     }
+    return render(request, "events/filtered_event_list.html", context)
 
-    return render(request, 'events/events_by_type.html', context)
+def event_detail(request, slug):
+    """
+    Renders the detail page for a specific event.
 
-def rsvp_create(request, event_id):
+    Parameters:
+    - request: HTTP request object
+    - slug: Slug of the event to display details for
+
+    Returns:
+    - Rendered HTML template with event details
+    """
     try:
-        event = Event.objects.by_event_id(event_id)
-    except Event.DoesNotExist:
-        return render(request, 'events/event_not_found.html')
+        event = Event.objects.by_slug(slug)
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
     
-    if not event.registration_required:
-        return render(request, 'events/rsvp_no_register.html', {'event':event})
-    
-    if request.method == 'POST':
-        form = RsvpForm(request.POST)
-        if form.is_valid():
-            rsvp = form.save(commit=False)
-            rsvp.event = event
-            cleaned_data = form.validate_rsvp(event)
-            if form.errors:
-                return render(request, 'events/rsvp_create.html', {'event': event, 'form': form})
-            rsvp.save()
-            return redirect('rsvp_receipt', token=rsvp.token)
-    else:
-        form = RsvpForm()
+    can_manage = check_user(request.user, "event_manager")
         
     context = {
-        'event': event,
-        'form': form
+        "event": event, 
+        "can_manage": can_manage
     }
+    return render(request, "events/event_detail.html", context)
 
-    return render(request, 'events/rsvp_create.html', context)
+@user_has_role("event_manager")
+def event_create(request):
+    """
+    Handles the creation of a new event.
 
-@validate_rsvp_token
-def rsvp_receipt(request, token):
+    Parameters:
+    - request: HTTP request object
+
+    Returns:
+    - Rendered HTML template for event creation form
+    - Redirects to event list on successful form submission
+    """
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("event-list"))  # Redirect to the events list or any other view
+    else:
+        form = EventForm()
+
+    return render(request, "events/event_form.html", {"form": form})
+
+@user_has_role("event_manager")
+def event_update(request, slug):
+    """
+    Handles the update of an existing event.
+
+    Parameters:
+    - request: HTTP request object
+    - slug: Slug of the event to update
+
+    Returns:
+    - Rendered HTML template for event update form
+    - Redirects to event detail page on successful form submission
+    """
     try:
-        rsvp = Rsvp.objects.by_token(token)
-    except Rsvp.DoesNotExist:
-        return render(request, 'events/rsvp_not_found.html')
-    
-    payment_info = rsvp.payment_status_and_cost()
-    
-    context = {
-        'rsvp': rsvp,
-        'token': token,
-        'payment_info': payment_info,
-    }
+        event = Event.objects.by_slug(slug)
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
 
-    return render(request, 'events/rsvp_receipt.html', context)
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect('event-detail', slug=event.slug)  # Redirect to the event detail page
+    else:
+        form = EventForm(instance=event)
 
-@validate_rsvp_token
-def generate_pdf(request, token):
+    return render(request, "events/event_update.html", {"form": form})
+
+@user_has_role("event_manager")
+def event_delete(request, slug):
     try:
-        rsvp = Rsvp.objects.by_token(token)
-    except Rsvp.DoesNotExist:
-        return render(request, 'events/rsvp_not_found.html')
-
-    pdf_response = rsvp.generate_pdf_receipt()
-
-    # If you want to return the PDF directly
-    return pdf_response
+        event = Event.objects.by_slug(slug)
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
+    
+    if request.method == "POST":
+        event.delete()
+        return redirect("event-list")
+    
+    return render(request, "events/event_delete_confirm.html", {"event": event})

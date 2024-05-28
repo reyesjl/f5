@@ -85,30 +85,3 @@
     font-weight: 300;
     margin: 0;
 }
-
-.eventfilters {
-    margin-bottom: 3rem;
-}
-
-.filterlist {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-    gap: .5rem;
-    flex-wrap: wrap;
-}
-
-.filterlink {
-    font-size: .9rem;
-    color: black;
-    border: 1px solid black;
-    border-radius: 12px;
-    padding: .15rem .45rem;
-    text-decoration: none;
-}
-
-.filterlink:hover {
-    background: black;
-    color: white;
-}
