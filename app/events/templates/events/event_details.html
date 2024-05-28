@@ -27,8 +27,8 @@
                     {% else %}
                         <div class="eventcost">Player: Free</div>
                     {% endif %}
-                    {% if event.secondary_cost %}
-                        <div class="eventcost">Coach: ${{ event.secondary_cost }}</div>
+                    {% if event.cost_secondary %}
+                        <div class="eventcost">Coach: ${{ event.cost_secondary }}</div>
                     {% else %}
                         <div class="eventcost">Coach: Free</div>
                     {% endif %}
@@ -64,8 +64,8 @@
                     {% else %}
                         <div class="eventcost">Player: Free</div>
                     {% endif %}
-                    {% if event.secondary_cost %}
-                        <div class="eventcost">Coach: ${{ event.secondary_cost }}</div>
+                    {% if event.cost_secondary %}
+                        <div class="eventcost">Coach: ${{ event.cost_secondary }}</div>
                     {% else %}
                         <div class="eventcost">Coach: Free</div>
                     {% endif %}
