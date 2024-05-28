@@ -15,16 +15,18 @@ environ.Env.read_env()
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY= env('F5_SECRET')
+SECRET_KEY = env('F5_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Stripe config
+STRIPE_TEST_PUBLIC = env('STRIPE_TEST_PUBLIC')
+STRIPE_TEST_SECRET = env('STRIPE_TEST_SECRET')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
