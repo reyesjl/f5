@@ -1,10 +1,13 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import Event, Rsvp
-from .forms import EventForm, RsvpForm
+from .forms import EventForm, RSVPStatusCheckForm, RsvpForm, RsvpFormNoPayment
 from .decorator import user_has_role
 from core.utils import check_user
 
+
+# Event Views
+# =============================================================================
 
 def event_list(request):
     """
@@ -85,7 +88,7 @@ def event_create(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse("event-list"))  # Redirect to the events list or any other view
+            return redirect(reverse("event-list"))
     else:
         form = EventForm()
 
@@ -114,7 +117,7 @@ def event_update(request, slug):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
-            return redirect('event-detail', slug=event.slug)  # Redirect to the event detail page
+            return redirect('event-detail', slug=event.slug)
     else:
         form = EventForm(instance=event)
 
@@ -122,6 +125,17 @@ def event_update(request, slug):
 
 @user_has_role("event_manager")
 def event_delete(request, slug):
+    """
+    Handles the deletion of an existing event.
+
+    Parameters:
+    - request: HTTP request object
+    - slug: Slug of the event to delete
+
+    Returns:
+    - Rendered HTML template for event deletion confirmation
+    - Redirects to event list on successful deletion
+    """
     try:
         event = Event.objects.by_slug(slug)
     except Exception as e:
@@ -133,3 +147,73 @@ def event_delete(request, slug):
         return redirect("event-list")
     
     return render(request, "events/event_delete_confirm.html", {"event": event})
+
+# RSVP Views
+# =============================================================================
+
+@user_has_role("event_manager")
+def rsvp_by_event(request, event_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
+    
+    rsvps = Rsvp.objects.by_event(event)
+
+    context = {
+        "event": event,
+        "rsvps": rsvps,
+    }
+    return render(request, "rsvps/rsvp_by_event.html", context)
+
+def rsvp_create(request, event_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
+    
+    if request.method == "POST":
+        if event.payment_required:
+            form = RsvpForm(request.POST, event=event)
+        else:
+            form = RsvpFormNoPayment(request.POST, event=event)
+        if form.is_valid():
+            rsvp = form.save(commit=False)
+            rsvp.event = event
+            rsvp.save()
+
+            # Handle payment if needed
+            rsvp_data = form.cleaned_data
+            if event.payment_required:
+                pass
+        
+            return redirect('event-detail', slug=event_slug)
+    else:
+        if event.payment_required:
+            form = RsvpForm(event=event)
+        else:
+            form = RsvpFormNoPayment(event=event)
+
+    context = {
+        "form": form,
+        "event": event
+    }
+    return render(request, "rsvps/rsvp_form.html", context)
+
+
+
+@user_has_role("event_manager")
+def rsvp_detail(request, slug):
+    try:
+        rsvp = Rsvp.objects.by_slug(slug)
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
+    
+    context = {
+        "rsvp": rsvp,
+    }
+
+    return render(request, "rsvps/rsvp_detail.html", context)

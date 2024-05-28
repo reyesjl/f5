@@ -37,6 +37,16 @@ body {
     pointer-events: none;
 }
 
+.button.go {
+    border: 2px solid darkgreen;
+    color: darkgreen;
+}
+
+.button.go:hover {
+    background-color: darkgreen;
+    color: white;
+}
+
 .button.warning {
     border: 2px solid darkgoldenrod;
     color: darkgoldenrod;

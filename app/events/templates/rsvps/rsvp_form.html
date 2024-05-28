@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>RSVP for Event</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                <h1 class="pagetitle">RSVP to {{event.name}}</h1>
+                <p class="pagesubtitle">Fill out the form below to register for this event.</p>
+            </div>
+
+            <div class="formwrapper">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="button" type="submit">Review RSVP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

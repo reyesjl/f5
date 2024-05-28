@@ -1,0 +1,52 @@
+@import url("https://use.typekit.net/wme5som.css");
+
+.rsvp {
+    margin-bottom: 3rem;
+}
+
+.rsvpfeatured {
+    font-family: aileron, Arial;
+    font-size: .8rem;
+    font-weight: 800;
+    color: darkblue;
+    font-style: italic;
+    animation: blink 1s infinite alternate;
+    padding-bottom: .5rem;
+}
+
+@keyframes blink {
+    0% { color: darkblue; } /* Start with darkred */
+    50% { color: darkgoldenrod; } /* Blink to yellow at 50% */
+    100% { color: darkblue; } /* Back to darkred at 100% */
+}
+
+.rsvpname {
+    font-family: aileron, Arial;
+    font-weight: 800;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: .25rem;
+    border-bottom: 4px solid black;
+}
+
+.rsvpname a {
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+
+.rsvpname a:hover {
+    background: darkred;
+    color: white;
+}
+
+.rsvpdate {
+    padding-top: .25rem;
+    display: flex;
+    font-size: .8rem;
+    color: gray;
+    margin-bottom: .5rem;
+}
+
+

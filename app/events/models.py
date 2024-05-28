@@ -4,11 +4,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from django_ckeditor_5.fields import CKEditor5Field
-from django.http import HttpResponse
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import Paragraph, Spacer, SimpleDocTemplate
 
 class EventQuerySet(models.QuerySet):
     def by_slug(self, slug):
@@ -92,6 +87,9 @@ class Event(models.Model):
         return self.name
 
 class RsvpQuerySet(models.QuerySet):
+    def by_slug(self, slug):
+        return self.get(slug=slug)
+    
     def by_token(self, token):
         return self.get(token=token)
     
@@ -100,10 +98,16 @@ class RsvpQuerySet(models.QuerySet):
     
     def phone_exists_for(self, event, phone_number):
         return self.filter(event=event, phone_number__iexact=phone_number).exists()
+    
+    def by_event(self, event):
+        return self.filter(event=event)
 
 class RsvpManager(models.Manager):
     def get_queryset(self):
         return RsvpQuerySet(self.model, using=self._db)
+    
+    def by_slug(self, slug):
+        return self.get_queryset().by_slug(slug)
     
     def by_token(self, token):
         return self.get_queryset().by_token(token)
@@ -113,6 +117,9 @@ class RsvpManager(models.Manager):
 
     def phone_exists_for(self, event, phone_number):
         return self.get_queryset().phone_exists_for(event, phone_number)
+    
+    def by_event(self, event):
+        return self.get_queryset().by_event(event)
 
 class Rsvp(models.Model):
     ROLE_CHOICES = (
@@ -137,8 +144,7 @@ class Rsvp(models.Model):
         if not self.slug:
             if not self.token:
                 self.token = uuid.uuid4()
-            shorttoken = self.token[:6]
-            self.slug = slugify(f"{shorttoken}-{self.name}")
+            self.slug = slugify(f"{self.token}-{self.email}")
         super().save(*args, **kwargs)
     
     def __str__(self):
@@ -148,63 +154,20 @@ class Rsvp(models.Model):
         unique_together = ('event', 'email')
 
     def payment_status_and_cost(self):
-        if self.event.payment_required:
-            if not self.has_paid:
-                cost = self.event.cost if self.role == 'player' else self.event.cost_secondary
-                return {'status': 'Not Paid', 'cost': cost}
-            else:
-                return {'status': 'Paid', 'cost': 0}
-        else:
+        if not self.event.payment_required:
             return {'status': 'No Payment Required', 'cost': 0}
-        
-    def generate_pdf_receipt(self):
-        # Creating the PDF response
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="rsvp_receipt_{self.id}.pdf"'
 
-        # Setting up the PDF document
-        doc = SimpleDocTemplate(response, pagesize=letter)
-        styles = getSampleStyleSheet()
-        
-        # Custom style for the link
-        link_style = ParagraphStyle(
-            name='ClickableLink',
-            parent=styles['Normal'],
-            textColor=colors.blue,
-            underline=True,
-        )
+        # All pay 'cost'
+        if self.event.event_type == 'game' :
+            cost = self.event.cost
+        elif self.event.event_type == 'camp':
+            # Player pays 'cost'
+            # Coach pays 'cost_secondary'
+            cost = self.event.cost if self.role == 'player' else self.event.cost_secondary
+        else:
+            cost = self.event.cost
 
-        content = []
-
-        # Adding content to the PDF
-        content.append(Paragraph("RSVP Receipt", styles['Title']))
-        content.append(Paragraph("Thank you for your RSVP!", styles['Heading3']))
-        content.append(Paragraph(f"You've successfully RSVP'd for the event: {self.event.name}", styles['Normal']))
-        content.append(Paragraph(f"Name: {self.name}", styles['Normal']))
-        content.append(Paragraph(f"Email: {self.email}", styles['Normal']))
-        content.append(Paragraph(f"Phone Number: {self.phone_number}", styles['Normal']))
-        content.append(Paragraph(f"Role: {self.get_role_display()}", styles['Normal']))
-        content.append(Spacer(1, 12))  # Adding spacing
-
-        # Adding a link to visit the receipt page again
-        domain = "127.0.0.1:8080"
-        receipt_url = f"http://{domain}{reverse('rsvp_receipt', kwargs={'token': self.token})}"
-        receipt_link = f'<a href="{receipt_url}">To view your receipt again or make payment, click here</a>'
-        content.append(Paragraph(receipt_link, link_style))
-        content.append(Spacer(1, 12))  # Adding spacing
-
-        # Describing event start and end dates
-        content.append(Paragraph(f"Event Start Date: {self.event.start_date}", styles['Normal']))
-        content.append(Paragraph(f"Event End Date: {self.event.end_date}", styles['Normal']))
-        content.append(Spacer(1, 12))  # Adding spacing
-
-        # Adding payment details
-        payment_info = self.payment_status_and_cost()
-        content.append(Paragraph("Payment Details", styles['Heading2']))
-        content.append(Paragraph(f"Payment Status: {payment_info['status']}", styles['Normal']))
-        content.append(Paragraph(f"Cost: ${payment_info['cost']}", styles['Normal']))
-
-        # Building the PDF document
-        doc.build(content)
-
-        return response
+        if not self.has_paid:
+            return {'status': 'Not Paid', 'cost': cost}
+        else:
+            return {'status': 'Paid', 'cost': 0}
