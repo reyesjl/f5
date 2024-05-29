@@ -35,25 +35,6 @@ def event_list(request):
     }
     return render(request, "events/event_list.html", context)
 
-def events_by_type(request, event_type):
-    """
-    Renders a list of events filtered by event type.
-
-    Parameters:
-    - request: HTTP request object
-    - event_type: Type of events to filter by
-
-    Returns:
-    - Rendered HTML template with filtered event list
-    """
-    events = Event.objects.by_type(event_type)
-
-    context = {
-        "events": events,
-        "event_type": event_type,
-    }
-    return render(request, "events/filtered_event_list.html", context)
-
 def event_detail(request, slug):
     """
     Renders the detail page for a specific event.
