@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>RSVP Status</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'rsvp-update' event_slug=event.slug rsvp_slug=rsvp.slug %}" class="button warning">Edit</a>
+                    <a href="{% url 'event-delete' slug=event.slug %}" class="button disabled">Delete</a>
+                </p>
+                {% endif %}
+                <h1 class="pagetitle">RSVP Status</h1>
+                <p class="pagesubtitle">If there are any issues please reach out to customer support.</p>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">User Details</h3>
+                <ul>
+                    <li>Name: {{ rsvp.name }}</li>
+                    <li>Email: {{ rsvp.email }}</li>
+                    <li>Phone: {{ rsvp.phone_number }}</li>
+                    <li>Role: {{ rsvp.get_role_display }}</li>
+                </ul>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Payment Status</h3>
+                <p>Sometimes the payment takes a few days to go through.</p>
+                <ul>
+                    {% if rsvp.payment_status_and_cost.status == 'Not Paid' %}
+                        <li>Status: pending...</li>
+                    {% else %}
+                
+                    <li>Status: {{ rsvp.payment_status_and_cost.status }}</li>
+                    {% endif %}
+                    <li>Cost: {{ rsvp.payment_status_and_cost.cost }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

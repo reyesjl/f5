@@ -17,6 +17,13 @@ body {
     text-decoration: none;
     color: black;
     font-weight: bold;
+    font-size: .9rem;
+}
+
+.buttongroup {
+    padding: 1rem 0;
+    display: flex;
+    gap: .25rem;
 }
 
 .button:hover {
@@ -28,6 +35,36 @@ body {
 .button.disabled {
     opacity: 50%;
     pointer-events: none;
+}
+
+.button.go {
+    border: 2px solid darkgreen;
+    color: darkgreen;
+}
+
+.button.go:hover {
+    background-color: darkgreen;
+    color: white;
+}
+
+.button.warning {
+    border: 2px solid darkgoldenrod;
+    color: darkgoldenrod;
+}
+
+.button.warning:hover {
+    background: darkgoldenrod;
+    color: white;
+}
+
+.button.danger {
+    border: 2px solid darkred;
+    color: darkred;
+}
+
+.button.danger:hover {
+    background: darkred;
+    color: white;
 }
 
 .splitshot {

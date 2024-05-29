@@ -1,19 +1,15 @@
 import uuid
 from functools import wraps
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
-def validate_rsvp_token(view_func):
-    @wraps(view_func)
-    def _wrapped_view(request, *args, **kwargs):
-        token = kwargs.get('token')
-        try:
-            # Attempt to parse the token as a UUID
-            uuid_obj = uuid.UUID(token)
-        except ValueError:
-            # If parsing fails, token is not a valid UUID, return invalid template
-            return render(request, 'events/rsvp_invalid_token.html')
-        
-        # If parsing succeeds, continue executing the view function
-        return view_func(request, *args, **kwargs)
-
-    return _wrapped_view
+def user_has_role(role):
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapped_view(request, *args, **kwargs):
+            if request.user.is_authenticated and request.user.groups.filter(name=role).exists():
+                return view_func(request, *args, **kwargs)
+            else:
+                message = "Permission denied: user does not have the correct role(s) to view this page."
+                return render(request, "core/permission_denied.html", {"message": message})
+        return wrapped_view
+    return decorator

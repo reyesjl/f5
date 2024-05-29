@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Events</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                <h1 class="pagetitle">Events</h1>
+                <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and find local rugby.</p>
+            </div> 
+
+            {% include 'events/_filters_snippet.html' %}
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Featured Events</h3>
+                {% for event in featured_events %}
+                    {% include 'events/_event_snippet.html' %}
+                {% empty %}
+                    <p>No featured events.</p>
+                {% endfor %}
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Upcoming Events</h3>
+                {% for event in upcoming_events %}
+                    {% include 'events/_event_snippet.html' %}
+                {% empty %}
+                    <p>No upcoming events.</p>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

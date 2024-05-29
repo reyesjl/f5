@@ -3,10 +3,18 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path('type/<str:event_type>/', views.events_by_type, name='events_by_type'),
-    path('details/<int:event_id>/', views.event_details, name='event_details'),
-    path('details/<int:event_id>/rsvp/', views.rsvp_create, name='rsvp_create'),
-    path('rsvp/<str:token>/receipt/', views.rsvp_receipt, name='rsvp_receipt'),
-    path('rsvp/<str:token>/generate-pdf/', views.generate_pdf, name='generate_pdf'),
+    # events
+    path("", views.event_list, name="event-list"),
+    path("filter/type/<str:event_type>/", views.events_by_type, name="events-by-type"),
+    path("create/", views.event_create, name="event-create"),
+    path("<slug:slug>/", views.event_detail, name="event-detail"),
+    path("<slug:slug>/update/", views.event_update, name="event-update"),
+    path("<slug:slug>/delete/", views.event_delete, name="event-delete"),
+
+    # rsvps
+    path("<slug:event_slug>/rsvps/", views.rsvp_list, name="rsvp-list"),
+    path("<slug:event_slug>/rsvps/create/", views.rsvp_create, name="rsvp-create"),
+    path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/", views.rsvp_detail, name="rsvp-detail"),
+    path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/update/", views.rsvp_update, name="rsvp-update"),
+    #path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/delete/", views.rsvp_delete, name="rsvp-delete"),
 ]
