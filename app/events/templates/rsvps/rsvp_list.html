@@ -6,6 +6,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'rsvps/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
@@ -20,16 +21,16 @@
                 <p class="pagesubtitle">These are all the responses for this event.</p>
             </div> 
 
-            <!-- {% include 'events/_filters_snippet.html' %} -->
+            {% include 'rsvps/_filters_snippet.html' %}
 
             <div class="pagesection">
                 <h3 class="sectiontitle">Responses [{{ rsvps|length }}]</h3>
                 {% for rsvp in rsvps %}
                     <div class="rsvp">
-                        {% if event.has_paid %}
-                            <div class="rsvppaid">Paid</div>
+                        {% if rsvp.has_paid %}
+                            <div class="rsvppaid">PAID</div>
                         {% else %}
-                            <div class="rsvppaid">Not Paid</div>
+                            <div class="rsvpnotpaid">NOT PAID</div>
                         {% endif %}
                         <h3 class="rsvpname"><a href="{% url 'rsvp-detail' event_slug=event.slug rsvp_slug=rsvp.slug %}"><span>&#10035;</span> {{ rsvp.name }}</a></h3>
                         <div class="rsvpdate">Submitted {{rsvp.created_at}}</div>

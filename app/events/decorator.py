@@ -10,6 +10,6 @@ def user_has_role(role):
                 return view_func(request, *args, **kwargs)
             else:
                 message = "Permission denied: user does not have the correct role(s) to view this page."
-                return render(request, "core/permission_denied.html", {"message": message})
+                return render(request, "core/permission_denied.html", {"message": message}, status=403)
         return wrapped_view
     return decorator

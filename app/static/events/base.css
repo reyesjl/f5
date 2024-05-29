@@ -62,11 +62,6 @@
     text-decoration: none;
 }
 
-.eventtag:hover {
-    background: black;
-    color: white;
-}
-
 .register_and_price {
     display: flex;
     justify-content: space-between;
