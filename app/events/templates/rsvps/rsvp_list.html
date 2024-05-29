@@ -27,12 +27,13 @@
                 {% for rsvp in rsvps %}
                     <div class="rsvp">
                         {% if event.has_paid %}
-                            <div class="rsvpfeatured">Paid</div>
+                            <div class="rsvppaid">Paid</div>
                         {% else %}
-                            <div class="rsvpfeatured">Not Paid</div>
+                            <div class="rsvppaid">Not Paid</div>
                         {% endif %}
-                        <h3 class="rsvpname"><a href="{% url 'rsvp-detail' slug=rsvp.slug %}"><span>&#9737;</span> {{ rsvp.name }}</a></h3>
-                        <p class="rsvpdate">Submitted {{rsvp.created_at}}</p>
+                        <h3 class="rsvpname"><a href="{% url 'rsvp-detail' event_slug=event.slug rsvp_slug=rsvp.slug %}"><span>&#10035;</span> {{ rsvp.name }}</a></h3>
+                        <div class="rsvpdate">Submitted {{rsvp.created_at}}</div>
+                        <div class="rsvprole">As {{rsvp.role}}</div>
                     </div>
                 {% empty %}
                     <p>No RSVPs found.</p>

@@ -15,6 +15,12 @@
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'rsvp-update' event_slug=event.slug rsvp_slug=rsvp.slug %}" class="button warning">Edit</a>
+                    <a href="{% url 'event-delete' slug=event.slug %}" class="button disabled">Delete</a>
+                </p>
+                {% endif %}
                 <h1 class="pagetitle">RSVP Status</h1>
                 <p class="pagesubtitle">If there are any issues please reach out to customer support.</p>
             </div>

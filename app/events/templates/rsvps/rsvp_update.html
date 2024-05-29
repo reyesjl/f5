@@ -9,15 +9,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>RSVP for Event</title>
+    <title>RSVP Update</title>
 </head>
 <body>
     <div class="container">
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">RSVP to {{event.name}}</h1>
-                <p class="pagesubtitle">Fill out the form below to register for this event.</p>
+                <h1 class="pagetitle">RSVP Update</h1>
+                <p class="pagesubtitle">For {{ event.name }} <br> on {{event.start_date}}</p>
+                <p class="pagesubtitle">Fill out the form below to update this RSVP.</p>
             </div>
 
             <div class="formwrapper">

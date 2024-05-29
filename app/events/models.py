@@ -101,6 +101,9 @@ class RsvpQuerySet(models.QuerySet):
     
     def by_event(self, event):
         return self.filter(event=event)
+    
+    def by_event_and_slug(self, event, rsvp_slug):
+        return self.get(event=event, slug=rsvp_slug)
 
 class RsvpManager(models.Manager):
     def get_queryset(self):
@@ -120,6 +123,9 @@ class RsvpManager(models.Manager):
     
     def by_event(self, event):
         return self.get_queryset().by_event(event)
+    
+    def by_event_and_slug(self, event, rsvp_slug):
+        return self.get_queryset().by_event_and_slug(event, rsvp_slug)
 
 class Rsvp(models.Model):
     ROLE_CHOICES = (

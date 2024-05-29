@@ -50,6 +50,7 @@ class RsvpForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.event = kwargs.pop('event', None)
+        self.instance = kwargs.get('instance')
         super().__init__(*args, **kwargs)
 
     def clean_credit_card_number(self):
@@ -87,14 +88,16 @@ class RsvpForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if self.event and Rsvp.objects.email_exists_for(self.event, email=email):
-            self.add_error('email', 'An RSVP already exists with this email.')
+        if self.event and not self.instance:  # Check if creating a new instance
+            if Rsvp.objects.email_exists_for(self.event, email=email):
+                self.add_error('email', 'An RSVP already exists with this email.')
         return email
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
-        if self.event and Rsvp.objects.phone_exists_for(self.event, phone_number=phone_number):
-            self.add_error('phone_number', 'An RSVP already exists with this phone number.')
+        if self.event and not self.instance:  # Check if creating a new instance
+            if Rsvp.objects.phone_exists_for(self.event, phone_number=phone_number):
+                self.add_error('phone_number', 'An RSVP already exists with this phone number.')
         return phone_number
     
 class RsvpFormNoPayment(forms.ModelForm):
@@ -109,6 +112,7 @@ class RsvpFormNoPayment(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.event = kwargs.pop('event', None)
+        self.instance = kwargs.get('instance')
         super().__init__(*args, **kwargs)
 
     def clean_role(self):
@@ -119,17 +123,14 @@ class RsvpFormNoPayment(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if self.event and Rsvp.objects.email_exists_for(self.event, email=email):
-            self.add_error('email', 'An RSVP already exists with this email.')
+        if self.event and not self.instance:  # Check if creating a new instance
+            if Rsvp.objects.email_exists_for(self.event, email=email):
+                self.add_error('email', 'An RSVP already exists with this email.')
         return email
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
-        if self.event and Rsvp.objects.phone_exists_for(self.event, phone_number=phone_number):
-            self.add_error('phone_number', 'An RSVP already exists with this phone number.')
+        if self.event and not self.instance:  # Check if creating a new instance
+            if Rsvp.objects.phone_exists_for(self.event, phone_number=phone_number):
+                self.add_error('phone_number', 'An RSVP already exists with this phone number.')
         return phone_number
-
-class RSVPStatusCheckForm(forms.Form):
-    name = forms.CharField(label='Name', max_length=100)
-    email = forms.EmailField(label='Email')
-    phone = forms.CharField(label='Phone Number', max_length=20)

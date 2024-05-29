@@ -4,7 +4,8 @@
     margin-bottom: 3rem;
 }
 
-.rsvpfeatured {
+.rsvppaid {
+    text-align: right;
     font-family: aileron, Arial;
     font-size: .8rem;
     font-weight: 800;
@@ -47,6 +48,11 @@
     font-size: .8rem;
     color: gray;
     margin-bottom: .5rem;
+}
+
+.rsvprole {
+    font-size: .8rem;
+    color: gray;
 }
 
 

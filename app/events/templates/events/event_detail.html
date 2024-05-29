@@ -19,7 +19,7 @@
             <div class="pageheader">
                 {% if can_manage %}
                 <p>
-                    <a href="{% url 'rsvp-by-event' event_slug=event.slug %}" class="button go">RSVPs</a>
+                    <a href="{% url 'rsvp-list' event_slug=event.slug %}" class="button go">RSVPs</a>
                     <a href="{% url 'event-update' slug=event.slug %}" class="button warning">Edit</a>
                     <a href="{% url 'event-delete' slug=event.slug %}" class="button danger">Delete</a>
                 </p>
