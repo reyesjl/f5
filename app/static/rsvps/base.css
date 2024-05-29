@@ -4,7 +4,7 @@
     margin-bottom: 3rem;
 }
 
-.rsvppaid {
+.rsvpnotpaid {
     text-align: right;
     font-family: aileron, Arial;
     font-size: .8rem;
@@ -15,10 +15,20 @@
     padding-bottom: .5rem;
 }
 
+.rsvppaid {
+    text-align: right;
+    font-family: aileron, Arial;
+    font-size: .8rem;
+    font-weight: 800;
+    color: darkgreen;
+    font-style: italic;
+    padding-bottom: .5rem;
+}
+
 @keyframes blink {
-    0% { color: darkblue; } /* Start with darkred */
-    50% { color: darkgoldenrod; } /* Blink to yellow at 50% */
-    100% { color: darkblue; } /* Back to darkred at 100% */
+    0% { color: darkblue; } 
+    50% { color: darkgoldenrod; } 
+    100% { color: darkblue; } 
 }
 
 .rsvpname {

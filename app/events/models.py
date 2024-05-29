@@ -15,6 +15,11 @@ class EventQuerySet(models.QuerySet):
     def by_type(self, event_type):
         return self.filter(event_type=event_type)
     
+    def filter_by_event_type(self, event_type):
+        if event_type:
+            return self.filter(event_type=event_type)
+        return self
+    
     def past(self):
         now = timezone.now()
         return self.filter(start_date__lte=now)
@@ -38,6 +43,9 @@ class EventManager(models.Manager):
 
     def by_type(self, event_type):
         return self.get_queryset().by_type(event_type)
+    
+    def filter_by_event_type(self, event_type):
+        return self.get_queryset().filter_by_event_type(event_type)
     
     def past(self):
         return self.get_queryset().past()
@@ -104,6 +112,11 @@ class RsvpQuerySet(models.QuerySet):
     
     def by_event_and_slug(self, event, rsvp_slug):
         return self.get(event=event, slug=rsvp_slug)
+    
+    def filter_by_paid_status(self, paid_status):
+        if paid_status is not None:
+            return self.filter(has_paid=paid_status)
+        return self
 
 class RsvpManager(models.Manager):
     def get_queryset(self):
@@ -126,6 +139,9 @@ class RsvpManager(models.Manager):
     
     def by_event_and_slug(self, event, rsvp_slug):
         return self.get_queryset().by_event_and_slug(event, rsvp_slug)
+    
+    def filter_by_paid_status(self, paid_status):
+        return self.get_queryset().filter_by_paid_status(paid_status)
 
 class Rsvp(models.Model):
     ROLE_CHOICES = (

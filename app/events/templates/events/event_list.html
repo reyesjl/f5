@@ -17,6 +17,11 @@
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'event-create' %}" class="button go">Create New</a>
+                </p>
+                {% endif %}
                 <h1 class="pagetitle">Events</h1>
                 <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and find local rugby.</p>
             </div> 

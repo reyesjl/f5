@@ -19,12 +19,19 @@ def event_list(request):
     Returns:
     - Rendered HTML template with event list
     """
-    featured_events = Event.objects.featured()
-    upcoming_events = Event.objects.upcoming().exclude(featured=True)
+    events = Event.objects.all()
+    event_type = request.GET.get("event_type")
+    if event_type:
+        events = events.filter_by_event_type(event_type)
+
+    featured_events = events.featured()
+    upcoming_events = events.upcoming().exclude(featured=True)
+    can_manage = check_user(request.user, "event_manager")
 
     context = {
         "featured_events": featured_events,
         "upcoming_events": upcoming_events,
+        "can_manage": can_manage,
     }
     return render(request, "events/event_list.html", context)
 
@@ -159,7 +166,16 @@ def rsvp_list(request, event_slug):
         message = e
         return render(request, "events/event_error.html", {"message": message})
     
-    rsvps = Rsvp.objects.by_event(event)
+    paid_filter = request.GET.get('paid')
+    if paid_filter is not None:
+        if paid_filter.lower() == 'true':
+            paid_filter = True
+        elif paid_filter.lower() == 'false':
+            paid_filter = False
+        else:
+            paid_filter = None
+
+    rsvps = Rsvp.objects.by_event(event).filter_by_paid_status(paid_filter)
 
     context = {
         "event": event,
