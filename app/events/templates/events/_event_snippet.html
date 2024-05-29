@@ -7,7 +7,7 @@
         <span>{{ event.start_date }} to {{ event.end_date }}</span>
     </div>
     <div class="eventtype">
-        <a class="eventtag" href="{% url 'events-by-type' event_type=event.event_type %}">#{{ event.event_type }}</a>
+        <span class="eventtag">#{{ event.event_type }}</span>
     </div>
     <p class="eventdesc">{{ event.description }}</p>
 
