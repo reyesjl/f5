@@ -1,0 +1,26 @@
+<p class="filterstitle"><strong>Filters</strong></p>
+<div class="filters">
+    <form method="GET" class="filterform">
+        <div class="filtercategories">
+            <div class="filtersection">
+                <p class="categorylabel">Pay Status</p>
+                <ul class="filterlist">
+                    <li class="filteritem">
+                        <input type="radio" name="paid" value="True" id="paid-true"
+                        {% if request.GET.paid == 'True' %} checked{% endif %}>
+                        <label for="paid-true">Paid</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="paid" value="False" id="paid-false"
+                        {% if request.GET.paid == 'False' %} checked{% endif %}>
+                        <label for="paid-false">Not Paid</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="filtersection">
+                <button type="submit" class="button primary">Apply</button>
+                <a class="button danger" href=".">Clear</a>
+            </div>
+        </div>
+    </form>
+</div>
