@@ -3,6 +3,21 @@
     <form method="GET" class="filterform">
         <div class="filtercategories">
             <div class="filtersection">
+                <p class="categorylabel">Event Status</p>
+                <ul class="filterlist">
+                    <li class="filteritem">
+                        <input type="radio" name="event_status" value="all" id="event-status-all"
+                        {% if request.GET.event_status == 'all' %} checked{% endif %}>
+                        <label for="event-status-all">All</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="event_status" value="featured" id="event-status-featured"
+                        {% if request.GET.event_status == 'featured' %} checked{% endif %}>
+                        <label for="event-status-featured">Featured</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="filtersection">
                 <p class="categorylabel">Event Type</p>
                 <ul class="filterlist">
                     <li class="filteritem">

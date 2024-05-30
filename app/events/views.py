@@ -19,18 +19,25 @@ def event_list(request):
     Returns:
     - Rendered HTML template with event list
     """
+    # get all events
     events = Event.objects.all()
+
+    # filter on event type
     event_type = request.GET.get("event_type")
     if event_type:
         events = events.filter_by_event_type(event_type)
 
-    featured_events = events.featured()
-    upcoming_events = events.upcoming().exclude(featured=True)
+    # filter on event status    
+    event_status = request.GET.get("event_status")
+    if event_status == "featured":
+        events = events.featured()
+
+    # only show upcoming events
+    events = events.upcoming()
     can_manage = check_user(request.user, "event_manager")
 
     context = {
-        "featured_events": featured_events,
-        "upcoming_events": upcoming_events,
+        "events": events,
         "can_manage": can_manage,
     }
     return render(request, "events/event_list.html", context)

@@ -1,0 +1,11 @@
+<div class="eventpreview">
+    <div class="eventheader">
+        <div class="eventname"><a href="{% url 'event-detail' slug=event.slug %}"><span>&#9737;</span> {{ event.name }}</a></div>
+        <div class="featured-and-date">
+            <div class="eventdate">{{event.start_date}}</div>
+            {% if event.featured %}
+                <div class="eventfeatured">Featured!</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
