@@ -38,6 +38,20 @@
             </div>
 
             <div class="pagesection">
+                <div class="splitshot">
+                    <h2 class="sectiontitle">Newest Plans</h2>
+                    <div><a class="link primary" href="/health">View All</a></div>
+                </div>
+                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
+                {% for plan in featured_plans %}
+                    <p>{{plan.title}}</p>
+                {% empty %}
+                <p>No plans found.</p>
+                {% endfor %}
+                <hr>
+            </div>
+
+            <div class="pagesection">
                 <h2 class="sectiontitle">About Us</h2>
                 <p class="sectiontext">Our <strong>mission</strong> is to promote and grow the game of rugby by providing accessible resources, organizing community events, and fostering a supportive environment for players of all levels.</p>
                 <p class="sectiontext">Our <strong>vision</strong> is to become the leading platform for rugby enthusiasts, offering comprehensive services with continuous innovation to meet the evolving needs of the rugby community.</p>
@@ -53,20 +67,6 @@
                     <li><strong>Team Tour Service:</strong> All-inclusive rugby tours with activities, exclusive tours, history lessons, and accommodations.</li>
                     <li><strong>Custom Kit Service:</strong> Custom branded rugby kits with free design, simple process, and prompt delivery.</li>
                 </ul>
-            </div>
-
-            <div class="pagesection">
-                <div class="splitshot">
-                    <h2 class="sectiontitle">Trending Right Now!</h2>
-                    <div><a class="link primary" href="/health">View All</a></div>
-                </div>
-                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
-                {% for plan in featured_plans %}
-                    <p>{{plan.title}}</p>
-                {% empty %}
-                <p>No plans found.</p>
-                {% endfor %}
-                <hr>
             </div>
 
             <div class="pagesection">
