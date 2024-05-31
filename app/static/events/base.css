@@ -28,6 +28,7 @@
     margin: 0;
     padding-bottom: .25rem;
     border-bottom: 4px solid black;
+    line-height: 1.4rem;
 }
 
 .eventname a {

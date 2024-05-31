@@ -6,22 +6,23 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Health</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container">        
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Health</h1>
                 <p class="pagesubtitle">Discover free gym & nutrition plans. Meet with an expert for a free evaluation.</p>
-            </div>
+            </div>     
 
             <div class="pagesection">
                 <div class="splitshot">
-                    <h2 class="sectiontitle">Trending Right Now!</h2>
+                    <h2 class="sectiontitle">Latest Plans!</h2>
                     <div><a class="link primary" href="/health">View All</a></div>
                 </div>
                 
@@ -68,7 +69,7 @@
                 <p class="sectiontext">
                     Partner with First Five Rugby and access our client database. Do you think you can help others reach their goals?
                 </p>
-                <p><a class="button" href="">Gain Access</a></p>
+                <p><a class="button" href="#">Gain Access</a></p>
             </div>
         </div>
     </div>

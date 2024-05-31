@@ -27,6 +27,7 @@
 .ck-editor-container,
 .formwrapper select {
     border: 2px solid black; 
+    border-radius: 8px;
     padding: .5rem; 
     margin-bottom: 10px; 
     width: 100%;
@@ -39,6 +40,7 @@
 
 .formwrapper textarea {
     border: 2px solid black; 
+    border-radius: 8px;
     padding: .5rem; 
     margin-bottom: 10px; 
     width: 100%;
@@ -48,6 +50,7 @@
 .formwrapper input[type="date"], 
 .formwrapper input[type="number"] {
     border: 2px solid black; 
+    border-radius: 8px;
     padding: .5rem; 
     margin-bottom: 10px; 
     font-weight: bold;

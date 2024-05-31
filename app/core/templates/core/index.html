@@ -13,12 +13,15 @@
 </head>
 <body>
     <div class="container">
+        {% include 'includes/notifications.html' %} 
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <img class="weblogo" src="{% static 'core/images/f5logo.png' %}" alt="first five rugby" />
-                <!-- <h1 class="pagetitle">First Five Rugby</h1> -->
-                <p class="pagesubtitle">Welcome to the premier destination to grow the game.</p>
+                <div class="brandwrapper">
+                    <img class="weblogo" src="{% static 'core/images/f5logo.png' %}" alt="first five rugby" />
+                    <!-- <h1 class="pagetitle">First Five Rugby</h1> -->
+                    <p class="pagesubtitle align-center">The premier destination to grow the game.</p>
+                </div>
             </div>
 
             <div class="pagesection">
@@ -53,11 +56,6 @@
             </div>
 
             <div class="pagesection">
-                <h3 class="sectiontitle">Conclusion</h3>
-                <p class="sectiontext">We aim to provide the highest quality in all our services, from accurate news to high-quality kits. Our goal is to grow positively and be the best in everything we do.</p>
-            </div>
-
-            <div class="pagesection">
                 <div class="splitshot">
                     <h2 class="sectiontitle">Trending Right Now!</h2>
                     <div><a class="link primary" href="/health">View All</a></div>
@@ -69,6 +67,11 @@
                 <p>No plans found.</p>
                 {% endfor %}
                 <hr>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Conclusion</h3>
+                <p class="sectiontext">We aim to provide the highest quality in all our services, from accurate news to high-quality kits. Our goal is to grow positively and be the best in everything we do.</p>
             </div>
         </div>
     </div>
