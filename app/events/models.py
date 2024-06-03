@@ -172,9 +172,6 @@ class Rsvp(models.Model):
     def __str__(self):
         return f'{self.name} - {self.event.name}'
 
-    class Meta:
-        unique_together = ('event', 'email')
-
     def payment_status_and_cost(self):
         if not self.event.payment_required:
             return {'status': 'No Payment Required', 'cost': 0}
