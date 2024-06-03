@@ -15,5 +15,5 @@ urlpatterns = [
     path("<slug:event_slug>/rsvps/create/", views.rsvp_create, name="rsvp-create"),
     path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/", views.rsvp_detail, name="rsvp-detail"),
     path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/update/", views.rsvp_update, name="rsvp-update"),
-    #path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/delete/", views.rsvp_delete, name="rsvp-delete"),
+    path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/delete/", views.rsvp_delete, name="rsvp-delete"),
 ]
