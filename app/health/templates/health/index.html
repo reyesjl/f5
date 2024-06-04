@@ -6,7 +6,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/posts/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Health</title>
@@ -17,26 +17,8 @@
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Health</h1>
-                <p class="pagesubtitle">Discover free gym & nutrition plans. Meet with an expert for a free evaluation.</p>
+                <p class="pagesubtitle">Discover free gym & nutrition posts to learn from. Meet with an expert for a free evaluation.</p>
             </div>     
-
-
-            <!-- {% include 'plans/_filters_snippet.html' %} -->
-
-            <div class="pagesection">
-                <div class="splitshot">
-                    <h2 class="sectiontitle">Latest Plans!</h2>
-                    <div><a class="link primary" href="/health">View All</a></div>
-                </div>
-                
-                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
-                {% for plan in featured_plans %}
-                    <p>{{plan.title}}</p>
-                {% empty %}
-                <p>No plans found.</p>
-                {% endfor %}
-                <hr>
-            </div>
 
             <div class="pagesection">
                 <h3 class="sectiontitle">Overview</h3>
@@ -44,6 +26,24 @@
                     All the information we provide is <strong>free</strong>. Our mission here is to help as many people as possible reach their goals and achieve success and happiness. All our plans are created by certified experts.
                 </p>
                 <hr>
+            </div>
+
+            <div class="pagesection">
+                <div class="splitshot">
+                    <h2 class="sectiontitle">Recent Posts</h2>
+                    <div><a class="link primary" href="/health/posts/">View All</a></div>
+                </div> 
+                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
+               
+                <ul class="post-list">
+                    {% for post in posts %}
+                        {% include 'posts/_post_snippet.html' %}
+                    {% empty %}
+                        <li class="no-posts-found">
+                            <p>No posts found.</p>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
 
             <div class="pagesection">
