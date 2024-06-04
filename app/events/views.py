@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import Event, Rsvp
-from .forms import EventForm, RsvpForm, RsvpFormNoPayment
+from .forms import EventForm, RsvpForm
 from .decorator import user_has_role
 from core.utils import check_user
 
@@ -19,18 +19,25 @@ def event_list(request):
     Returns:
     - Rendered HTML template with event list
     """
+    # get all events
     events = Event.objects.all()
+
+    # filter on event type
     event_type = request.GET.get("event_type")
     if event_type:
         events = events.filter_by_event_type(event_type)
 
-    featured_events = events.featured()
-    upcoming_events = events.upcoming().exclude(featured=True)
+    # filter on event status    
+    event_status = request.GET.get("event_status")
+    if event_status == "featured":
+        events = events.featured()
+
+    # only show upcoming events
+    events = events.upcoming()
     can_manage = check_user(request.user, "event_manager")
 
     context = {
-        "featured_events": featured_events,
-        "upcoming_events": upcoming_events,
+        "events": events,
         "can_manage": can_manage,
     }
     return render(request, "events/event_list.html", context)
@@ -172,26 +179,19 @@ def rsvp_create(request, event_slug):
         return render(request, "events/event_error.html", {"message": message})
     
     if request.method == "POST":
-        if event.payment_required:
-            form = RsvpForm(request.POST, event=event)
-        else:
-            form = RsvpFormNoPayment(request.POST, event=event)
+        form = RsvpForm(request.POST, event=event)
         if form.is_valid():
             rsvp = form.save(commit=False)
             rsvp.event = event
             rsvp.save()
 
             # Handle payment if needed
-            rsvp_data = form.cleaned_data
             if event.payment_required:
                 pass
         
             return redirect('event-detail', slug=event_slug)
     else:
-        if event.payment_required:
-            form = RsvpForm(event=event)
-        else:
-            form = RsvpFormNoPayment(event=event)
+        form = RsvpForm(event=event)
 
     context = {
         "form": form,
@@ -235,12 +235,12 @@ def rsvp_update(request, event_slug, rsvp_slug):
         return render(request, "events/event_error.html", {"message": str(e)})
 
     if request.method == "POST":
-        form = RsvpFormNoPayment(request.POST, instance=rsvp, event=event)
+        form = RsvpForm(request.POST, instance=rsvp, event=event)
         if form.is_valid():
             form.save()
             return redirect('rsvp-detail', event_slug=event_slug, rsvp_slug=rsvp_slug)
     else:
-        form = RsvpFormNoPayment(instance=rsvp, event=event)
+        form = RsvpForm(instance=rsvp, event=event)
 
     context = {
         "form": form,
@@ -249,5 +249,27 @@ def rsvp_update(request, event_slug, rsvp_slug):
     }
     return render(request, "rsvps/rsvp_update.html", context)
 
+@user_has_role("event_manager")
+def rsvp_delete(request, event_slug, rsvp_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+        rsvp = Rsvp.objects.by_event_and_slug(event, rsvp_slug)
+    except Event.DoesNotExist:
+        return render(request, "events/event_error.html", {"message": "Event not found"})
+    except Rsvp.DoesNotExist:
+        return render(request, "events/event_error.html", {"message": "RSVP not found"})
+    except Exception as e:
+        message = e
+        return render(request, "events/event_error.html", {"message": message})
+    
+    if request.method == "POST":
+        rsvp.delete()
+        return redirect("rsvp-list", event_slug=event.slug)
+    
+    context = {
+        'event': event,
+        'rsvp': rsvp
+    }
+    return render(request, "rsvps/rsvp_delete_confirm.html", context)
 
     

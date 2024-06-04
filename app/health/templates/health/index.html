@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Health</title>
+</head>
+<body>
+    <div class="container">        
+        {% include 'includes/navigation.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                <h1 class="pagetitle">Health</h1>
+                <p class="pagesubtitle">Discover free gym & nutrition plans. Meet with an expert for a free evaluation.</p>
+            </div>     
+
+
+            <!-- {% include 'plans/_filters_snippet.html' %} -->
+
+            <div class="pagesection">
+                <div class="splitshot">
+                    <h2 class="sectiontitle">Latest Plans!</h2>
+                    <div><a class="link primary" href="/health">View All</a></div>
+                </div>
+                
+                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
+                {% for plan in featured_plans %}
+                    <p>{{plan.title}}</p>
+                {% empty %}
+                <p>No plans found.</p>
+                {% endfor %}
+                <hr>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Overview</h3>
+                <p class="sectiontext">
+                    All the information we provide is <strong>free</strong>. Our mission here is to help as many people as possible reach their goals and achieve success and happiness. All our plans are created by certified experts.
+                </p>
+                <hr>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Training Plans</h3>
+                <p class="sectiontext">
+                    Our training plans are unique, tailored for specific positions or groups of players in rugby, as well as various ages and experience levels. With adjustable plans, athletes can tailor their training to meet their individual needs. Whether you're a coach looking to optimize team performance, a player aiming to enhance your skills, or a parent supporting your young athlete, our plans cater to everyone.
+                </p>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Nutrition Guides</h3>
+                <p class="sectiontext">
+                    Fuel your training properly with our comprehensive nutrition guides. Learn what foods to eat, when to eat them, and how to monitor your body's performance and health. Our diet plans are designed for athletes of all levels, ensuring you get the best out of your training and achieve peak performance.
+                </p>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Meet With an Expert</h3>
+                <p class="sectiontext">
+                    Schedule a free evaluation with one of our certified experts to get personalized advice and support tailored to your specific goals and needs. Our experts are here to help you succeed.
+                </p>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Are You a Trainer?</h3>
+                <p class="sectiontext">
+                    Partner with First Five Rugby and access our client database. Do you think you can help others reach their goals?
+                </p>
+                <p><a class="button" href="#">Gain Access</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

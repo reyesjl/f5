@@ -7,6 +7,7 @@ urlpatterns = [
     path("", include("core.urls")),
     path("events/", include("events.urls")),
     path("clubs/", include("clubs.urls")),
+    path("health/", include("health.urls")),
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path("admin/", admin.site.urls),
 ]

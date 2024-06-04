@@ -6,21 +6,53 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>F5</title>
 </head>
 <body>
     <div class="container">
+        {% include 'includes/notifications.html' %} 
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">First Five Rugby</h1>
-                <p class="pagesubtitle">Welcome to the premier destination to grow the game.</p>
+                <div class="brandwrapper">
+                    <img class="weblogo" src="{% static 'core/images/f5logo.png' %}" alt="first five rugby" />
+                    <!-- <h1 class="pagetitle">First Five Rugby</h1> -->
+                    <p class="pagesubtitle align-center">The premier destination to grow the game.</p>
+                </div>
             </div>
 
             <div class="pagesection">
-                <h3 class="sectiontitle">Mission & Vision</h3>
+                <div class="splitshot">
+                    <h2 class="sectiontitle">Featured Events</h2>
+                    <div><a class="link primary" href="/events">View All</a></div>
+                </div>
+                <p class="sectionsubtitle">Explore community rugby events like camps, tournaments, and games!</p>
+                {% for event in events %}
+                    {% include 'events/_event_preview_snippet.html' %}
+                {% empty %}
+                    <p>No featured events.</p>
+                {% endfor %}
+            </div>
+
+            <div class="pagesection">
+                <div class="splitshot">
+                    <h2 class="sectiontitle">Newest Plans</h2>
+                    <div><a class="link primary" href="/health">View All</a></div>
+                </div>
+                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
+                {% for plan in featured_plans %}
+                    <p>{{plan.title}}</p>
+                {% empty %}
+                <p>No plans found.</p>
+                {% endfor %}
+                <hr>
+            </div>
+
+            <div class="pagesection">
+                <h2 class="sectiontitle">About Us</h2>
                 <p class="sectiontext">Our <strong>mission</strong> is to promote and grow the game of rugby by providing accessible resources, organizing community events, and fostering a supportive environment for players of all levels.</p>
                 <p class="sectiontext">Our <strong>vision</strong> is to become the leading platform for rugby enthusiasts, offering comprehensive services with continuous innovation to meet the evolving needs of the rugby community.</p>
             </div>

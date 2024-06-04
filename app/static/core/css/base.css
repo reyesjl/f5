@@ -11,13 +11,117 @@ body {
     overflow-x: hidden;
 }
 
+.notifications {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 0 .5rem;
+    position: fixed;
+    width: 900px;
+    max-width: 100%;
+    top: 70px;
+}
+
+.alert.fade-in {
+    animation: fadeIn .5s forwards;
+}
+
+.alert.fade-out {
+    animation: fadeOut 0.2s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.alert {
+    padding: 1rem;
+    background: hwb(0 0% 100% / 0.5);
+    color: white;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    z-index: 100;
+    width: 100%;
+    backdrop-filter: blur(.25rem);
+}
+
+.alerttitle {
+    font-family: aileron, Arial;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.alertdismiss {
+    font-family: aileron, Arial;
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+.alertdismiss:hover {
+    cursor: pointer;
+}
+
+.alert.success {
+    background: rgba(108, 199, 255, 0.7);
+}
+
+.alert.warning {
+    background: rgba(184, 109, 11, 0.7);
+    color: white;
+}
+
+.alert.error {
+    background: rgba(139, 0, 0, 0.7);
+    color: white;
+}
+
+.brandwrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.weblogo {
+    max-width: 100%;
+    width: 250px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.link {
+    font-style: italic;
+    font-size: .9rem;
+    text-transform: lowercase;
+}
+
+.link.primary {
+    color: darkred;
+}
+
 .button {
     padding: .25rem .75rem;
-    border: 2px solid black;
+    border: 1px solid black;
     text-decoration: none;
     color: black;
     font-weight: bold;
     font-size: .9rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
 .buttongroup {
@@ -38,7 +142,7 @@ body {
 }
 
 .button.go {
-    border: 2px solid darkgreen;
+    border-color: darkgreen;
     color: darkgreen;
 }
 
@@ -48,7 +152,7 @@ body {
 }
 
 .button.warning {
-    border: 2px solid darkgoldenrod;
+    border-color: darkgoldenrod;
     color: darkgoldenrod;
 }
 
@@ -58,7 +162,7 @@ body {
 }
 
 .button.danger {
-    border: 2px solid darkred;
+    border-color: darkred;
     color: darkred;
 }
 
@@ -67,9 +171,22 @@ body {
     color: white;
 }
 
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
 .splitshot {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .splitpole {
@@ -102,14 +219,16 @@ body {
     top: 1rem;
     right: 1rem;
     display: none;
-    z-index: 99;
+    z-index: 90;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
     transition: all .3s;
     border: none;
-    background: black;
+    background: hwb(0 0% 100% / 0.5);
+    backdrop-filter: blur(.25rem);
     color: white;
+    border-radius: 4px;
 }
 
 .container {
@@ -134,8 +253,8 @@ body {
 }
 
 .pagesubtitle {
-    margin: 0;
     margin-top: .5rem;
+    margin-bottom: .75rem;
     color: #666;
     font-family: aileron, Arial;
     font-style: italic;
@@ -148,7 +267,7 @@ body {
 
 .sectiontitle {
     margin: 0;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     font-family: aileron, Arial;
     font-weight: 800;
     font-style: italic;
@@ -159,6 +278,16 @@ body {
     margin: 0;
     margin-bottom: .75rem;
     line-height: 1.5rem;
+}
+
+.sectionsubtitle {
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    color: gray;
+    font-weight: 300;
+    font-size: 1rem;
+    font-family: aileron, Arial;
+    font-style: italic;
 }
 
 .generallist  {
@@ -204,14 +333,19 @@ body {
     .navlist {
         --gap: 2rem;
         position: fixed;
-        inset: 0 0 0 40%;
+        /* inset: 0 0 0 40%; */
         background: steelblue;
         flex-direction: column;
+        align-items: center;
         padding: min(30vh, 8rem) 1rem;
-        background: hsla(0, 0%, 0%, 0.5);
+        background: hsla(0, 0%, 51%, 0.5);
         backdrop-filter: blur(.5rem);
-        transform: translateX(100%);
+        transform: translateX(120%);
         transition: transform 350ms ease-out;
+        top: 1rem;
+        right: 1rem;
+        border-radius: 8px;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     }
 
     .navlist[data-visible="true"] {
