@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import Event, Rsvp
 from .forms import EventForm, RsvpForm
-from .decorator import user_has_role
+from core.decorator import user_has_role
 from core.utils import check_user
 
 
@@ -264,7 +264,7 @@ def rsvp_delete(request, event_slug, rsvp_slug):
     
     if request.method == "POST":
         rsvp.delete()
-        return redirect("rsvp-list", event_slug=event.slug)
+        return redirect("rsvp-list")
     
     context = {
         'event': event,

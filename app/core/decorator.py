@@ -1,6 +1,5 @@
-import uuid
 from functools import wraps
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 
 def user_has_role(role):
     def decorator(view_func):

@@ -22,6 +22,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Cookies and Sessions 30mins
+SESSION_COOKIE_AGE = 1800
+
 # Stripe config
 STRIPE_TEST_PUBLIC = env('STRIPE_TEST_PUBLIC')
 STRIPE_TEST_SECRET = env('STRIPE_TEST_SECRET')

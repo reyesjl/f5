@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/posts/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>F5</title>
@@ -39,15 +40,19 @@
 
             <div class="pagesection">
                 <div class="splitshot">
-                    <h2 class="sectiontitle">Newest Plans</h2>
+                    <h2 class="sectiontitle">Featured Health Posts</h2>
                     <div><a class="link primary" href="/health">View All</a></div>
                 </div>
-                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
-                {% for plan in featured_plans %}
-                    <p>{{plan.title}}</p>
-                {% empty %}
-                <p>No plans found.</p>
-                {% endfor %}
+                <p class="sectionsubtitle">Free posts for speed, power, strength, mobility, and nutrition.</p>
+                <ul class="post-list">
+                    {% for post in posts %}
+                        {% include 'posts/_post_snippet.html' %}
+                    {% empty %}
+                        <li class="no-posts-found">
+                            <p>No posts found.</p>
+                        </li>
+                    {% endfor %}
+                </ul>
                 <hr>
             </div>
 
