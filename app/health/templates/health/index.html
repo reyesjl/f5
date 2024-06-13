@@ -1,80 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'health/posts/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/scroller.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
+    <script src="{% static 'core/js/scroller.js' %}" defer></script>
 
     <title>Health</title>
 </head>
+
 <body>
-    <div class="container">        
-        {% include 'includes/navigation.html' %} 
+    <div class="container">
+        {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Health</h1>
-                <p class="pagesubtitle">Discover free gym & nutrition posts to learn from. Meet with an expert for a free evaluation.</p>
-            </div>     
-
-            <div class="pagesection">
-                <h3 class="sectiontitle">Overview</h3>
-                <p class="sectiontext">
-                    All the information we provide is <strong>free</strong>. Our mission here is to help as many people as possible reach their goals and achieve success and happiness. All our plans are created by certified experts.
+                <p class="pagesubtitle">Discover free plans and blogs to learn from. Meet with an expert for a free
+                    evaluation.</p>
+                <!-- Manager actions -->
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'plan-list' %}" class="button">All Plans</a>
+                    <a href="{% url 'plan-create' %}" class="button go">Create Plan</a>
                 </p>
-                <hr>
+                {% endif %}
             </div>
 
             <div class="pagesection">
                 <div class="splitshot">
-                    <h2 class="sectiontitle">Recent Posts</h2>
-                    <div><a class="link primary" href="/health/posts/">View All</a></div>
-                </div> 
-                <p class="sectionsubtitle">Explore the top plans crafted by experts.</p>
-               
-                <ul class="post-list">
-                    {% for post in posts %}
-                        {% include 'posts/_post_snippet.html' %}
+                    <h2 class="sectiontitle">Featured Plans</h2>
+                    <div class="scrollerbuttons">
+                        <div id="scroll-left" class="button" alt="scroll left">&#171;</div>
+                        <div id="scroll-right" class="button" alt="scroll right">&#187;</div>
+                    </div>
+                </div>
+                <div class="media-scroller snaps-inline">
+                    {% for plan in plans %}
+                    <div class="media-element">
+                        <a class="element-link" href="{% url 'plan-detail' slug=plan.slug %}">
+                            <img class="element-image" src="{{ plan.featured_image.url }}"
+                                alt="plan image placeholder" />
+                            <div class="element-title">{{ plan.title|truncatechars:55 }}</div>
+                        </a>
+                        <div class="featured-text">Featured!</div>
+                    </div>
                     {% empty %}
-                        <li class="no-posts-found">
-                            <p>No posts found.</p>
-                        </li>
+                    <div class="media-element">
+                        <a class="element-link" href="#">
+                            <img class="element-image" src="https://place-hold.it/320x480"
+                                alt="plan image placeholder" />
+                            <div class="element-title">No plans found.</div>
+                        </a>
+                        <div class="featured-text">Coming soon!</div>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
-
             <div class="pagesection">
-                <h3 class="sectiontitle">Training Plans</h3>
+                <h2 class="sectiontitle">Strength & Conditioning</h2>
                 <p class="sectiontext">
-                    Our training plans are unique, tailored for specific positions or groups of players in rugby, as well as various ages and experience levels. With adjustable plans, athletes can tailor their training to meet their individual needs. Whether you're a coach looking to optimize team performance, a player aiming to enhance your skills, or a parent supporting your young athlete, our plans cater to everyone.
+                    Strength training isn't just about building muscle mass; it enhances various aspects of a
+                    player's game, from power and resilience to injury prevention and overall athleticism. Here’s a
+                    closer look at why strength training is indispensable for rugby players.
                 </p>
+                <a class="button" href="strength/">Get Strong</a>
             </div>
-
             <div class="pagesection">
-                <h3 class="sectiontitle">Nutrition Guides</h3>
+                <h2 class="sectiontitle">Nutrition Info</h2>
                 <p class="sectiontext">
-                    Fuel your training properly with our comprehensive nutrition guides. Learn what foods to eat, when to eat them, and how to monitor your body's performance and health. Our diet plans are designed for athletes of all levels, ensuring you get the best out of your training and achieve peak performance.
+                    Nutrition plays a crucial role in an athlete's performance and recovery. A well-balanced diet
+                    provides the necessary fuel for training and competition, aids in muscle repair and growth, and
+                    helps maintain overall health. Learn about the best dietary practices, essential nutrients, and
+                    meal plans tailored for rugby players.
                 </p>
+                <a class="button" href="nutrition/">Get Healthy</a>
             </div>
-
             <div class="pagesection">
-                <h3 class="sectiontitle">Meet With an Expert</h3>
+                <h2 class="sectiontitle">Mental Fitness</h2>
                 <p class="sectiontext">
-                    Schedule a free evaluation with one of our certified experts to get personalized advice and support tailored to your specific goals and needs. Our experts are here to help you succeed.
+                    Mental fitness is as important as physical fitness for athletes. Techniques such as mindfulness,
+                    visualization, and positive self-talk can enhance focus, reduce stress, and improve overall
+                    performance. Explore strategies to strengthen your mental resilience and keep your mind sharp on and
+                    off the field.
                 </p>
-            </div>
-
-            <div class="pagesection">
-                <h3 class="sectiontitle">Are You a Trainer?</h3>
-                <p class="sectiontext">
-                    Partner with First Five Rugby and access our client database. Do you think you can help others reach their goals?
-                </p>
-                <p><a class="button" href="#">Gain Access</a></p>
+                <a class="button" href="mental/">Get Sharp</a>
             </div>
         </div>
     </div>
 </body>
+
 </html>

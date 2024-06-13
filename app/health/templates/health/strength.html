@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/scroller.css' %}">
+    <script src="{% static 'core/js/scroller.js' %}" defer></script>
+
+    <title>Health</title>
+</head>
+<body>
+    <div class="container">        
+        <div class="pagecontent">
+            <div class="breadcrumbs">
+                <div><a href="/health/">health</a></div>
+                <div>/</div>
+                <div>strength & conditioning</div>
+            </div>
+            <div class="pageheader">
+                <h1 class="pagetitle">Strength & Conditioning</h1>
+                <p class="pagesubtitle">Discover free plans and blogs to learn from. Meet with an expert for a free evaluation.</p>
+            </div>     
+
+            <div class="pagesection">
+                <div class="splitshot">
+                    <h2 class="sectiontitle">Plans</h2>
+                    <div class="scrollerbuttons">
+                        <div id="scroll-left" class="button" alt="scroll left">&#171;</div>
+                        <div id="scroll-right" class="button" alt="scroll right">&#187;</div>
+                    </div>
+                </div> 
+
+                <div class="media-scroller snaps-inline">
+                    {% for plan in plans %}
+                    <div class="media-element">
+                        <a class="element-link" href="{% url 'plan-detail' slug=plan.slug %}">
+                            <img class="element-image" src="{{ plan.featured_image.url }}"
+                                alt="plan image placeholder" />
+                            <div class="element-title">{{ plan.title|truncatechars:55 }}</div>
+                        </a>
+                        {% if plan.featured %}
+                        <div class="featured-text">Featured!</div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <div class="media-element">
+                        <a class="element-link" href="#">
+                            <img class="element-image" src="https://place-hold.it/320x480"
+                                alt="plan image placeholder" />
+                            <div class="element-title">No plans found.</div>
+                        </a>
+                        <div class="featured-text">Coming soon!</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="pagesection">
+                <h2 class="sectiontitle">Blogs</h2>
+                <p class="sectiontext">
+                   No blogs here yet.
+                </p>
+            </div>
+
+            <div class="pagesection">
+                <h2 class="sectiontitle">Book 1on1</h2>
+                <p class="sectiontext">
+                    <ul>
+                        <li>Asau</li>
+                        <li>Ashley</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

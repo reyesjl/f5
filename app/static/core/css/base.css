@@ -11,6 +11,22 @@ body {
     overflow-x: hidden;
 }
 
+.breadcrumbs {
+    display: flex;
+    color: gray;
+    padding: .5rem 1rem;
+    background: rgb(231, 231, 231);
+    border-radius: 12px;
+    font-size: .8rem;
+    gap: .5rem;
+    width: fit-content;
+    text-transform: capitalize;
+}
+
+.breadcrumbs a {
+    color: darkred;
+}
+
 .notifications {
     display: flex;
     flex-direction: column;
@@ -197,6 +213,7 @@ body {
 .navlist {
     display: flex;
     list-style-type: none;
+    width: 90%;
     margin: 0;
     padding: 1rem;
     gap: var(--gap, 1rem);
@@ -204,12 +221,30 @@ body {
     backdrop-filter: blur(.5rem);
 }
 
+.account-image {
+    width: 100px;
+    aspect-ratio: 1 / 1;
+}
+
+.account-image img {
+    width: 100%;
+    border-radius: 50%;
+    border: 4px solid white;
+}
+
 .navlink {
-    color: black;
-    font-size: 1rem;
+    color: #333;
+    font-size: .9rem;
     font-weight: bold;
+    letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
+    transition: all .3s;
+}
+
+.navlink:hover {
+    color: darkred;
+    transition: all .3s;
 }
 
 .mobile-nav-toggle {
@@ -321,6 +356,22 @@ body {
     font-style: italic;
     font-weight: bold;
     text-transform: uppercase; 
+}
+
+.featured-text {
+    font-family: aileron, Arial;
+    font-size: .8rem;
+    font-weight: 800;
+    color: darkblue;
+    font-style: italic;
+    animation: blink 1s infinite alternate;
+    padding-bottom: .5rem;
+}
+
+@keyframes blink {
+    0% { color: darkblue; } /* Start with darkred */
+    50% { color: darkgoldenrod; } /* Blink to yellow at 50% */
+    100% { color: darkblue; } /* Back to darkred at 100% */
 }
 
 .hiddentext {

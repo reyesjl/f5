@@ -1,0 +1,17 @@
+<div class="media-element">
+    <a class="element-link" href="{% url 'plan-detail' slug=plan.slug %}">
+        <img class="element-image" src="{{ plan.featured_image.url }}"
+            alt="plan image placeholder" />
+        <div class="element-title">{{ plan.title|truncatechars:55 }}</div>
+    </a>
+    <div class="featured-text">Featured!</div>
+</div>
+{% empty %}
+<div class="media-element">
+    <a class="element-link" href="#">
+        <img class="element-image" src="https://place-hold.it/320x480"
+            alt="plan image placeholder" />
+        <div class="element-title">No plans found.</div>
+    </a>
+    <div class="featured-text">Coming soon!</div>
+</div>

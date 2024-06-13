@@ -1,0 +1,76 @@
+<p class="filterstitle"><strong>Filters</strong></p>
+<div class="filters">
+    <form method="GET" class="filterform">
+        <div class="filtercategories">
+            {% if can_manage %}
+            <div class="filtersection">
+                <p class="categorylabel">Visibility</p>
+                <ul class="filterlist">
+                    <li class="filteritem">
+                        <input type="radio" name="visibility" value="draft" id="visibility-draft"
+                        {% if request.GET.visibility == 'draft' %} checked{% endif %}>
+                        <label for="visibility-draft">Draft</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="visibility" value="published" id="visibility-published"
+                        {% if request.GET.visibility == 'published' %} checked{% endif %}>
+                        <label for="visibility-published">Published</label>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+            <!-- Status Filter -->
+            <div class="filtersection">
+                <p class="categorylabel">Plan Status</p>
+                <ul class="filterlist">
+                    <li class="filteritem">
+                        <input type="radio" name="plan_status" value="all" id="plan-status-all"
+                        {% if request.GET.plan_status == 'all' %} checked{% endif %}>
+                        <label for="plan-status-all">All</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="plan_status" value="featured" id="plan-status-featured"
+                        {% if request.GET.plan_status == 'featured' %} checked{% endif %}>
+                        <label for="plan-status-featured">Featured</label>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Type Filter -->
+            <div class="filtersection">
+                <p class="categorylabel">Plan Type</p>
+                <ul class="filterlist">
+                    <li class="filteritem">
+                        <input type="radio" name="plan_type" value="all" id="plan-type-all"
+                        {% if request.GET.plan_type == 'all' %} checked{% endif %}>
+                        <label for="plan-type-all">All</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="plan_type" value="strength_and_conditioning" id="plan-type-sc"
+                        {% if request.GET.plan_type == 'strength_and_conditioning' %} checked{% endif %}>
+                        <label for="plan-type-sc">Strength & Conditioning</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="plan_type" value="nutrition" id="plan-type-nutrition"
+                        {% if request.GET.plan_type == 'nutrition' %} checked{% endif %}>
+                        <label for="plan-type-nutrition">Nutrition</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="plan_type" value="mental" id="plan-type-mental"
+                        {% if request.GET.plan_type == 'mental' %} checked{% endif %}>
+                        <label for="plan-type-mental">Mental</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="plan_type" value="other" id="plan-type-other"
+                        {% if request.GET.plan_type == 'other' %} checked{% endif %}>
+                        <label for="plan-type-other">Other</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="filtersection">
+                <button type="submit" class="button primary">Apply</button>
+                <a class="button danger" href=".">Clear</a>
+            </div>
+        </div>
+    </form>
+</div>

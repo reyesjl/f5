@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import Event, Rsvp
-from .forms import EventForm, RsvpForm
+from .forms import EventForm, RsvpForm, UpdateRsvpForm
 from core.decorator import user_has_role
 from core.utils import check_user
 
@@ -10,15 +10,6 @@ from core.utils import check_user
 # =============================================================================
 
 def event_list(request):
-    """
-    Renders a list of events, including featured and upcoming events.
-
-    Parameters:
-    - request: HTTP request object
-
-    Returns:
-    - Rendered HTML template with event list
-    """
     # get all events
     events = Event.objects.all()
 
@@ -43,21 +34,11 @@ def event_list(request):
     return render(request, "events/event_list.html", context)
 
 def event_detail(request, slug):
-    """
-    Renders the detail page for a specific event.
-
-    Parameters:
-    - request: HTTP request object
-    - slug: Slug of the event to display details for
-
-    Returns:
-    - Rendered HTML template with event details
-    """
     try:
         event = Event.objects.by_slug(slug)
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
     
     can_manage = check_user(request.user, "event_manager")
         
@@ -69,16 +50,6 @@ def event_detail(request, slug):
 
 @user_has_role("event_manager")
 def event_create(request):
-    """
-    Handles the creation of a new event.
-
-    Parameters:
-    - request: HTTP request object
-
-    Returns:
-    - Rendered HTML template for event creation form
-    - Redirects to event list on successful form submission
-    """
     if request.method == "POST":
         form = EventForm(request.POST)
         if form.is_valid():
@@ -91,22 +62,11 @@ def event_create(request):
 
 @user_has_role("event_manager")
 def event_update(request, slug):
-    """
-    Handles the update of an existing event.
-
-    Parameters:
-    - request: HTTP request object
-    - slug: Slug of the event to update
-
-    Returns:
-    - Rendered HTML template for event update form
-    - Redirects to event detail page on successful form submission
-    """
     try:
         event = Event.objects.by_slug(slug)
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
 
     if request.method == "POST":
         form = EventForm(request.POST, instance=event)
@@ -120,22 +80,11 @@ def event_update(request, slug):
 
 @user_has_role("event_manager")
 def event_delete(request, slug):
-    """
-    Handles the deletion of an existing event.
-
-    Parameters:
-    - request: HTTP request object
-    - slug: Slug of the event to delete
-
-    Returns:
-    - Rendered HTML template for event deletion confirmation
-    - Redirects to event list on successful deletion
-    """
     try:
         event = Event.objects.by_slug(slug)
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
     
     if request.method == "POST":
         event.delete()
@@ -152,7 +101,7 @@ def rsvp_list(request, event_slug):
         event = Event.objects.by_slug(event_slug)
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
     
     paid_filter = request.GET.get('paid')
     if paid_filter is not None:
@@ -176,7 +125,7 @@ def rsvp_create(request, event_slug):
         event = Event.objects.by_slug(event_slug)
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
     
     if request.method == "POST":
         form = RsvpForm(request.POST, event=event)
@@ -205,12 +154,12 @@ def rsvp_detail(request, event_slug, rsvp_slug):
         event = Event.objects.by_slug(event_slug)
         rsvp = Rsvp.objects.by_event_and_slug(event, rsvp_slug)
     except Event.DoesNotExist:
-        return render(request, "events/event_error.html", {"message": "Event not found"})
+        return render(request, "core/error.html", {"message": "Event not found"})
     except Rsvp.DoesNotExist:
-        return render(request, "events/event_error.html", {"message": "RSVP not found"})
+        return render(request, "core/error.html", {"message": "RSVP not found"})
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
     
     can_manage = check_user(request.user, "event_manager")
     
@@ -228,19 +177,19 @@ def rsvp_update(request, event_slug, rsvp_slug):
         event = Event.objects.by_slug(event_slug)
         rsvp = Rsvp.objects.by_event_and_slug(event, rsvp_slug)
     except Event.DoesNotExist:
-        return render(request, "events/event_error.html", {"message": "Event not found"})
+        return render(request, "core/error.html", {"message": "Event not found"})
     except Rsvp.DoesNotExist:
-        return render(request, "events/event_error.html", {"message": "RSVP not found"})
+        return render(request, "core/error.html", {"message": "RSVP not found"})
     except Exception as e:
-        return render(request, "events/event_error.html", {"message": str(e)})
+        return render(request, "core/error.html", {"message": str(e)})
 
     if request.method == "POST":
-        form = RsvpForm(request.POST, instance=rsvp, event=event)
+        form = UpdateRsvpForm(request.POST, instance=rsvp, event=event)
         if form.is_valid():
             form.save()
-            return redirect('rsvp-detail', event_slug=event_slug, rsvp_slug=rsvp_slug)
+            return redirect('rsvp-list', event_slug=event.slug)
     else:
-        form = RsvpForm(instance=rsvp, event=event)
+        form = UpdateRsvpForm(instance=rsvp, event=event)
 
     context = {
         "form": form,
@@ -255,12 +204,12 @@ def rsvp_delete(request, event_slug, rsvp_slug):
         event = Event.objects.by_slug(event_slug)
         rsvp = Rsvp.objects.by_event_and_slug(event, rsvp_slug)
     except Event.DoesNotExist:
-        return render(request, "events/event_error.html", {"message": "Event not found"})
+        return render(request, "core/error.html", {"message": "Event not found"})
     except Rsvp.DoesNotExist:
-        return render(request, "events/event_error.html", {"message": "RSVP not found"})
+        return render(request, "core/error.html", {"message": "RSVP not found"})
     except Exception as e:
         message = e
-        return render(request, "events/event_error.html", {"message": message})
+        return render(request, "core/error.html", {"message": message})
     
     if request.method == "POST":
         rsvp.delete()
