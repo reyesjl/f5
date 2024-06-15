@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +11,21 @@
 
     <title>Delete RSVP</title>
 </head>
+
 <body>
     <div class="container">
-        {% include 'includes/navigation.html' %} 
+        {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Delete RSVP</h1>
-                <p class="pagesubtitle">Are you sure you want to delete this RSVP forever! This action cannot be undone.</p>
+                <p class="pagesubtitle">Are you sure you want to delete this RSVP forever! This action cannot be undone.
+                </p>
                 <form action="{% url 'rsvp-delete' event_slug=event.slug rsvp_slug=rsvp.slug %}" method="post">
                     {% csrf_token %}
-                    
+
                     <div class="buttongroup">
-                        <a class="button" href="{% url 'rsvp-detail' event_slug=event.slug rsvp_slug=rsvp.slug %}">Nooooo!</a>
+                        <a class="button"
+                            href="{% url 'rsvp-detail' event_slug=event.slug rsvp_slug=rsvp.slug %}">Nooooo!</a>
                         <button class="button danger" type="submit">Yes</button>
                     </div>
                 </form>
@@ -29,4 +33,5 @@
         </div>
     </div>
 </body>
+
 </html>

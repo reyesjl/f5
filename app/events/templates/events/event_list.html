@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,32 +13,35 @@
 
     <title>Events</title>
 </head>
+
 <body>
     <div class="container">
-        {% include 'includes/navigation.html' %} 
+        {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
+                <h1 class="pagetitle">Events</h1>
+                <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and find local rugby.</p>
+                <!-- Manager actions -->
                 {% if can_manage %}
                 <p>
                     <a href="{% url 'event-create' %}" class="button go">Create New</a>
                 </p>
                 {% endif %}
-                <h1 class="pagetitle">Events</h1>
-                <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and find local rugby.</p>
-            </div> 
+            </div>
 
             {% include 'events/_filters_snippet.html' %}
 
             <div class="pagesection">
                 <h2 class="sectiontitle">Upcoming Events</h2>
                 {% for event in events %}
-                    {% include 'events/_event_snippet.html' %}
+                {% include 'events/_event_snippet.html' %}
                 {% empty %}
-                    <p>No upcoming events.</p>
+                <p>No upcoming events.</p>
                 {% endfor %}
             </div>
 
         </div>
     </div>
 </body>
+
 </html>

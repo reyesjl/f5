@@ -51,3 +51,24 @@ class RsvpForm(forms.ModelForm):
         if self.event and self.event.event_type == 'game' and role in ['player', 'coach']:
             self.add_error('role', "Players and coaches cannot register for game events.")
         return role
+    
+class UpdateRsvpForm(forms.ModelForm):
+    class Meta:
+        model = Rsvp
+        fields = [
+            'name',
+            'email',
+            'phone_number',
+            'role',
+            'has_paid'
+        ]
+
+    def __init__(self, *args, **kwargs):
+        self.event = kwargs.pop('event', None)
+        super().__init__(*args, **kwargs)
+    
+    def clean_role(self):
+        role = self.cleaned_data.get('role')
+        if self.event and self.event.event_type == 'game' and role in ['player', 'coach']:
+            self.add_error('role', "Players and coaches cannot register for game events.")
+        return role

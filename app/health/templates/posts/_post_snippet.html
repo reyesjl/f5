@@ -1,9 +1,0 @@
-<li class="post-item">
-    <a class="post-link" href="{% url 'post-detail' post_slug=post.slug %}">
-        <img class="post-image" src="{{ post.featured_image.url }}" alt="{{ post.title }}"/>
-        <div class="post-title">{{ post.title }}</div>
-    </a>
-    {% if post.featured %}
-        <div class="postfeatured">Featured!</div>
-    {% endif %}
-</li>

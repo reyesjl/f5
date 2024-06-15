@@ -7,7 +7,6 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'health/posts/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>F5</title>
@@ -23,37 +22,6 @@
                     <!-- <h1 class="pagetitle">First Five Rugby</h1> -->
                     <p class="pagesubtitle align-center">The premier destination to grow the game.</p>
                 </div>
-            </div>
-
-            <div class="pagesection">
-                <div class="splitshot">
-                    <h2 class="sectiontitle">Featured Events</h2>
-                    <div><a class="link primary" href="/events">View All</a></div>
-                </div>
-                <p class="sectionsubtitle">Explore community rugby events like camps, tournaments, and games!</p>
-                {% for event in events %}
-                    {% include 'events/_event_preview_snippet.html' %}
-                {% empty %}
-                    <p>No featured events.</p>
-                {% endfor %}
-            </div>
-
-            <div class="pagesection">
-                <div class="splitshot">
-                    <h2 class="sectiontitle">Featured Health Posts</h2>
-                    <div><a class="link primary" href="/health">View All</a></div>
-                </div>
-                <p class="sectionsubtitle">Free posts for speed, power, strength, mobility, and nutrition.</p>
-                <ul class="post-list">
-                    {% for post in posts %}
-                        {% include 'posts/_post_snippet.html' %}
-                    {% empty %}
-                        <li class="no-posts-found">
-                            <p>No posts found.</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-                <hr>
             </div>
 
             <div class="pagesection">

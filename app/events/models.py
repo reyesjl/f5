@@ -29,7 +29,7 @@ class EventQuerySet(models.QuerySet):
         return self.filter(start_date__gte=now)
     
     def featured(self):
-        return self.filter(featured=True)
+        return self.filter(featured=True).order_by('start_date')
 
 class EventManager(models.Manager):
     def get_queryset(self):
@@ -78,17 +78,14 @@ class Event(models.Model):
     payment_required = models.BooleanField(default=False)
     cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     cost_secondary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     slug = models.SlugField(max_length=255, unique=True, null=False, blank=True)
 
-    objects = EventManager()
+    objects = EventQuerySet.as_manager()
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            if not self.token:
-                self.token = uuid.uuid4()
-            shorttoken = str(self.token)[:6]
-            self.slug = slugify(f"{shorttoken}-{self.name}")
+            date_str = self.start_date.strftime("%Y-%m-%d")
+            self.slug = slugify(f"{self.name}-{date_str}")
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -160,13 +157,13 @@ class Rsvp(models.Model):
     token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     slug = models.SlugField(max_length=255, unique=True, null=False, blank=True)
 
-    objects = RsvpManager()
+    objects = RsvpQuerySet.as_manager()
 
     def save(self, *args, **kwargs):
         if not self.slug:
             if not self.token:
                 self.token = uuid.uuid4()
-            self.slug = slugify(f"{self.token}-{self.email}")
+            self.slug = slugify(f"{self.token}")
         super().save(*args, **kwargs)
     
     def __str__(self):

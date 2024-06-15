@@ -84,3 +84,9 @@
     color: darkred;
     font-style: italic;
 }
+
+.helptext {
+    font-size: .9rem;
+    color: gray;
+    margin-bottom: .5rem;
+}
