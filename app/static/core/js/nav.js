@@ -1,17 +1,16 @@
-const nav = document.querySelector(".navlist");
-const navToggle = document.querySelector(".mobile-nav-toggle");
-navToggle.addEventListener('click', () => {
-    const visibility = nav.getAttribute("data-visible");
-    
-    if (visibility === "false") {
-        nav.setAttribute("data-visible", true);
-        navToggle.setAttribute("aria-expanded", true);
-    } else {
-        nav.setAttribute("data-visible", false);
-        navToggle.setAttribute("aria-expanded", false);
-    }
-});
+// Get references to the elements
+const toggleMenu = document.getElementById('togglemenu');
+const sideMenu = document.querySelector('.sidemenu');
+const closeBtn = document.querySelector('.closebutton');
 
+function toggleSideMenu() {
+    sideMenu.classList.toggle('open');
+}
+
+toggleMenu.addEventListener('click', toggleSideMenu);
+closeBtn.addEventListener('click', toggleSideMenu);
+
+/** Notification component */
 const alerts = document.querySelectorAll('.alert');
 const dismissButtons = document.querySelectorAll('.alertdismiss');
 dismissButtons.forEach(button => {

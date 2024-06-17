@@ -6,15 +6,14 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>F5</title>
 </head>
 <body>
     <div class="container">
-        {% include 'includes/notifications.html' %} 
         {% include 'includes/navigation.html' %} 
+        {% include 'includes/notifications.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
                 <div class="brandwrapper">

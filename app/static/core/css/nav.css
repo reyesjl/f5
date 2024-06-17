@@ -1,0 +1,112 @@
+.nav { 
+    width: 100%;
+    max-width: 900px;
+}
+
+.nav .controls {
+    padding: .5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.menubutton {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.menustripe {
+    height: 3.7px;
+    border-radius: 8px;
+    width: 28px;
+    background-color: black;
+}
+
+.accountimage {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+    border: 1px solid black;
+}
+
+.accountmenu {
+    list-style-type: none;
+    display: flex;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.menulink {
+    font-family: aileron, Arial;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.pagesmenu {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidemenu {
+    z-index: 111;
+    top: 0;
+    left: 0;
+    transform: translateY(-110%);
+    position: fixed;
+    background: hwb(0 0% 100% / 0.5);
+    backdrop-filter: blur(.25rem);
+    width: 100%;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: transform 0.3s ease;
+}
+
+.sidemenu.open {
+    transform: translateY(0);
+}
+
+.sidemenu .closewrapper {
+    text-align: right;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.closebutton {
+    border: none;
+    background: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.sidemenu > .menulist {
+    list-style-type: none;
+    margin: 10vh 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidemenu .menuitem {
+    text-align: center;
+}
+
+.sidemenu .menulink {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 900px) {
+    .nav .controls {
+        padding: 1rem;
+    }
+}
