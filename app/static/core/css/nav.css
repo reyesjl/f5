@@ -7,7 +7,7 @@
     padding: .5rem 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     height: 100%;
 }
 
@@ -27,8 +27,13 @@
 .accountimage {
     aspect-ratio: 1 / 1;
     border-radius: 50%;
+<<<<<<< HEAD
     height: 48px;
     width: 48px;
+=======
+    height: 40px;
+    width: 40px;
+>>>>>>> 4039fe6 (Story 36 - modify navigation bar)
     border: 1px solid black;
 }
 
