@@ -17,6 +17,7 @@
 <body>
     <div class="container">
         {% include 'includes/navigation.html' %}
+        {% include 'includes/notifications.html' %}
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Health</h1>
@@ -27,6 +28,7 @@
                 <p>
                     <a href="{% url 'plan-list' %}" class="button">All Plans</a>
                     <a href="{% url 'plan-create' %}" class="button go">Create Plan</a>
+                    <a href="{% url 'article-create' %}" class="button go">Create Article</a>
                 </p>
                 {% endif %}
             </div>

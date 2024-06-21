@@ -3,6 +3,7 @@ from django.contrib import messages
 
 from core.decorator import user_has_role
 from .models import Plan
+from blog.models import Article
 from .forms import PlanForm
 from core.utils import check_user
 
@@ -19,25 +20,37 @@ def index(request):
 
 def strength_index(request):
     plans = Plan.objects.published().by_type("strength_and_conditioning")
+    articles = Article.objects.published().by_type("strength_and_conditioning")
+    can_manage = check_user(request.user, "health_manager")
 
     context = {
         "plans": plans,
+        "articles": articles,
+        "can_manage": can_manage,
     }
     return render(request, "health/strength.html", context)
 
 def nutrition_index(request):
     plans = Plan.objects.published().by_type("nutrition")
+    articles = Article.objects.published().by_type("nutrition")
+    can_manage = check_user(request.user, "health_manager")
 
     context = {
         "plans": plans,
+        "articles": articles,
+        "can_manage": can_manage,
     }
     return render(request, "health/nutrition.html", context)
 
 def mental_index(request):
     plans = Plan.objects.published().by_type("mental")
+    articles = Article.objects.published().by_type("mental")
+    can_manage = check_user(request.user, "health_manager")
 
     context = {
         "plans": plans,
+        "articles": articles,
+        "can_manage": can_manage,
     }
     return render(request, "health/mental.html", context)
 
@@ -70,6 +83,7 @@ def plan_list(request):
     }
     return render(request, "plans/plan_list.html", context)
 
+@user_has_role("health_manager")
 def plan_create(request):
     if request.method == "POST":
         form = PlanForm(request.POST, request.FILES)

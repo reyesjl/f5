@@ -6,6 +6,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/articles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/scroller.css' %}">
     <script src="{% static 'core/js/scroller.js' %}" defer></script>
 
@@ -60,9 +61,21 @@
 
             <div class="pagesection">
                 <h2 class="sectiontitle">Blogs</h2>
-                <p class="sectiontext">
-                   No blogs here yet.
+                <!-- Manager actions -->
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'article-create' %}" class="button go">Create Article</a>
                 </p>
+                {% endif %}
+                <ul class="article-list">
+                    {% for article in articles %}
+                        {% include "articles/_article_item_snippet.html" %}
+                    {% empty %}
+                    <li class="article-item">
+                    No blogs here yet.
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
 
             <div class="pagesection">

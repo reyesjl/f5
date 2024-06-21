@@ -4,7 +4,7 @@
 }
 
 .nav .controls {
-    padding: .5rem 0;
+    padding: 1rem 0;
     display: flex;
     justify-content: space-between;
     align-items: start;
@@ -20,7 +20,7 @@
 .menustripe {
     height: 3.7px;
     border-radius: 8px;
-    width: 28px;
+    width: 25px;
     background-color: black;
 }
 
