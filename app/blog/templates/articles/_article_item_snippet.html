@@ -1,0 +1,10 @@
+<li class="article-item">
+    <div class="article-date-title">
+        <div class="article-date">
+            {{ article.created_at|date:"m" }} &#8226; {{ article.created_at|date:"Y" }}
+        </div>
+        <div class="article-title">
+            <a href="#">{{ article.title }}</a>
+        </div>
+    </div>
+</li>

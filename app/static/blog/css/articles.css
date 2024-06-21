@@ -1,0 +1,30 @@
+/* Articles on subpages */
+.article-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-item {
+}
+
+.article-date-title {
+    display: flex;
+}
+
+.article-date-title > .article-date {
+    color: gray;
+    margin-right: 1rem;
+}
+
+.article-date-title > .article-title a {
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    .article-date-title {
+        flex-direction: column;
+    }
+}

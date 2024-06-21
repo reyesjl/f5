@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'events',
     'clubs',
     'health',
+    'blog',
 ]
 
 MIDDLEWARE = [
