@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Delete Article</title>
+</head>
+
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %}
+        <div class="pagecontent">
+            <div class="pageheader">
+                <h1 class="pagetitle">Delete Article</h1>
+                <p class="pagesubtitle">Are you sure you want to delete this article forever! This action cannot be
+                    undone.</p>
+                <form action="{% url 'article-delete' article.slug %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="buttongroup">
+                        <a class="button" href="{% url 'article-detail' article.slug %}">Nooooo!</a>
+                        <button class="button danger" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

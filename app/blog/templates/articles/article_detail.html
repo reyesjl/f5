@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/rich.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+    <script src="{% static 'core/js/rich.js' %}" defer></script>
+
+    <title>Article</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                {% if can_manage %}
+                <p>
+                    <a href="{% url 'article-update' slug=article.slug %}" class="button warning">Edit</a>
+                    <a href="{% url 'article-delete' slug=article.slug %}" class="button danger">Delete</a>
+                </p>
+                {% endif %}
+                <h1 class="pagetitle">{{ article.title }}</h1>
+                <p class="pagesubtitle">{{ article.created_at }}</p>
+                <p class="pagesubtitle">{{ article.views }} views</p>
+            </div>
+
+            <div class="pagesection richbody">
+                {{ article.content | safe }}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
