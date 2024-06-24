@@ -1,5 +1,5 @@
 from django import forms
-from .models import Event, Rsvp
+from .models import Event, EventRole, Rsvp
 from django.utils import timezone
 
 
@@ -9,8 +9,7 @@ class EventForm(forms.ModelForm):
         fields = [
             'name', 'description', 'detailed_description', 'event_type',
             'featured', 'start_date', 'end_date', 'location',
-            'registration_required', 'payment_required', 'cost',
-            'cost_secondary'
+            'registration_required', 'payment_required'
         ]
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
@@ -32,25 +31,21 @@ class EventForm(forms.ModelForm):
             if start_date < timezone.now():
                 self.add_error('start_date', 'Start date cannot be in the past.')
 
+class EventRoleForm(forms.ModelForm):
+    class Meta:
+        model = EventRole
+        fields = [
+            'name', 'cost'
+        ]
+
 class RsvpForm(forms.ModelForm):
     class Meta:
         model = Rsvp
         fields = [
             'name',
             'email',
-            'phone_number',
-            'role'
+            'phone_number'
         ]
-
-    def __init__(self, *args, **kwargs):
-        self.event = kwargs.pop('event', None)
-        super().__init__(*args, **kwargs)
-    
-    def clean_role(self):
-        role = self.cleaned_data.get('role')
-        if self.event and self.event.event_type == 'game' and role in ['player', 'coach']:
-            self.add_error('role', "Players and coaches cannot register for game events.")
-        return role
     
 class UpdateRsvpForm(forms.ModelForm):
     class Meta:
@@ -59,16 +54,5 @@ class UpdateRsvpForm(forms.ModelForm):
             'name',
             'email',
             'phone_number',
-            'role',
             'has_paid'
         ]
-
-    def __init__(self, *args, **kwargs):
-        self.event = kwargs.pop('event', None)
-        super().__init__(*args, **kwargs)
-    
-    def clean_role(self):
-        role = self.cleaned_data.get('role')
-        if self.event and self.event.event_type == 'game' and role in ['player', 'coach']:
-            self.add_error('role', "Players and coaches cannot register for game events.")
-        return role

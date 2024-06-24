@@ -17,7 +17,7 @@
             <div class="pageheader">
                 {% if can_manage %}
                 <p>
-                    <a href="{% url 'rsvp-update' event_slug=event.slug rsvp_slug=rsvp.slug %}" class="button warning">Edit</a>
+                    <a href="{% url 'rsvp-update' event_slug=event.slug rsvp_slug=rsvp.slug %}" class="button disabled">Edit</a>
                     <a href="{% url 'rsvp-delete' event_slug=event.slug rsvp_slug=rsvp.slug %}" class="button danger">Delete</a>
                 </p>
                 {% endif %}
@@ -31,7 +31,7 @@
                     <li>Name: {{ rsvp.name }}</li>
                     <li>Email: {{ rsvp.email }}</li>
                     <li>Phone: {{ rsvp.phone_number }}</li>
-                    <li>Role: {{ rsvp.get_role_display }}</li>
+                    <li>Role: {{ rsvp.role.name }}</li>
                 </ul>
             </div>
 
@@ -39,13 +39,9 @@
                 <h3 class="sectiontitle">Payment Status</h3>
                 <p>Sometimes the payment takes a few days to go through.</p>
                 <ul>
-                    {% if rsvp.payment_status_and_cost.status == 'Not Paid' %}
-                        <li>Status: pending...</li>
-                    {% else %}
-                
-                    <li>Status: {{ rsvp.payment_status_and_cost.status }}</li>
+                    {% if rsvp.has_paid and event.payment_required %}
+                    <li>Status: PAID</li>
                     {% endif %}
-                    <li>Cost: {{ rsvp.payment_status_and_cost.cost }}</li>
                 </ul>
             </div>
         </div>

@@ -1,7 +1,8 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from .models import Event, Rsvp
-from .forms import EventForm, RsvpForm, UpdateRsvpForm
+from django.contrib import messages
+from .models import Event, EventRole, Rsvp
+from .forms import EventForm, EventRoleForm, RsvpForm, UpdateRsvpForm
 from core.decorator import user_has_role
 from core.utils import check_user
 
@@ -41,9 +42,11 @@ def event_detail(request, slug):
         return render(request, "core/error.html", {"message": message})
     
     can_manage = check_user(request.user, "event_manager")
-        
+    roles = event.roles.all()
+
     context = {
         "event": event, 
+        "roles": roles,
         "can_manage": can_manage
     }
     return render(request, "events/event_detail.html", context)
@@ -92,6 +95,68 @@ def event_delete(request, slug):
     
     return render(request, "events/event_delete_confirm.html", {"event": event})
 
+@user_has_role("event_manager")
+def role_create(request, event_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+    except Exception as e:
+        message = e
+        messages.errors(request, e, extra_tags="error")
+        return render(request, "core/error.html", {"message": message})
+    
+    if request.method == "POST":
+        form = EventRoleForm(request.POST)
+        if form.is_valid():
+            event_role = form.save(commit=False)
+            event_role.event = event
+            event_role.save()
+            messages.success(request, "Role has been added.", extra_tags="success")
+            return redirect('role-list', event_slug=event.slug)
+    else:
+        form = EventRoleForm()
+
+    context = {
+        "form": form,
+        "event": event,
+    }
+
+    return render(request, "roles/role_create.html", context)
+
+
+@user_has_role("event_manager")
+def role_list(request, event_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {"message": message})
+    
+    roles = event.roles.all()
+
+    context = {
+        "event": event, 
+        "roles": roles,
+    }
+
+    return render(request, "roles/role_list.html", context)
+
+@user_has_role("event_manager")
+def role_delete(request, event_slug, role_id):
+    try:
+        event = Event.objects.by_slug(event_slug)
+        role = EventRole.objects.get(id=role_id, event=event)
+    except Event.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Event not found"})
+    except EventRole.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Role not found"})
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {"message": message})
+    
+    role.delete()
+    messages.success(request, "Role has been deleted.", extra_tags="success")
+    return redirect('role-list', event_slug=event_slug)
+
 # RSVP Views
 # =============================================================================
 
@@ -99,6 +164,8 @@ def event_delete(request, slug):
 def rsvp_list(request, event_slug):
     try:
         event = Event.objects.by_slug(event_slug)
+    except Event.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Event not found"})
     except Exception as e:
         message = e
         return render(request, "core/error.html", {"message": message})
@@ -120,31 +187,42 @@ def rsvp_list(request, event_slug):
     }
     return render(request, "rsvps/rsvp_list.html", context)
 
-def rsvp_create(request, event_slug):
+def rsvp_create(request, event_slug, role_id=None):
     try:
         event = Event.objects.by_slug(event_slug)
+        if role_id:
+            role = EventRole.objects.get(id=role_id, event=event)
+        else:
+            role = None
+    except Event.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Event not found"})
+    except EventRole.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Role not found"})
     except Exception as e:
         message = e
         return render(request, "core/error.html", {"message": message})
     
     if request.method == "POST":
-        form = RsvpForm(request.POST, event=event)
+        form = RsvpForm(request.POST)
         if form.is_valid():
             rsvp = form.save(commit=False)
             rsvp.event = event
+            rsvp.role = role
             rsvp.save()
 
             # Handle payment if needed
             if event.payment_required:
                 pass
-        
-            return redirect('event-detail', slug=event_slug)
+            
+            messages.success(request, "Registration was successful.", extra_tags="success")
+            return redirect('rsvp-success', event_slug=event_slug, rsvp_slug=rsvp.slug)
     else:
-        form = RsvpForm(event=event)
+        form = RsvpForm()
 
     context = {
         "form": form,
-        "event": event
+        "event": event,
+        "role": role
     }
     return render(request, "rsvps/rsvp_form.html", context)
 
@@ -184,12 +262,12 @@ def rsvp_update(request, event_slug, rsvp_slug):
         return render(request, "core/error.html", {"message": str(e)})
 
     if request.method == "POST":
-        form = UpdateRsvpForm(request.POST, instance=rsvp, event=event)
+        form = UpdateRsvpForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('rsvp-list', event_slug=event.slug)
     else:
-        form = UpdateRsvpForm(instance=rsvp, event=event)
+        form = UpdateRsvpForm(instance=rsvp)
 
     context = {
         "form": form,
@@ -221,4 +299,19 @@ def rsvp_delete(request, event_slug, rsvp_slug):
     }
     return render(request, "rsvps/rsvp_delete_confirm.html", context)
 
-    
+def rsvp_success(request, event_slug, rsvp_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+        rsvp = Rsvp.objects.by_event_and_slug(event, rsvp_slug)
+    except Event.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Event not found"})
+    except Rsvp.DoesNotExist:
+        return render(request, "core/error.html", {"message": "RSVP not found"})
+    except Exception as e:
+        return render(request, "core/error.html", {"message": str(e)})
+
+    context = {
+        "event": event,
+        "rsvp": rsvp
+    } 
+    return render(request, "rsvps/rsvp_success.html", context)

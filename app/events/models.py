@@ -31,31 +31,6 @@ class EventQuerySet(models.QuerySet):
     def featured(self):
         return self.filter(featured=True).order_by('start_date')
 
-class EventManager(models.Manager):
-    def get_queryset(self):
-        return EventQuerySet(self.model, using=self._db)
-    
-    def by_slug(self, slug):
-        return self.get_queryset().by_slug(slug)
-    
-    def by_id(self, event_id):
-        return self.get_queryset().by_id(event_id)
-
-    def by_type(self, event_type):
-        return self.get_queryset().by_type(event_type)
-    
-    def filter_by_event_type(self, event_type):
-        return self.get_queryset().filter_by_event_type(event_type)
-    
-    def past(self):
-        return self.get_queryset().past()
-    
-    def upcoming(self):
-        return self.get_queryset().upcoming().order_by('start_date')
-    
-    def featured(self):
-        return self.get_queryset().featured().order_by('start_date')
-
 class Event(models.Model):
     EVENT_TYPES = (
         ('camp', 'Camp'),
@@ -76,8 +51,6 @@ class Event(models.Model):
     location = models.CharField(max_length=255)
     registration_required = models.BooleanField(default=False)
     payment_required = models.BooleanField(default=False)
-    cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    cost_secondary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True, null=False, blank=True)
 
     objects = EventQuerySet.as_manager()
@@ -90,6 +63,14 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+    
+class EventRole(models.Model):
+    name = models.CharField(max_length=50)
+    event = models.ForeignKey(Event, related_name='roles', on_delete=models.CASCADE)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.name} for {self.event.name}'
 
 class RsvpQuerySet(models.QuerySet):
     def by_slug(self, slug):
@@ -115,43 +96,12 @@ class RsvpQuerySet(models.QuerySet):
             return self.filter(has_paid=paid_status)
         return self
 
-class RsvpManager(models.Manager):
-    def get_queryset(self):
-        return RsvpQuerySet(self.model, using=self._db)
-    
-    def by_slug(self, slug):
-        return self.get_queryset().by_slug(slug)
-    
-    def by_token(self, token):
-        return self.get_queryset().by_token(token)
-    
-    def email_exists_for(self, event, email):
-        return self.get_queryset().email_exists_for(event, email)
-
-    def phone_exists_for(self, event, phone_number):
-        return self.get_queryset().phone_exists_for(event, phone_number)
-    
-    def by_event(self, event):
-        return self.get_queryset().by_event(event)
-    
-    def by_event_and_slug(self, event, rsvp_slug):
-        return self.get_queryset().by_event_and_slug(event, rsvp_slug)
-    
-    def filter_by_paid_status(self, paid_status):
-        return self.get_queryset().filter_by_paid_status(paid_status)
-
 class Rsvp(models.Model):
-    ROLE_CHOICES = (
-        ('player', 'Player'),
-        ('coach', 'Coach'),
-        ('spectator', 'Spectator'),
-    )
-    
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='rsvps')
+    role = models.ForeignKey(EventRole, related_name='rsvps', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20)
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     has_paid = models.BooleanField(default=False)
     token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)

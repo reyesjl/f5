@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/css/rolelist.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Event Roles</title>
+</head>
+
+<body>
+    <div class="container">
+        {% include 'includes/notifications.html' %}
+        {% include 'includes/navigation.html' %}
+        <div class="pagecontent">
+            <div class="pageheader"> 
+                <h1 class="pagetitle">Event Roles for {{ event.name }}</h1>
+                <p class="pagesubtitle">Find all roles for this event here.</p>
+                <p>
+                    <a href="{% url 'event-detail' slug=event.slug %}" class="button">Back to Event</a>
+                    <a href="{% url 'role-create' event_slug=event.slug %}" class="button go">Add Role +</a>
+                </p>
+            </div>
+
+            <div class="pagesection">
+                <ul class="rolelist">
+                    {% for role in roles %}
+                        <li class="roleitem">
+                            <a class="button danger" href="{% url 'role-delete' event_slug=event.slug role_id=role.id %}">&#x2715;</a>
+                            <p>{{ role.name }}</p>
+                            <p>${{ role.cost }}</p>
+                        </li>
+                    {% empty %}
+                        <p>No roles available.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>

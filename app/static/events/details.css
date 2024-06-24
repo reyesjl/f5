@@ -1,6 +1,17 @@
 .detailregister {
-    text-align: right;
     margin-top: 1rem;
+}
+
+.eventroles {
+    margin: 2rem 0;
+}
+
+.roletitle {
+    font-weight: bold;
+}
+
+.rolebuttons {
+    padding: 0;
 }
 
 .eventdesc h1, h2, h3 {
