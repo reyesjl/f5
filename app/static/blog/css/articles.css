@@ -7,8 +7,7 @@
     flex-direction: column;
 }
 
-.article-item {
-}
+
 
 .article-date-title {
     display: flex;
@@ -26,5 +25,8 @@
 @media (max-width: 600px) {
     .article-date-title {
         flex-direction: column;
+    }
+    .article-item {
+        margin-bottom: 1rem;
     }
 }
