@@ -22,5 +22,6 @@ urlpatterns = [
     path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/", views.rsvp_detail, name="rsvp-detail"),
     path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/update/", views.rsvp_update, name="rsvp-update"),
     path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/delete/", views.rsvp_delete, name="rsvp-delete"),
-    path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/success/", views.rsvp_success, name="rsvp-success")
+    path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/success/", views.rsvp_success, name="rsvp-success"),
+    path("<slug:event_slug>/rsvps/<slug:rsvp_slug>/cancel/", views.rsvp_cancel, name="rsvp-cancel")
 ]

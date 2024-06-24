@@ -1,11 +1,15 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.conf import settings
 from django.contrib import messages
 from .models import Event, EventRole, Rsvp
 from .forms import EventForm, EventRoleForm, RsvpForm, UpdateRsvpForm
 from core.decorator import user_has_role
 from core.utils import check_user
+import stripe
 
+# Stripe Setup
+stripe.api_key = settings.STRIPE_TEST_SECRET
 
 # Event Views
 # =============================================================================
@@ -212,7 +216,28 @@ def rsvp_create(request, event_slug, role_id=None):
 
             # Handle payment if needed
             if event.payment_required:
-                pass
+                # Create Stripe Checkout Session
+                session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[{
+                        'price_data': {
+                            'currency': 'usd',
+                            'product_data': {
+                                'name': role.name if role else 'Event Registration',
+                            },
+                            'unit_amount': int(role.cost * 100),
+                        },
+                        'quantity': 1,
+                    }],
+                    mode='payment',
+                    success_url=request.build_absolute_uri(
+                        reverse('rsvp-success', args=[event_slug, rsvp.slug])
+                    ),
+                    cancel_url=request.build_absolute_uri(
+                        reverse('rsvp-cancel', args=[event_slug, rsvp.slug])
+                    ),
+                )
+                return redirect(session.url, code=303)
             
             messages.success(request, "Registration was successful.", extra_tags="success")
             return redirect('rsvp-success', event_slug=event_slug, rsvp_slug=rsvp.slug)
@@ -291,7 +316,7 @@ def rsvp_delete(request, event_slug, rsvp_slug):
     
     if request.method == "POST":
         rsvp.delete()
-        return redirect("rsvp-list")
+        return redirect("rsvp-list", event_slug=event_slug)
     
     context = {
         'event': event,
@@ -309,9 +334,30 @@ def rsvp_success(request, event_slug, rsvp_slug):
         return render(request, "core/error.html", {"message": "RSVP not found"})
     except Exception as e:
         return render(request, "core/error.html", {"message": str(e)})
+    
+    rsvp.has_paid = True
+    rsvp.save()
+    messages.success(request, "Registration and payment were successful.", extra_tags="success")
 
     context = {
         "event": event,
         "rsvp": rsvp
     } 
     return render(request, "rsvps/rsvp_success.html", context)
+
+def rsvp_cancel(request, event_slug, rsvp_slug):
+    try:
+        event = Event.objects.by_slug(event_slug)
+        rsvp = Rsvp.objects.by_event_and_slug(event, rsvp_slug)
+    except Event.DoesNotExist:
+        return render(request, "core/error.html", {"message": "Event not found"})
+    except Rsvp.DoesNotExist:
+        return render(request, "core/error.html", {"message": "RSVP not found"})
+    except Exception as e:
+        return render(request, "core/error.html", {"message": str(e)})
+
+    context = {
+        "event": event,
+        "rsvp": rsvp
+    } 
+    return render(request, "rsvps/rsvp_cancel.html", context)
