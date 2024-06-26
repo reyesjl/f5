@@ -31,7 +31,11 @@
                     <li>Name: {{ rsvp.name }}</li>
                     <li>Email: {{ rsvp.email }}</li>
                     <li>Phone: {{ rsvp.phone_number }}</li>
+                    {% if rsvp.role %}
                     <li>Role: {{ rsvp.role.name }}</li>
+                    {% else %}
+                    <li>No Role / No Payment.</li>
+                    {% endif %}
                 </ul>
             </div>
 
