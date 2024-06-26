@@ -9,30 +9,23 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>RSVP for Event</title>
+    <title>Create Event Role</title>
 </head>
 <body>
     <div class="container">
         {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">RSVP to {{event.name}}</h1>
-                <p class="pagesubtitle">Fill out the form below to register for this event.</p>
-                {% if event.payment_required %}
-                    <p>{{ role.name }} for ${{ role.cost }}</p>
-                {% endif  %}
+                <h1 class="pagetitle">Create Event Role for {{event.name}}</h1>
+                <p class="pagesubtitle">Fill out the form below to create a new event role.</p>
             </div>
 
-            <div class="formwrapper">
+            <div class="formwrapper wide">
                 <form method="post">
                     {% csrf_token %}
                     {{ form }}
-
-                    {% if event.payment_required %}
-                        <button class="button" type="submit">Continue to Payment</button>
-                    {% else %}
-                        <button class="button" type="submit">Submit</button>
-                    {% endif %}
+                    {{ form.media }}
+                    <button class="button" type="submit">Submit</button>
                 </form>
             </div>
         </div>

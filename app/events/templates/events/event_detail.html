@@ -14,41 +14,39 @@
 </head>
 <body>
     <div class="container">
-        {% include 'includes/navigation.html' %} 
+        {% include 'includes/notifications.html' %}
+        {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
                 {% if can_manage %}
-                <p>
+                <div class="buttongroup">
                     <a href="{% url 'rsvp-list' event_slug=event.slug %}" class="button go">RSVPs</a>
+                    <a href="{% url 'role-list' event_slug=event.slug %}" class="button">All Roles</a>
                     <a href="{% url 'event-update' slug=event.slug %}" class="button warning">Edit</a>
                     <a href="{% url 'event-delete' slug=event.slug %}" class="button danger">Delete</a>
-                </p>
+                </div>
                 {% endif %}
                 <h1 class="pagetitle">{{ event.name }}</h1>
-                <div class="splitshot">
-                    <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
-                    
-                    <div class="splitpole pagesubtitle">
-                    {% if event.cost %}
-                        <div class="eventcost">Player: ${{ event.cost }}</div>
-                    {% else %}
-                        <div class="eventcost">Player: Free</div>
-                    {% endif %}
-                    {% if event.cost_secondary %}
-                        <div class="eventcost">Coach: ${{ event.cost_secondary }}</div>
-                    {% else %}
-                        <div class="eventcost">Coach: Free</div>
-                    {% endif %}
-                    </div>
-                </div>
+                <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
 
-                <div class="detailregister">
+                {% if event.registration_required and event.payment_required %}
+                    <div class="eventroles">
+                        <p class="pagesubtitle roletitle">Select a role:</p>
+                        <div class="buttongroup rolebuttons">
+                            {% for role in roles %}
+                                <a class="button" href="{% url 'rsvp-create' event_slug=event.slug role_id=role.id %}">{{ role.name }} ${{ role.cost }}</a>
+                            {% empty %}
+                                <a class="button disabled" href="">No Roles Avaiable</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
                     {% if event.registration_required %}
-                        <a class="button" href="{% url 'rsvp-create' event_slug=event.slug %}">RSVP</a>
+                        <p><a class="button" href="{% url 'rsvp-create-no-role' event_slug=event.slug %}">Register</a></p>
                     {% else %}
-                        <a class="button disabled" href="">No RSVP Required</a>
+                        <p><a class="button disabled" href="#">No Action Required</a></p>
                     {% endif %}
-                </div>
+                {% endif %}
                 
             </div>
             <div class="pagesection">
