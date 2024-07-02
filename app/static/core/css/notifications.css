@@ -63,7 +63,7 @@
 }
 
 .alert.success {
-    background: rgba(108, 199, 255, 0.7);
+    background: rgba(108, 117, 225, .7);
 }
 
 .alert.warning {

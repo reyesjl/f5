@@ -24,6 +24,7 @@
 
 .formwrapper input[type="text"],
 .formwrapper input[type="email"],
+.formwrapper input[type="password"],
 .ck-editor-container,
 .formwrapper select {
     border: 2px solid black; 

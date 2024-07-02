@@ -7,14 +7,14 @@
         </div>
         {% if user.is_authenticated %}
             <div class="account">
-                <a href="#">
+                <a href="{% url 'member-dashboard' user.username %}">
                     <img class="accountimage" src="https://place-hold.it/50x50" alt="profile image">
                 </a>
             </div>
         {% else %}
             <ul class="accountmenu">
-                <li class="menuitem"><a class="menulink" href="">Signup</a></li>
-                <li class="menuitem"><a class="menulink" href="">Login</a></li>
+                <li class="menuitem"><a class="menulink" href="{% url 'member-signup' %}">Signup</a></li>
+                <li class="menuitem"><a class="menulink" href="{% url 'member-login' %}">Login</a></li>
             </ul>
         {% endif %}
     </div>
@@ -29,5 +29,8 @@
         <li class="menuitem"><a class="menulink" href="{% url 'event-list' %}">Events</a></li>
         <li class="menuitem"><a class="menulink" href="{% url 'health-home' %}">Health</a></li>
         <li class="menuitem"><a class="menulink" href="{% url 'clubs-home' %}">Clubs</a></li>
+        {% if user.is_authenticated %}
+            <li class="menuitem"><a class="menulink" href="{% url 'member-logout' %}">Logout</a></li>
+        {% endif %}
     </ul> 
 </div>
