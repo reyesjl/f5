@@ -4,6 +4,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import MemberCreationForm, MemberAuthenticationForm
 from .models import CustomUser
+from events.models import Event
+from blog.models import Article
 
 def member_signup(request):
     if request.method == 'POST':
@@ -50,9 +52,19 @@ def member_dashboard(request, username):
 @login_required
 def admin_dashboard(request, username):
     user = CustomUser.objects.get(username=username)
+    total_users = CustomUser.objects.count()
+    total_events = Event.objects.count()
+    total_articles = Article.objects.count()
+    total_health_clients = 5
+    total_revenue = 5.00
+
     messages.info(request, "Camp registration is up 5% today.", extra_tags="info")
-    messages.info(request, "Asau has released a new plan.", extra_tags="info")
     context = {
+        'total_users': total_users,
+        'total_revenue': total_revenue,
+        'total_events': total_events,
+        'total_health_clients': total_health_clients,
+        'total_articles': total_articles,
         'user': user,
     }
     return render(request, 'members/admin_dashboard.html', context)
