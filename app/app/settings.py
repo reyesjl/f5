@@ -29,6 +29,9 @@ SESSION_COOKIE_AGE = 3600
 STRIPE_TEST_PUBLIC = env('STRIPE_TEST_PUBLIC')
 STRIPE_TEST_SECRET = env('STRIPE_TEST_SECRET')
 
+# Django user
+AUTH_USER_MODEL = "members.CustomUser"
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
     'clubs',
     'health',
     'blog',
+    'members',
 ]
 
 MIDDLEWARE = [

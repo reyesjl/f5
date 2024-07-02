@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Trainer Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        {% include 'includes/notifications.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                <div class="brandwrapper">
+                    <h1 class="pagetitle">{{ user.username }}</h1>
+                    <p class="pagesubtitle align-center">{{ user.email }}</p>
+                    <p class="pagesubtitle">Lvl. 0</p>
+                </div>
+            </div>
+
+            <div class="pagesection">
+                <h3 class="sectiontitle">Trainer Benefits</h3>
+                <ul class="generallist">
+                    <li>You can manage <a href="#">/playerprofiles</a></li>
+                    <li>You can manage <a href="#">/blogs</a></li>
+                    <li>You can manage <a href="#">/plans</a></li>
+                    <li>You can <a href="#">generate</a> reports</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

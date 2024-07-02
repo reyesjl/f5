@@ -9,6 +9,8 @@ urlpatterns = [
     path("clubs/", include("clubs.urls")),
     path("health/", include("health.urls")),
     path("blog/", include("blog.urls")),
+    path("members/", include("members.urls")),
+    path("members/", include("django.contrib.auth.urls")),
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path("admin/", admin.site.urls),
 ]
