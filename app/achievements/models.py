@@ -24,8 +24,8 @@ class UserProfile(models.Model):
         self.save()
 
     def check_level_up(self):
-        # Simple example: increase level for every 100 XP
-        while self.xp >= self.level * 100:
+        # Simple example: increase level for every 1000 XP
+        while self.xp >= self.level * 1000:
             self.level += 1
 
 class UserAchievement(models.Model):

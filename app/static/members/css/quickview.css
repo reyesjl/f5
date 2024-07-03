@@ -35,13 +35,18 @@
 }
 
 .metric-label {
-    font-weight: bold;
-    font-size: .8rem;
     text-align: center;
     padding: .5rem .75rem;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     background-color: maroon;
+}
+
+.metric-link {
+    font-weight: bold;
+    font-size: .8rem;
+    text-decoration: none;
+    color: white;
 }
 
 @media (max-width: 600px) {

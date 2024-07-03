@@ -5,7 +5,6 @@ from core.utils import check_user
 from core.decorator import user_has_role
 from .models import Article
 
-@user_has_role("blog_manager")
 def index(request):
     articles = Article.objects.published()
     can_manage = check_user(request.user, "blog_manager")

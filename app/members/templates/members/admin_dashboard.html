@@ -29,35 +29,37 @@
                     <ul class="metrics-list">
                         <li class="metrics-item">
                             <div class="metric-value">{{ total_users }}</div>
-                            <div class="metric-label">Members</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Members</a></div>
                         </li>
-                        <li class="metrics-item">
+                        <!-- <li class="metrics-item">
                             <div class="metric-value">${{total_revenue|stringformat:".2f" }}</div>
-                            <div class="metric-label">Revenue</div>
-                        </li>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Revenue</a></div>
+                        </li> -->
                         <li class="metrics-item">
                             <div class="metric-value">{{ total_events }}</div>
-                            <div class="metric-label">Events</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'event-list' %}">Events</a></div>
                         </li>
                         <li class="metrics-item">
                             <div class="metric-value">{{ total_articles }}</div>
-                            <div class="metric-label">Blogs</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'blog-home' %}">Articles</a></div>
                         </li>
-                        <li class="metrics-item">
+                        <!-- <li class="metrics-item">
                             <div class="metric-value">{{ total_health_clients }}</div>
-                            <div class="metric-label">Health Clients</div>
-                        </li>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Health Clients</a></div>
+                        </li> -->
                     </ul>
                 </div>
             </div>
             <div class="pagesection">
                 <h3 class="sectiontitle">Admin Benefits</h3>
-                <ul class="generallist">
-                    <li>You can manage <a href="#">/users</a></li>
-                    <li>You can manage <a href="{% url 'event-list' %}">/events</a></li>
-                    <li>You can manage <a href="#">/blogs</a></li>
-                    <li>You can manage <a href="#">/plans</a></li>
-                    <li>You can <a href="#">generate</a> reports</li>
+                <p>You can select any of the metrics above to view their source.</p>
+                <p>If you have the required role, you will see buttons for:</p>
+                <ul>
+                    <li>Creating objects</li>
+                    <li>Viewing objects</li>
+                    <li>Editing objects</li>
+                    <li>Deleting objects</li>
+                    <li>Quick actions on objects</li>
                 </ul>
             </div>
         </div>

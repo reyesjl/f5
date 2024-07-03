@@ -1,11 +1,31 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from core.decorator import user_has_role
 from django.contrib.auth.decorators import login_required
 from .forms import MemberCreationForm, MemberAuthenticationForm
 from .models import CustomUser
 from events.models import Event
 from blog.models import Article
+
+def member_list(request):
+    users = CustomUser.objects.all()
+
+    # Filter by search query
+    search_query = request.GET.get('search', '')
+    if search_query:
+        users = users.filter(username__icontains=search_query)
+
+    # Filter by user group
+    user_group_filter = request.GET.get('user_group', 'all')
+    if user_group_filter != 'all':
+            users = users.filter(groups__name=user_group_filter)
+            
+    context = {
+        'users': users,
+        'search_query': search_query,
+    }
+    return render(request, "members/member-list.html", context)
 
 def member_signup(request):
     if request.method == 'POST':
@@ -16,7 +36,7 @@ def member_signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('member-dashboard', username=user.username)
+            return redirect('member-login')
     else:
         form = MemberCreationForm()
     return render(request, 'members/signup.html', {'form': form})
@@ -30,14 +50,29 @@ def member_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                request.session['username'] = username
                 return redirect('member-dashboard', username=user.username)
     else:
         form = MemberAuthenticationForm()
     return render(request, 'members/login.html', {'form': form})
 
+def member_profile(request, username):
+    try:
+        user = CustomUser.objects.get(username=username)
+    except Exception as e:
+        message = e
+        messages.success(request, "User not found.", extra_tags="error")
+        return render(request, "core/error.html", {"message": message})
+
+    return render(request, 'members/profile.html', {'profile': user})
+
 @login_required
 def member_dashboard(request, username):
-    user = CustomUser.objects.get(username=username)
+    try:
+        user = CustomUser.objects.get(username=username)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {"message": message})
     
     if user.is_superuser:
         return redirect('admin-dashboard', username=user.username)
@@ -50,8 +85,13 @@ def member_dashboard(request, username):
         return render(request, 'members/dashboard.html', {'user': user})
     
 @login_required
+@user_has_role("admin")
 def admin_dashboard(request, username):
-    user = CustomUser.objects.get(username=username)
+    try:
+        user = CustomUser.objects.get(username=username)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {"message": message})
     total_users = CustomUser.objects.count()
     total_events = Event.objects.count()
     total_articles = Article.objects.count()
@@ -70,17 +110,27 @@ def admin_dashboard(request, username):
     return render(request, 'members/admin_dashboard.html', context)
 
 @login_required
+@user_has_role("trainer")
 def trainer_dashboard(request, username):
-    user = CustomUser.objects.get(username=username)
+    try:
+        user = CustomUser.objects.get(username=username)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {"message": message})
     context = {
         'user': user,
     }
     return render(request, 'members/trainer_dashboard.html', context)
 
 @login_required
+@user_has_role("player")
 def player_dashboard(request, username):
-    user = CustomUser.objects.get(username=username)
-    messages.success(request, "You have earned 10xp for logging in today.", extra_tags="success")
+    try:
+        user = CustomUser.objects.get(username=username)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {"message": message})
+    
     context = {
         'user': user,
     }
@@ -88,4 +138,5 @@ def player_dashboard(request, username):
     
 def member_logout(request):
     logout(request)
+    request.session.flush()
     return redirect('member-login')

@@ -7,13 +7,13 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/css/articles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/scroller.css' %}">
-    <script src="{% static 'core/js/scroller.js' %}" defer></script>
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Health</title>
 </head>
 <body>
     <div class="container">        
+        {% include 'includes/navigation.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Blog</h1>

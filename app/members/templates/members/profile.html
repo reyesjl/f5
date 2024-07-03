@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>Dashboard</title>
+    <title>Profile</title>
 </head>
 <body>
     <div class="container">
@@ -17,20 +17,10 @@
         <div class="pagecontent">
             <div class="pageheader">
                 <div class="brandwrapper">
-                    <h1 class="pagetitle">{{ user.username }}</h1>
-                    <p class="pagesubtitle align-center">{{ user.email }}</p>
+                    <h1 class="pagetitle">{{ profile.username }}</h1>
+                    <p class="pagesubtitle align-center">{{ profile.email }}</p>
                     <p class="pagesubtitle">Lvl. 0</p>
                 </div>
-            </div>
-
-            <div class="pagesection">
-                <h3 class="sectiontitle">Member Benefits</h3>
-                <ul class="generallist">
-                    <li>Access to information.</li>
-                    <li>Building the community.</li>
-                    <li>Engage with topics and ideas.</li>
-                    <li>Discover all deals early!</li>
-                </ul>
             </div>
         </div>
     </div>

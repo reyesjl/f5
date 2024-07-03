@@ -53,6 +53,12 @@
     color: white;
 }
 
+.searchbox {
+    border: 1px solid black; 
+    border-radius: 8px;
+    padding: .5rem;
+}
+
 .applybutton {
     text-align: right;
 }

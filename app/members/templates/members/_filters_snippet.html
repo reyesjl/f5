@@ -1,0 +1,35 @@
+<p class="filterstitle"><strong>Filters</strong></p>
+<div class="filters">
+    <form method="GET" class="filterform">
+        <div class="filtercategories">
+            <div class="filtersection">
+                <p class="categorylabel">Search</p>
+                <input class="searchbox" type="text" name="search" value="{{ request.GET.search }}" placeholder="Username...">
+            </div>
+            <div class="filtersection">
+                <p class="categorylabel">User Groups</p>
+                <ul class="filterlist">
+                    <li class="filteritem">
+                        <input type="radio" name="user_group" value="all" id="user-group-all"
+                        {% if request.GET.user_group == 'all' %} checked{% endif %}>
+                        <label for="user-group-all">All</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="user_group" value="trainer" id="user-group-trainer"
+                        {% if request.GET.user_group == 'trainer' %} checked{% endif %}>
+                        <label for="user-group-featured">Trainer</label>
+                    </li>
+                    <li class="filteritem">
+                        <input type="radio" name="user_group" value="player" id="user-group-player"
+                        {% if request.GET.user_group == 'player' %} checked{% endif %}>
+                        <label for="user-group-featured">Player</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="filtersection">
+                <button type="submit" class="button primary">Apply</button>
+                <a class="button danger" href=".">Clear</a>
+            </div>
+        </div>
+    </form>
+</div>
