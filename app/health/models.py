@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
@@ -88,3 +89,22 @@ class Plan(models.Model):
 
     def __str__(self):
         return self.title
+
+class ClientQuerySet(models.QuerySet):
+    def by_username(self, username):
+        return self.filter(user__username=username)
+
+    def by_user(self, user):
+        return self.filter(user=user)
+    
+    def by_trainer(self, username):
+        return self.filter(trainer__username=username)
+    
+class Client(models.Model):
+    trainer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='clients')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='health_profile')
+
+    objects = ClientQuerySet.as_manager()
+
+    def __str__(self):
+        return self.user.username

@@ -13,9 +13,9 @@ urlpatterns = [
     # Dashboards & public profile
     path("<str:username>/profile/", views.member_profile, name="member-profile"),
     path("<str:username>/dashboard/", views.member_dashboard, name="member-dashboard"),
-    path("admin/<str:username>/dashboard/", views.admin_dashboard, name="admin-dashboard"),
-    path("trainer/<str:username>/dashboard/", views.trainer_dashboard, name="trainer-dashboard"),
-    path("player/<str:username>/dashboard/", views.player_dashboard, name="player-dashboard"),
+    path("<str:username>/admin-dashboard/", views.admin_dashboard, name="admin-dashboard"),
+    path("<str:username>/trainer-dashboard/", views.trainer_dashboard, name="trainer-dashboard"),
+    path("<str:username>/player-dashboard/", views.player_dashboard, name="player-dashboard"),
 
     # Management
     #path("<str:username>/roles/", views.member-edit),

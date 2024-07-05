@@ -6,6 +6,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/quickview.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Trainer Dashboard</title>
@@ -22,16 +23,30 @@
                     <p class="pagesubtitle">Lvl. 0</p>
                 </div>
             </div>
-
             <div class="pagesection">
-                <h3 class="sectiontitle">Trainer Benefits</h3>
-                <ul class="generallist">
-                    <li>You can manage <a href="#">/playerprofiles</a></li>
-                    <li>You can manage <a href="#">/blogs</a></li>
-                    <li>You can manage <a href="#">/plans</a></li>
-                    <li>You can <a href="#">generate</a> reports</li>
-                </ul>
+                <h3 class="sectiontitle">Quickview</h3>
+                <div class="metrics-container">
+                    <ul class="metrics-list">
+                        <li class="metrics-item">
+                            <div class="metric-value">{{ total_health_clients }}</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'client-list' trainer_username=user.username %}">Health Clients</a></div>
+                        </li>
+                        <li class="metrics-item">
+                            <div class="metric-value">{{ total_plans }}</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'plan-list' %}">Plans</a></div>
+                        </li>
+                        <li class="metrics-item">
+                            <div class="metric-value">{{ total_articles }}</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'blog-home' %}">Articles</a></div>
+                        </li>
+                        <li class="metrics-item">
+                            <div class="metric-value">{{ total_users }}</div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Members</a></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
     </div>
 </body>

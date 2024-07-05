@@ -14,7 +14,10 @@ urlpatterns = [
     path("plans/<slug:slug>/", views.plan_detail, name="plan-detail"),
     path("plans/<slug:slug>/update/", views.plan_update, name="plan-update"),
     path("plans/<slug:slug>/delete/", views.plan_delete, name="plan-delete"),
-    
-    # plan quick actions
     path("plans/<slug:slug>/quick-action/<str:action>/", views.quick_action, name="quick-action"),
+
+    # clients 
+    path("clients/<str:trainer_username>/", views.client_list, name='client-list'),
+    path("clients/add/<str:trainer_username>/<str:client_username>/", views.client_add, name='client-add'),
+    #path("clients/remove/<str:username>/", views.client_remove, name='client_remove'),
 ]

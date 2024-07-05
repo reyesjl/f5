@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from core.decorator import user_has_role
+from core.utils import check_user
 from django.contrib.auth.decorators import login_required
 from .forms import MemberCreationForm, MemberAuthenticationForm
 from .models import CustomUser
 from events.models import Event
 from blog.models import Article
+from health.models import Plan, Client
 
+@login_required
+@user_has_role("health_manager")
 def member_list(request):
     users = CustomUser.objects.all()
 
@@ -63,8 +67,16 @@ def member_profile(request, username):
         message = e
         messages.success(request, "User not found.", extra_tags="error")
         return render(request, "core/error.html", {"message": message})
-
-    return render(request, 'members/profile.html', {'profile': user})
+    
+    has_trainer = check_user(request.user, "trainer")
+    if (has_trainer):
+        clients = Client.objects.by_user(request.user)
+        
+    context = {
+        'profile': user,
+        'has_trainer': has_trainer,
+    }
+    return render(request, 'members/profile.html', context)
 
 @login_required
 def member_dashboard(request, username):
@@ -117,8 +129,16 @@ def trainer_dashboard(request, username):
     except Exception as e:
         message = e
         return render(request, "core/error.html", {"message": message})
+    total_users = CustomUser.objects.count()
+    total_plans = Plan.objects.count()
+    total_articles = Article.objects.count()
+    total_health_clients = Client.objects.by_trainer(username).count()
     context = {
         'user': user,
+        'total_users': total_users,
+        'total_plans': total_plans,
+        'total_articles': total_articles,
+        'total_health_clients': total_health_clients,
     }
     return render(request, 'members/trainer_dashboard.html', context)
 

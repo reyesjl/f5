@@ -2,9 +2,10 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 
 from core.decorator import user_has_role
-from .models import Plan
+from .models import Plan, Client
 from blog.models import Article
 from .forms import PlanForm
+from members.models import CustomUser
 from core.utils import check_user
 
 
@@ -179,3 +180,52 @@ def quick_action(request, slug, action):
 
     plan.save()
     return redirect('plan-list')
+
+# clients
+@user_has_role("trainer")
+def client_list(request, trainer_username):
+    clients = Client.objects.by_trainer(trainer_username)
+
+    # Filter by search query
+    search_query = request.GET.get('search', '')
+    if search_query:
+        clients = clients.filter(user__username__icontains=search_query)
+
+    # Filter by user group
+    user_group_filter = request.GET.get('user_group', 'all')
+    if user_group_filter != 'all':
+            clients = clients.filter(user__groups__name=user_group_filter)
+    
+    context = {
+        'clients': clients,
+    }
+    return render(request, 'clients/client_list.html', context)
+
+@user_has_role("trainer")
+def client_add(request, trainer_username, client_username):
+    # Fetch the trainer
+    try:
+        trainer = CustomUser.objects.get(username=trainer_username)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {'message': message})
+    
+    # Fetch the user
+    try:
+        client = CustomUser.objects.get(username=client_username)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {'message': message})
+    
+    # Check Clients for instance
+    if Client.objects.filter(user=client, trainer=trainer).exists():
+        messages.info(request, "User is already a client.", extra_tags="info")
+    else:
+        Client.objects.create(user=client, trainer=trainer)
+        messages.info(request, "User has been added.", extra_tags="info")
+    
+    return redirect('client-list', trainer_username=trainer_username)
+
+@user_has_role("trainer")
+def remove_client(request, trainer_username, client_username):
+    pass

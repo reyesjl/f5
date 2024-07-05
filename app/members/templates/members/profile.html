@@ -22,6 +22,15 @@
                     <p class="pagesubtitle">Lvl. 0</p>
                 </div>
             </div>
+
+            {% if has_trainer %}
+            <div class="pagesection">
+                <h3 class="sectiontitle">Trainer Actions</h3>
+                <p>
+                    <a href="{% url 'client-add' trainer_username=request.user.username client_username=profile.username %}" class="button go">Add as Client</a>
+                </p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </body>
