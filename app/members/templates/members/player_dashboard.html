@@ -22,16 +22,16 @@
                     <p class="pagesubtitle">Lvl. 0</p>
                 </div>
             </div>
-
-            <div class="pagesection">
-                <h3 class="sectiontitle">Player Benefits</h3>
-                <ul class="generallist">
-                    <li>You can manage your <a href="#">plans</a></li>
-                    <li>You can <a href="#">book</a> a trainer</li>
-                    <li>You can <a href="#">edit</a> your profile</li>
-                    <li>You can <a href="#">ask</a> for help</li>
-                </ul>
-            </div>
+            
+            <!-- If player profile exists -->
+            {% if player_profile %}
+                {% include 'members/_player_profile_snippet.html' %}
+            {% endif %}
+            
+            <!-- If health profile exists -->
+            {% if health_profile %}
+                {% include 'members/_health_profile_snippet.html' %}      
+            {% endif %}
         </div>
     </div>
 </body>

@@ -5,7 +5,7 @@ from core.decorator import user_has_role
 from core.utils import check_user
 from django.contrib.auth.decorators import login_required
 from .forms import MemberCreationForm, MemberAuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, UserProfile, PlayerProfile, HealthProfile
 from events.models import Event
 from blog.models import Article
 from health.models import Plan, Client
@@ -68,12 +68,18 @@ def member_profile(request, username):
         messages.success(request, "User not found.", extra_tags="error")
         return render(request, "core/error.html", {"message": message})
     
+    # Fetch user profiles
+    player_profile = PlayerProfile.objects.filter(user=user).first()
+    health_profile = HealthProfile.objects.filter(user=user).first()
+    
     has_trainer = check_user(request.user, "trainer")
     if (has_trainer):
         clients = Client.objects.by_user(request.user)
         
     context = {
         'profile': user,
+        'player_profile': player_profile,
+        'health_profile': health_profile,
         'has_trainer': has_trainer,
     }
     return render(request, 'members/profile.html', context)
@@ -151,8 +157,13 @@ def player_dashboard(request, username):
         message = e
         return render(request, "core/error.html", {"message": message})
     
+    player_profile = PlayerProfile.objects.filter(user=user).first()
+    health_profile = HealthProfile.objects.filter(user=user).first()
+    
     context = {
         'user': user,
+        'player_profile': player_profile,
+        'health_profile': health_profile,
     }
     return render(request, 'members/player_dashboard.html', context)
     

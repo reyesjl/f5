@@ -2,7 +2,24 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-   pass
+    def reset_player_profile(self):
+        player_profile, created = PlayerProfile.objects.get_or_create(user=self)
+        player_profile.position = ''
+        player_profile.club = ''
+        player_profile.tries_scored = 0
+        player_profile.tackles_made = 0
+        player_profile.minutes_played = 0
+        player_profile.save()
+
+    def reset_health_profile(self):
+        health_profile, created = HealthProfile.objects.get_or_create(user=self)
+        health_profile.height = 0.00
+        health_profile.weight = 0.00
+        health_profile.save()
+
+    def erase_profiles(self):
+        PlayerProfile.objects.filter(user=self).delete()
+        HealthProfile.objects.filter(user=self).delete()
 
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

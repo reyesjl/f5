@@ -45,7 +45,9 @@
                                 <div>{{ group.name }}, </div>
                             {% endfor %}
                         </td>
-                        <td><a href="{% url 'client-add' trainer_username=request.user.username client_username=client.user.username %}" class="button go">Add Client</a></td>
+                        <td>
+                            <a href="{% url 'client-remove' client.id %}" class="button danger">X</a>
+                        </td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -5,7 +5,7 @@ from core.decorator import user_has_role
 from .models import Plan, Client
 from blog.models import Article
 from .forms import PlanForm
-from members.models import CustomUser
+from members.models import CustomUser, HealthProfile, PlayerProfile
 from core.utils import check_user
 
 
@@ -218,14 +218,86 @@ def client_add(request, trainer_username, client_username):
         return render(request, "core/error.html", {'message': message})
     
     # Check Clients for instance
-    if Client.objects.filter(user=client, trainer=trainer).exists():
+    if Client.objects.filter(user=client).exists():
         messages.info(request, "User is already a client.", extra_tags="info")
     else:
         Client.objects.create(user=client, trainer=trainer)
         messages.info(request, "User has been added.", extra_tags="info")
+
+    player_profile, created_pp = PlayerProfile.objects.get_or_create(user=client, defaults={
+        'position': '',
+        'club': '',
+        'tries_scored': 0,
+        'tackles_made': 0,
+        'minutes_played': 0,
+    })
+    
+    health_profile, created_hp = HealthProfile.objects.get_or_create(user=client, defaults={
+        'height': 0.00,
+        'weight': 0.00,
+    })
+
+    if created_pp and created_hp:
+        messages.success(request, 'Player and Health profiles have been initialized.', extra_tags="success")
+    elif created_pp:
+        messages.success(request, 'Player profile has been initialized.', extra_tags="success")
+    elif created_hp:
+        messages.success(request, 'Health profile has been initialized.', extra_tags="success")
+    else:
+        messages.info(request, 'Profiles already exist.', extra_tags="info")
     
     return redirect('client-list', trainer_username=trainer_username)
 
 @user_has_role("trainer")
-def remove_client(request, trainer_username, client_username):
+def client_remove(request, client_id):
+    try:
+        client = Client.objects.get(id=client_id)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {'message': message})
+    
+    if request.method == 'POST':
+        client.delete()
+        messages.success(request, "Client has been removed.", extra_tags="success")
+        return redirect('client-list', request.user.username)
+    
+    return render(request, 'clients/client_remove_confirm.html', {'client': client})
+
+@user_has_role("trainer")
+def client_initialize(request, client_id):
+    try:
+        client = Client.objects.get(id=client_id)
+    except Exception as e:
+        message = e
+        return render(request, "core/error.html", {'message': message})
+    
+    player_profile, created_pp = PlayerProfile.objects.get_or_create(user=client.user, defaults={
+        'position': '',
+        'club': '',
+        'tries_scored': 0,
+        'tackles_made': 0,
+        'minutes_played': 0,
+    })
+    
+    health_profile, created_hp = HealthProfile.objects.get_or_create(user=client.user, defaults={
+        'height': 0.00,
+        'weight': 0.00,
+    })
+
+    if created_pp and created_hp:
+        messages.success(request, 'Player and Health profiles have been initialized.', extra_tags="success")
+    elif created_pp:
+        messages.success(request, 'Player profile has been initialized.', extra_tags="success")
+    elif created_hp:
+        messages.success(request, 'Health profile has been initialized.', extra_tags="success")
+    else:
+        messages.info(request, 'Profiles already exist.', extra_tags="info")
+
+    return redirect('client-list', request.user.username)
+
+@user_has_role("trainer")
+def client_detail(request, client_id):
+    # fetch user object from client
+    # fetch user profiles to display
+    # show quick actions (remove client, reset info, etc)
     pass

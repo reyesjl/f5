@@ -18,6 +18,7 @@ urlpatterns = [
 
     # clients 
     path("clients/<str:trainer_username>/", views.client_list, name='client-list'),
-    path("clients/add/<str:trainer_username>/<str:client_username>/", views.client_add, name='client-add'),
-    #path("clients/remove/<str:username>/", views.client_remove, name='client_remove'),
+    path("clients/<str:trainer_username>/<str:client_username>/add/", views.client_add, name='client-add'),
+    path("clients/<int:client_id>/remove/", views.client_remove, name='client-remove'),
+    path("clients/<int:client_id>/initialize/", views.client_initialize, name='client-initialize'),
 ]
