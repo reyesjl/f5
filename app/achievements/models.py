@@ -11,7 +11,7 @@ class Achievement(models.Model):
         return self.title
 
 class UserAchievement(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, realetd_name='user_achievements')
     achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
     achieved_on = models.DateTimeField(auto_now_add=True)
 

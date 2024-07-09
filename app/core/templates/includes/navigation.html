@@ -13,7 +13,6 @@
             </div>
         {% else %}
             <ul class="accountmenu">
-                <li class="menuitem"><a class="menulink" href="{% url 'member-signup' %}">Signup</a></li>
                 <li class="menuitem"><a class="menulink" href="{% url 'member-login' %}">Login</a></li>
             </ul>
         {% endif %}
@@ -24,6 +23,14 @@
     <div class="closewrapper">
         <button class="closebutton">&#x2715;</button>
     </div>
+    {% if user.is_authenticated %}
+    <div class="menuprofile">
+        <div class="avatar">
+            <img src="https://place-hold.it/164x164" />
+        </div>
+        <a class="username" href="{% url 'member-dashboard' user.username %}">{{ user.username }}</a>
+    </div>
+    {% endif %}
     <ul class="menulist">
         <li class="menuitem"><a class="menulink" href="/">Home</a></li>
         <li class="menuitem"><a class="menulink" href="{% url 'event-list' %}">Events</a></li>

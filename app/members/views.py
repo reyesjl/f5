@@ -135,16 +135,10 @@ def trainer_dashboard(request, username):
     except Exception as e:
         message = e
         return render(request, "core/error.html", {"message": message})
-    total_users = CustomUser.objects.count()
-    total_plans = Plan.objects.count()
-    total_articles = Article.objects.count()
-    total_health_clients = Client.objects.by_trainer(username).count()
+    health_clients = Client.objects.by_trainer(username).count()
     context = {
         'user': user,
-        'total_users': total_users,
-        'total_plans': total_plans,
-        'total_articles': total_articles,
-        'total_health_clients': total_health_clients,
+        'health_clients': health_clients,
     }
     return render(request, 'members/trainer_dashboard.html', context)
 

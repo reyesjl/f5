@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/quickview.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Trainer Dashboard</title>
@@ -17,10 +18,16 @@
         {% include 'includes/notifications.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <div class="brandwrapper">
-                    <h1 class="pagetitle">{{ user.username }}</h1>
-                    <p class="pagesubtitle align-center">{{ user.email }}</p>
-                    <p class="pagesubtitle">Lvl. 0</p>
+                <div class="profile-wrapper">
+                    <div class="profile-image">
+                        <img src="https://place-hold.it/164x164" alt="profile_image" />
+                    </div>
+                    <div class="profile-info">
+                        <div class="username">{{ user.username }}</div>
+                        <div class="fullname">
+                            <span>{{ user.first_name }} {{ user.last_name }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="pagesection">
@@ -29,7 +36,7 @@
                     <ul class="metrics-list">
                         <li class="metrics-item">
                             <div class="metric-value">{{ total_health_clients }}</div>
-                            <div class="metric-label"><a class="metric-link" href="{% url 'client-list' trainer_username=user.username %}">Health Clients</a></div>
+                            <div class="metric-label"><a class="metric-link" href="{% url 'client-list' %}">Health Clients</a></div>
                         </li>
                         <li class="metrics-item">
                             <div class="metric-value">{{ total_plans }}</div>

@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/login.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Log In</title>
@@ -14,8 +15,9 @@
 <body>
     <div class="container">
         {% include 'includes/navigation.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
+        <div class="pagecontent thin">
+            <div class="pageheader align-center">
+                <img class="weblogo small" src="{% static 'core/images/f5logo.png' %}" alt="first five rugby" />
                 <h1 class="pagetitle">Log In</h1>
                 <p class="pagesubtitle">Welcome back to First Five Rugby!</p>
             </div>
@@ -26,8 +28,22 @@
                     {{ form }}
                     {{ form.media }}
                     
-                    <button class="button" type="submit">Login</button>
+                    <button class="button solidred" type="submit">Login</button>
+                    <a class="help link small" href="">Help, I can't sign in</a>
                 </form>
+            </div>
+        </div>
+        <div class="pagecontent">
+            <div class="signup-wrapper">
+                <div class="action">
+                    <div class="action-inner">
+                        <h3 class="action-title align-center">New to F5?</h3>
+                        <a class="button medium solidred" href="{% url 'member-signup' %}">Create an Account</a>
+                    </div>
+                </div>
+                <div class="incentive">
+                    <div class="tagline">It's free and easy. Discover thousands of resources with millions of rugby fans just like you.</div>
+                </div>                        
             </div>
         </div>
     </div>

@@ -40,7 +40,7 @@ class UserProfile(models.Model):
             self.level += 1
 
 class PlayerProfile(models.Model):
-   user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+   user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='player_profile')
    position = models.CharField(max_length=50)
    club = models.CharField(max_length=100)
    tries_scored = models.IntegerField(default=0)
@@ -48,6 +48,6 @@ class PlayerProfile(models.Model):
    minutes_played = models.IntegerField(default=0)
 
 class HealthProfile(models.Model):
-   user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+   user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='health_profile')
    height = models.DecimalField(max_digits=5, decimal_places=2)
    weight = models.DecimalField(max_digits=5, decimal_places=2)

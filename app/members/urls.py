@@ -11,7 +11,7 @@ urlpatterns = [
     path("logout/", views.member_logout, name="member-logout"),
 
     # Dashboards & public profile
-    path("<str:username>/profile/", views.member_profile, name="member-profile"),
+    path("<str:username>/", views.member_profile, name="member-profile"),
     path("<str:username>/dashboard/", views.member_dashboard, name="member-dashboard"),
     path("<str:username>/admin-dashboard/", views.admin_dashboard, name="admin-dashboard"),
     path("<str:username>/trainer-dashboard/", views.trainer_dashboard, name="trainer-dashboard"),

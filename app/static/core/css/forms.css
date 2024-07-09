@@ -59,17 +59,18 @@
 
 /* Style submit button */
 .formwrapper button[type="submit"] {
-    background-color: black;
-    color: white;
-    border: 2px solid black;
     padding: 10px 20px;
-    cursor: pointer;
+    color: white;
+    font-weight: normal;
+    background: linear-gradient(to right, #ff4747 5%, #c21a1a 60%);
+    background-position: 25%;
+    background-size: 330% 100%;
+    border: none;
 }
 
 /* Hover effect on submit button */
 .formwrapper button[type="submit"]:hover {
-    background-color: white;
-    color: black;
+    background: linear-gradient(to right, #ff4747 30%, #c21a1a 60%);
 }
 
 .errorlist {

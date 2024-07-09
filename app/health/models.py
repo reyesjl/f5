@@ -102,7 +102,7 @@ class ClientQuerySet(models.QuerySet):
     
 class Client(models.Model):
     trainer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='clients')
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='health_profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client_profile')
 
     objects = ClientQuerySet.as_manager()
 

@@ -17,13 +17,13 @@
         {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">Remove Client: {{client.user.username }}</h1>
+                <h1 class="pagetitle">Remove Client: {{ client.user.username }}</h1>
                 <p class="pagesubtitle">Are you sure you want to remove this client? Their player profile and health data will remain in the system.</p>
-                <form action="{% url 'client-remove' client.id %}" method="post">
+                <form action="{% url 'client-remove' client.user.username %}" method="post">
                     {% csrf_token %}
 
                     <div class="buttongroup">
-                        <a class="button" href="{% url 'client-list' request.user.username %}">Nooooo!</a>
+                        <a class="button" href="{% url 'client-list' %}">Nooooo!</a>
                         <button class="button danger" type="submit">Yes</button>
                     </div>
                 </form>

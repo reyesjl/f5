@@ -17,8 +17,8 @@ urlpatterns = [
     path("plans/<slug:slug>/quick-action/<str:action>/", views.quick_action, name="quick-action"),
 
     # clients 
-    path("clients/<str:trainer_username>/", views.client_list, name='client-list'),
+    path("clients/", views.client_list, name='client-list'),
     path("clients/<str:trainer_username>/<str:client_username>/add/", views.client_add, name='client-add'),
-    path("clients/<int:client_id>/remove/", views.client_remove, name='client-remove'),
+    path("clients/<str:client_username>/remove/", views.client_remove, name='client-remove'),
     path("clients/<int:client_id>/initialize/", views.client_initialize, name='client-initialize'),
 ]

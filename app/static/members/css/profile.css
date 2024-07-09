@@ -1,0 +1,33 @@
+.profile-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.profile-image {
+    max-width: 164px;
+}
+
+.profile-image img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+.username {
+    font-size: 1.5rem;
+}
+
+.fullname {
+    color: gray;
+    font-size: .8rem;
+}
+
+@media (max-width: 680px) {
+    .profile-wrapper {
+        flex-direction: column;
+    }
+    
+    .profile-info {
+        order: -1;
+    }
+}

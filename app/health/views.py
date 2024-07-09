@@ -6,7 +6,7 @@ from .models import Plan, Client
 from blog.models import Article
 from .forms import PlanForm
 from members.models import CustomUser, HealthProfile, PlayerProfile
-from core.utils import check_user
+from core.utils import check_user, get_object_or_error
 
 
 def index(request):
@@ -183,8 +183,9 @@ def quick_action(request, slug, action):
 
 # clients
 @user_has_role("trainer")
-def client_list(request, trainer_username):
-    clients = Client.objects.by_trainer(trainer_username)
+def client_list(request):
+    trainer = get_object_or_error(CustomUser, username=request.user.username)
+    clients = trainer.clients.all()
 
     # Filter by search query
     search_query = request.GET.get('search', '')
@@ -203,26 +204,16 @@ def client_list(request, trainer_username):
 
 @user_has_role("trainer")
 def client_add(request, trainer_username, client_username):
-    # Fetch the trainer
-    try:
-        trainer = CustomUser.objects.get(username=trainer_username)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {'message': message})
+    trainer = get_object_or_error(CustomUser, username=trainer_username)
+    client = get_object_or_error(CustomUser, username=client_username)
     
-    # Fetch the user
-    try:
-        client = CustomUser.objects.get(username=client_username)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {'message': message})
-    
-    # Check Clients for instance
-    if Client.objects.filter(user=client).exists():
+    # Check if client already exists for this trainer
+    if trainer.clients.filter(user=client).exists():
         messages.info(request, "User is already a client.", extra_tags="info")
     else:
+        # Create Client object if it doesn't exist
         Client.objects.create(user=client, trainer=trainer)
-        messages.info(request, "User has been added.", extra_tags="info")
+        messages.info(request, "User has been added as a client.", extra_tags="info")
 
     player_profile, created_pp = PlayerProfile.objects.get_or_create(user=client, defaults={
         'position': '',
@@ -246,20 +237,17 @@ def client_add(request, trainer_username, client_username):
     else:
         messages.info(request, 'Profiles already exist.', extra_tags="info")
     
-    return redirect('client-list', trainer_username=trainer_username)
+    return redirect('client-list')
 
 @user_has_role("trainer")
-def client_remove(request, client_id):
-    try:
-        client = Client.objects.get(id=client_id)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {'message': message})
+def client_remove(request, client_username):
+    user = get_object_or_error(CustomUser, username=client_username) 
+    client = get_object_or_error(Client, user=user)
     
     if request.method == 'POST':
         client.delete()
         messages.success(request, "Client has been removed.", extra_tags="success")
-        return redirect('client-list', request.user.username)
+        return redirect('client-list')
     
     return render(request, 'clients/client_remove_confirm.html', {'client': client})
 
@@ -293,7 +281,7 @@ def client_initialize(request, client_id):
     else:
         messages.info(request, 'Profiles already exist.', extra_tags="info")
 
-    return redirect('client-list', request.user.username)
+    return redirect('client-list')
 
 @user_has_role("trainer")
 def client_detail(request, client_id):
