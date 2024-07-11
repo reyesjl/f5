@@ -32,6 +32,7 @@ STRIPE_TEST_SECRET = env('STRIPE_TEST_SECRET')
 # Django user
 AUTH_USER_MODEL = "members.CustomUser"
 LOGIN_URL = '/members/login/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 INSTALLED_APPS = [

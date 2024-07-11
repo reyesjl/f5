@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/quickview.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Admin Dashboard</title>
@@ -17,12 +18,18 @@
         {% include 'includes/notifications.html' %} 
         <div class="pagecontent">
             <div class="pageheader">
-                <div class="brandwrapper">
-                    <h1 class="pagetitle">{{ user.username }}</h1>
-                    <p class="pagesubtitle align-center">{{ user.email }}</p>
-                    <p class="pagesubtitle">Lvl. 0</p>
+                <div class="profile-wrapper">
+                    <div class="profile-image">
+                        <img src="https://place-hold.it/164x164" alt="profile_image" />
+                    </div>
+                    <div class="profile-info">
+                        <div class="username">{{ user.username }}</div>
+                        <div class="fullname">
+                            <span>{{ user.first_name }} {{ user.last_name }}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div> 
             <div class="pagesection">
                 <h3 class="sectiontitle">Quickview</h3>
                 <div class="metrics-container">
@@ -31,10 +38,6 @@
                             <div class="metric-value">{{ total_users }}</div>
                             <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Members</a></div>
                         </li>
-                        <!-- <li class="metrics-item">
-                            <div class="metric-value">${{total_revenue|stringformat:".2f" }}</div>
-                            <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Revenue</a></div>
-                        </li> -->
                         <li class="metrics-item">
                             <div class="metric-value">{{ total_events }}</div>
                             <div class="metric-label"><a class="metric-link" href="{% url 'event-list' %}">Events</a></div>

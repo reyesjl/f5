@@ -60,12 +60,15 @@ def member_login(request):
         form = MemberAuthenticationForm()
     return render(request, 'members/login.html', {'form': form})
 
+def member_login_support(request):
+    return render(request, 'members/login_support.html')
+
 def member_profile(request, username):
     try:
         user = CustomUser.objects.get(username=username)
     except Exception as e:
         message = e
-        messages.success(request, "User not found.", extra_tags="error")
+        messages.error(request, "User not found", extra_tags="error")
         return render(request, "core/error.html", {"message": message})
     
     # Fetch user profiles
@@ -113,15 +116,10 @@ def admin_dashboard(request, username):
     total_users = CustomUser.objects.count()
     total_events = Event.objects.count()
     total_articles = Article.objects.count()
-    total_health_clients = 5
-    total_revenue = 5.00
 
-    messages.info(request, "Camp registration is up 5% today.", extra_tags="info")
     context = {
         'total_users': total_users,
-        'total_revenue': total_revenue,
         'total_events': total_events,
-        'total_health_clients': total_health_clients,
         'total_articles': total_articles,
         'user': user,
     }
