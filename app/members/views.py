@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from core.decorator import user_has_role
 from core.utils import check_user
 from django.contrib.auth.decorators import login_required
-from .forms import MemberCreationForm, MemberAuthenticationForm
+from .forms import MemberCreationForm, MemberAuthenticationForm, SupportTicketForm
 from .models import CustomUser, UserProfile, PlayerProfile, HealthProfile
 from events.models import Event
 from blog.models import Article
@@ -62,6 +62,21 @@ def member_login(request):
 
 def member_login_support(request):
     return render(request, 'members/login_support.html')
+
+def member_support_form(request):
+    if request.method == 'POST':
+        form = SupportTicketForm(request.POST)
+        if form.is_valid():
+            support_ticket = form.save(commit=False)
+            support_ticket.user = request.user
+            support_ticket.save()
+            return redirect('member-support-success')
+    else:
+        form = SupportTicketForm()
+    return render(request, 'members/support/support_form.html', {'form': form})
+
+def member_support_success(request):
+    return render(request, 'members/support/support_success.html')
 
 def member_profile(request, username):
     try:

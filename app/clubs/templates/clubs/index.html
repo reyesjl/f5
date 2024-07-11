@@ -7,6 +7,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'clubs/css/index.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Clubs</title>
@@ -18,15 +19,24 @@
         <div class="pagecontent">
             <div class="pageheader">
                 <h1 class="pagetitle">Clubs</h1>
-                <p class="pagesubtitle">Register your club, record player stats, get team kit.</p>
+                <p class="pagesubtitle">Everything you need to manage and support your club.</p>
             </div>
             <div class="pagesection">
-                <h3 class="sectiontitle">Custom Page</h3>
-                <p>Put your club on the map with your own unique page on our site.</p>
+                <h2 class="sectiontitle">Custom Team Kit</h2>
+                <p class="pagesubtitle">Receive a free quote with your colors, crest, and unique options.</p>
+               
+                <p>We are working alongside Macron to establish a strong and reliable kit provider for the USA rugby community.</p>
+                <img class="macron-logo" src="{% static 'clubs/images/macron_logo.png' %}" />
             </div>
             <div class="pagesection">
-                <h3 class="sectiontitle">Player Stats</h3>
-                <p>One of a kind tracking system for your players. Click on a player, see their tries, and skills.</p>
+                <h2 class="sectiontitle">Road Map November 2024</h2>
+                
+                <ul class="roadmap-list">
+                    <li class="roadmap-item">Club pages to promote achievements, players, and records.</li>
+                    <li class="roadmap-item">Tracable stats for every player each rugby season. Track tries, tackles, minutes, etc</li>
+                    <li class="roadmap-item">Create a 501(c) account to collect donations for your club.</li>
+                    <li class="roadmap-item">Gain access to a database of rising players to recruit to your club.</li>
+                </ul>
             </div>
         </div>
     </div>
