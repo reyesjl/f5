@@ -1,7 +1,7 @@
 .profile-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .profile-image {

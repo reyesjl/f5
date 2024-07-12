@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>Update Plan</title>
+    <title>Create Health Profile</title>
 </head>
 
 <body>
@@ -18,15 +18,14 @@
         {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
-                <h1 class="pagetitle">Update Plan</h1>
-                <p class="pagesubtitle">Fill out the form below to update the plan.</p>
+                <h1 class="pagetitle">Create Health Profile</h1>
+                <p class="pagesubtitle">Fill out the form below to create a new health profile.</p>
             </div>
 
             <div class="formwrapper wide">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
-                    {{ form.media }}
                     <button class="button" type="submit">Submit</button>
                 </form>
             </div>

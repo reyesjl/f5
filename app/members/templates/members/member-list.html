@@ -43,7 +43,7 @@
                     <tbody>
                         {% for user in users %}
                         <tr>
-                        <td><span>Username</span><a href="{% url 'member-profile' user.username %}">{{ user.username }}</a></td>
+                        <td><span>Username</span><a href="{% url 'member-detail' user.username %}">{{ user.username }}</a></td>
                         <td><span>Groups</span>
                             {% for group in user.groups.all %}
                                 <div>{{ group.name }}, </div>

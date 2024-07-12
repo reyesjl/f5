@@ -1,11 +1,11 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
-from core.decorator import user_has_role
-from .models import Plan, Client
+from core.decorator import user_has_role, is_trainer
+from .models import HealthProfile, Plan, Client
 from blog.models import Article
-from .forms import PlanForm
-from members.models import CustomUser, HealthProfile
+from .forms import PlanForm, HealthProfileForm
+from members.models import CustomUser
 from core.utils import check_user, get_object_or_error
 
 
@@ -89,7 +89,9 @@ def plan_create(request):
     if request.method == "POST":
         form = PlanForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            plan = form.save(commit=False)
+            plan.author = request.user.username
+            plan.save()
             return redirect('health-home')
     else:
         form = PlanForm()
@@ -132,7 +134,9 @@ def plan_update(request, slug):
     if request.method == "POST":
         form = PlanForm(request.POST, request.FILES, instance=plan_instance)
         if form.is_valid():
-            form.save()
+            plan = form.save(commit=False)
+            plan.author = request.user.username
+            plan.save()
             messages.success(request, "Plan updated successfully.", extra_tags="success")
             return redirect('plan-list')
     else:
@@ -202,6 +206,17 @@ def client_list(request):
     }
     return render(request, 'clients/client_list.html', context)
 
+@is_trainer
+def client_detail(request, client_id):
+    client = get_object_or_error(Client, id=client_id)
+    health_profile = get_object_or_error(HealthProfile, user=client.user)
+    
+    context = {
+        'client': client,
+        'health_profile': health_profile,
+    }
+    return render(request, 'clients/client_detail.html', context)
+
 @user_has_role("trainer")
 def client_add(request, trainer_username, client_username):
     trainer = get_object_or_error(CustomUser, username=trainer_username)
@@ -214,16 +229,6 @@ def client_add(request, trainer_username, client_username):
         # Create Client object if it doesn't exist
         Client.objects.create(user=client, trainer=trainer)
         messages.info(request, "User has been added as a client.", extra_tags="info")
-    
-    health_profile, created_hp = HealthProfile.objects.get_or_create(user=client, defaults={
-        'height': 0.00,
-        'weight': 0.00,
-    })
-
-    if created_hp:
-        messages.success(request, 'Health profile has been initialized.', extra_tags="success")
-    else:
-        messages.info(request, 'Health profile already exist.', extra_tags="info")
     
     return redirect('client-list')
 
@@ -239,29 +244,42 @@ def client_remove(request, client_username):
     
     return render(request, 'clients/client_remove_confirm.html', {'client': client})
 
-@user_has_role("trainer")
-def client_initialize(request, client_id):
-    try:
-        client = Client.objects.get(id=client_id)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {'message': message})
-    
-    health_profile, created_hp = HealthProfile.objects.get_or_create(user=client, defaults={
-        'height': 0.00,
-        'weight': 0.00,
-    })
+def create_health_profile(request, client_id):
+    client = get_object_or_error(Client, id=client_id)
 
-    if created_hp:
-        messages.success(request, 'Health profile has been initialized.', extra_tags="success")
+    if request.method == 'POST':
+        # Assuming you have a form for creating health profiles
+        form = HealthProfileForm(request.POST)
+        if form.is_valid():
+            health_profile = form.save(commit=False)
+            health_profile.user = client.user
+            health_profile.save()
+            messages.success(request, "Health profile has been created.", extra_tags="success")
+            return redirect('client-list')
     else:
-        messages.info(request, 'Health profile already exist.', extra_tags="info")
+        form = HealthProfileForm()
 
-    return redirect('client-list')
+    context = {
+        'form': form,
+        'client': client,
+    }
+    return render(request, 'clients/create_health_profile.html', context)
 
-@user_has_role("trainer")
-def client_detail(request, client_id):
-    # fetch user object from client
-    # fetch user profiles to display
-    # show quick actions (remove client, reset info, etc)
-    pass
+def update_health_profile(request, client_id):
+    client = get_object_or_error(Client, id=client_id)
+    health_profile = get_object_or_error(HealthProfile, user=client.user)
+
+    if request.method == 'POST':
+        form = HealthProfileForm(request.POST, instance=health_profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Health profile has been updated.", extra_tags="success")
+            return redirect('client-detail', client_id=client.id)
+    else:
+        form = HealthProfileForm(instance=health_profile)
+
+    context = {
+        'form': form,
+        'client': client,
+    }
+    return render(request, 'clients/update_health_profile.html', context)

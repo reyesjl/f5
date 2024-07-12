@@ -63,14 +63,24 @@ body {
 
 .button {
     padding: .25rem .75rem;
-    border: 1px solid black;
     text-decoration: none;
-    color: black;
-    font-weight: bold;
+    color: white;
+    background: linear-gradient(to right, #aaaaaa 5%, #333333 60%);
+    background-position: 25%;
+    background-size: 330% 100%;
     font-size: .9rem;
-    background: white;
     border-radius: 5px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.button:hover {
+    background: linear-gradient(to right, #919191 60%, #919191 60%);
+    cursor: pointer;
+}
+
+.button.disabled {
+    opacity: 50%;
+    pointer-events: none;
 }
 
 .button.medium {
@@ -84,18 +94,38 @@ body {
     gap: .25rem;
 }
 
-.button:hover {
-    background: black;
+
+/* Specific colors */
+.button.go {
+    border: none;
     color: white;
-    cursor: pointer;
+    font-weight: normal;
+    background: linear-gradient(to right, #47aaff 5%, #1a6ac2 60%);
+    background-position: 25%;
+    background-size: 330% 100%;
+    text-transform: none;
 }
 
-.button.disabled {
-    opacity: 50%;
-    pointer-events: none;
+.button.go:hover {
+    background: linear-gradient(to right, #47aaff 60%, #54a7ff 60%);
 }
 
-.button.solidred {
+.button.warning {
+    border: none;
+    color: white;
+    font-weight: normal;
+    background: linear-gradient(to right, #ffcc47 5%, #cca11a 60%);
+    background-position: 25%;
+    background-size: 330% 100%;
+    text-transform: none;
+}
+
+.button.warning:hover {
+    background: linear-gradient(to right, #ffcc47 60%, #ffce2e 60%);
+}
+
+.button.danger {
+    border: none;
     color: white;
     font-weight: normal;
     background: linear-gradient(to right, #ff4747 5%, #c21a1a 60%);
@@ -104,34 +134,8 @@ body {
     text-transform: none;
 }
 
-.button.go {
-    border-color: darkgreen;
-    color: darkgreen;
-}
-
-.button.go:hover {
-    background-color: darkgreen;
-    color: white;
-}
-
-.button.warning {
-    border-color: darkgoldenrod;
-    color: darkgoldenrod;
-}
-
-.button.warning:hover {
-    background: darkgoldenrod;
-    color: white;
-}
-
-.button.danger {
-    border-color: darkred;
-    color: darkred;
-}
-
 .button.danger:hover {
-    background: darkred;
-    color: white;
+    background: linear-gradient(to right, #ff4747 60%, #f93939 60%);
 }
 
 .align-right {

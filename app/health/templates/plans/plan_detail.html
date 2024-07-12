@@ -8,6 +8,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'health/css/plan.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/plan-detail.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Plan Details</title>
@@ -32,7 +33,7 @@
                     </div>
                     <div>
                     <h1 class="pagetitle">{{ plan.title }}</h1>
-                    <p class="pagesubtitle postauthor">by {{ plan.author }}</p>
+                    <p class="pagesubtitle postauthor">by <a href="{% url 'member-profile' plan.author %}">{{ plan.author }}</a></p>
                     <p class="pagesubtitle">{{ plan.views }} views {{ plan.created_at }}</p>
                     </div>
                 </div>

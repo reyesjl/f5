@@ -21,7 +21,9 @@ def article_create(request):
     if request.method == "POST":
         form = ArticleForm(request.POST)
         if form.is_valid():
-            form.save()
+            article = form.save(commit=False)
+            article.author = request.user.username
+            article.save()
             messages.success(request, "Article has been added.", extra_tags="success")
             return redirect('health-home')
     else:
@@ -63,7 +65,10 @@ def article_update(request, slug):
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
-            form.save()
+            article = form.save(commit=False)
+            article.author = request.user.username
+            article.save()
+            messages.success(request, "Article has been updated.", extra_tags="success")
             return redirect('article-detail', slug=article.slug)
     else:
         form = ArticleForm(instance=article)

@@ -2,19 +2,25 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    def reset_health_profile(self):
-        health_profile, created = HealthProfile.objects.get_or_create(user=self)
-        health_profile.height = 0.00
-        health_profile.weight = 0.00
-        health_profile.save()
+    is_trainer = models.BooleanField(
+        default=False,
+        verbose_name='Trainer status',
+        help_text='Designates whether this user is a trainer.'
+    )
+    bio = models.TextField(blank=True, null=True)
 
-    def erase_profiles(self):
-        HealthProfile.objects.filter(user=self).delete()
+class Avatar(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='profiles/avatars/')
 
+    def __str__(self):
+        return self.name
+    
 class UserProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     level = models.IntegerField(default=1)
     xp = models.IntegerField(default=0)
+    avatar = models.ForeignKey(Avatar, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -28,23 +34,6 @@ class UserProfile(models.Model):
     	# Simple example: increase level for every 1000 XP
         while self.xp >= self.level * 1000:
             self.level += 1
-
-class HealthProfile(models.Model):
-	user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='health_profile')
-	height = models.DecimalField(max_digits=5, decimal_places=2)
-	weight = models.DecimalField(max_digits=5, decimal_places=2)
-	squat = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	bench = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	chin_up = models.IntegerField(null=True, blank=True)
-	deadlift = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	bronco = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	broad_jump = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	vertical = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	forty_meter_sprint = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-
-	def __str__(self):
-		return f"Health Profile of {self.user.username}"
-
 
 class SupportTicket(models.Model):
     email = models.EmailField()

@@ -35,6 +35,10 @@
     font-weight: bold;
 }
 
+#id_bronco {
+   width: 210px; 
+}
+
 .ck-editor-container {
     font-weight: normal;
 }

@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
+from members.models import CustomUser
 
 
 class PlanQuerySet(models.QuerySet):
@@ -108,3 +109,35 @@ class Client(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class HealthProfile(models.Model):
+	user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='health_profile')
+	height = models.DecimalField(max_digits=5, decimal_places=2)
+	weight = models.DecimalField(max_digits=5, decimal_places=2)
+	squat = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	bench = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	chin_up = models.IntegerField(null=True, blank=True)
+	deadlift = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	bronco = models.CharField(max_length=8, null=True, blank=True, help_text="Enter duration in HH:MM format")
+	broad_jump = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	vertical = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	forty_meter_sprint = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+
+	def __str__(self):
+		return f"Client Profile of {self.user.username}"
+    
+class Movement(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='health/movement_images/')
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Exercise(models.Model):
+    movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
+    sets = models.PositiveIntegerField()
+    reps = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.movement.name} - {self.sets} sets of {self.reps} reps"

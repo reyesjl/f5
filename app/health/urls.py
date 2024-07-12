@@ -8,6 +8,10 @@ urlpatterns = [
     path("nutrition/", views.nutrition_index, name="nutrition-home"),
     path("mental/", views.mental_index, name="mental-home"),
 
+    # movements
+
+    # exercises
+
     # plans
     path("plans/", views.plan_list, name="plan-list"),
     path("plans/create/", views.plan_create, name="plan-create"),
@@ -18,7 +22,11 @@ urlpatterns = [
 
     # clients 
     path("clients/", views.client_list, name='client-list'),
+    path("clients/<int:client_id>/", views.client_detail, name='client-detail'),
     path("clients/<str:trainer_username>/<str:client_username>/add/", views.client_add, name='client-add'),
     path("clients/<str:client_username>/remove/", views.client_remove, name='client-remove'),
-    path("clients/<int:client_id>/initialize/", views.client_initialize, name='client-initialize'),
+
+    # client health profiles
+    path("clients/<int:client_id>/create-health-profile/", views.create_health_profile, name='create-health-profile'),
+    path("clients/<int:client_id>/update-health-profile/", views.update_health_profile, name='update-health-profile'),
 ]

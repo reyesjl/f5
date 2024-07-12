@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/member-list.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Clients</title>
@@ -21,10 +22,10 @@
         <div class="pagecontent">
             <div class="pageheader"> 
                 <h1 class="pagetitle">My Clients</h1>
-                <p class="pagesubtitle">Find all your clients here.</p>
+                <p class="pagesubtitle">Find and manager all your clients here.</p>
             </div>
 
-            {% include 'clients/_filters_snippet.html' %}
+            {% comment %} Filter can go here later... {% endcomment %}
 
             <div class="pagesection">
                 <h3 class="sectiontitle">All Clients [{{ clients.count }}]</h3>
@@ -32,21 +33,19 @@
                     <thead>
                         <tr>
                         <th>Username</th>
-                        <th>Groups</th>
-                        <th>Action</th>
+                        <th>Update</th>
+                        <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for client in clients %}
                         <tr>
-                        <td><span>Username</span><a href="{% url 'member-profile' client.user.username %}">{{ client.user.username }}</a></td>
-                        <td><span>Groups</span>
-                            {% for group in client.user.groups.all %}
-                                <div>{{ group.name }}, </div>
-                            {% endfor %}
+                        <td><span>Username</span><a href="{% url 'client-detail' client.id %}">{{ client.user.username }}</a></td>
+                        <td><span>Update</span>
+                            <a href="{% url 'member-update' client.user.username %}" class="button warning"><i class="fa fa-pencil"></i></a>
                         </td>
-                        <td><span>Actions</span>
-                            <a href="{% url 'client-remove' client.user.username %}" class="button danger">X</a>
+                        <td><span>Remove</span>
+                            <a href="{% url 'client-remove' client.user.username %}" class="button danger"><i class="fa fa-trash"></i></a>
                         </td>
                         </tr>
                         {% endfor %}

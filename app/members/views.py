@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-from core.decorator import user_has_role
-from core.utils import check_user
+from core.decorator import user_has_role, is_trainer, is_staff, is_staff_or_trainer
+from core.utils import check_user, get_object_or_error
 from django.contrib.auth.decorators import login_required
-from .forms import MemberCreationForm, MemberAuthenticationForm, SupportTicketForm
-from .models import CustomUser, UserProfile, HealthProfile
+from .forms import MemberCreationForm, MemberUpdateForm, MemberAuthenticationForm, SupportTicketForm
+from .models import CustomUser, UserProfile
 from events.models import Event
 from blog.models import Article
 from health.models import Plan, Client
@@ -30,6 +30,34 @@ def member_list(request):
         'search_query': search_query,
     }
     return render(request, "members/member-list.html", context)
+
+@is_staff_or_trainer
+def member_detail(request, username):
+    user = get_object_or_error(CustomUser, username=username)
+    context = {
+        'profile': user,
+    }
+    return render(request, "members/member-detail.html", context)
+
+@is_staff_or_trainer
+def member_update(request, username):
+    profile = get_object_or_error(CustomUser, username=username)
+    print(profile)
+
+    if request.method == 'POST':
+        form = MemberUpdateForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User has been updated.", extra_tags="success")
+            return redirect('member-list')
+    else:
+        form = MemberUpdateForm(instance=profile)
+    
+    context = {
+        'form': form,
+        'profile': profile,
+    }
+    return render(request, "members/member_update.html", context)
 
 def member_signup(request):
     if request.method == 'POST':
@@ -86,31 +114,23 @@ def member_profile(request, username):
         messages.error(request, "User not found", extra_tags="error")
         return render(request, "core/error.html", {"message": message})
     
-    # Fetch user profiles
-    health_profile = HealthProfile.objects.filter(user=user).first()
-    
     has_trainer = check_user(request.user, "trainer")
     if (has_trainer):
         clients = Client.objects.by_user(request.user)
         
     context = {
         'profile': user,
-        'health_profile': health_profile,
         'has_trainer': has_trainer,
     }
     return render(request, 'members/profile.html', context)
 
 @login_required
 def member_dashboard(request, username):
-    try:
-        user = CustomUser.objects.get(username=username)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    user = get_object_or_error(CustomUser, username=username)
     
-    if user.is_superuser:
+    if user.is_staff:
         return redirect('admin-dashboard', username=user.username)
-    elif user.groups.filter(name='trainer').exists():
+    elif user.is_trainer:
         return redirect('trainer-dashboard', username=user.username)
     elif user.groups.filter(name='player').exists():
         return redirect('player-dashboard', username=user.username)
@@ -121,11 +141,7 @@ def member_dashboard(request, username):
 @login_required
 @user_has_role("admin")
 def admin_dashboard(request, username):
-    try:
-        user = CustomUser.objects.get(username=username)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    user = get_object_or_error(CustomUser, username=username)
     total_users = CustomUser.objects.count()
     total_events = Event.objects.count()
     total_articles = Article.objects.count()
@@ -162,11 +178,8 @@ def player_dashboard(request, username):
         message = e
         return render(request, "core/error.html", {"message": message})
     
-    health_profile = HealthProfile.objects.filter(user=user).first()
-    
     context = {
         'user': user,
-        'health_profile': health_profile,
     }
     return render(request, 'members/player_dashboard.html', context)
     
