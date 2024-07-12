@@ -5,7 +5,7 @@ from core.decorator import user_has_role
 from .models import Plan, Client
 from blog.models import Article
 from .forms import PlanForm
-from members.models import CustomUser, HealthProfile, PlayerProfile
+from members.models import CustomUser, HealthProfile
 from core.utils import check_user, get_object_or_error
 
 
@@ -214,28 +214,16 @@ def client_add(request, trainer_username, client_username):
         # Create Client object if it doesn't exist
         Client.objects.create(user=client, trainer=trainer)
         messages.info(request, "User has been added as a client.", extra_tags="info")
-
-    player_profile, created_pp = PlayerProfile.objects.get_or_create(user=client, defaults={
-        'position': '',
-        'club': '',
-        'tries_scored': 0,
-        'tackles_made': 0,
-        'minutes_played': 0,
-    })
     
     health_profile, created_hp = HealthProfile.objects.get_or_create(user=client, defaults={
         'height': 0.00,
         'weight': 0.00,
     })
 
-    if created_pp and created_hp:
-        messages.success(request, 'Player and Health profiles have been initialized.', extra_tags="success")
-    elif created_pp:
-        messages.success(request, 'Player profile has been initialized.', extra_tags="success")
-    elif created_hp:
+    if created_hp:
         messages.success(request, 'Health profile has been initialized.', extra_tags="success")
     else:
-        messages.info(request, 'Profiles already exist.', extra_tags="info")
+        messages.info(request, 'Health profile already exist.', extra_tags="info")
     
     return redirect('client-list')
 
@@ -259,27 +247,15 @@ def client_initialize(request, client_id):
         message = e
         return render(request, "core/error.html", {'message': message})
     
-    player_profile, created_pp = PlayerProfile.objects.get_or_create(user=client.user, defaults={
-        'position': '',
-        'club': '',
-        'tries_scored': 0,
-        'tackles_made': 0,
-        'minutes_played': 0,
-    })
-    
-    health_profile, created_hp = HealthProfile.objects.get_or_create(user=client.user, defaults={
+    health_profile, created_hp = HealthProfile.objects.get_or_create(user=client, defaults={
         'height': 0.00,
         'weight': 0.00,
     })
 
-    if created_pp and created_hp:
-        messages.success(request, 'Player and Health profiles have been initialized.', extra_tags="success")
-    elif created_pp:
-        messages.success(request, 'Player profile has been initialized.', extra_tags="success")
-    elif created_hp:
+    if created_hp:
         messages.success(request, 'Health profile has been initialized.', extra_tags="success")
     else:
-        messages.info(request, 'Profiles already exist.', extra_tags="info")
+        messages.info(request, 'Health profile already exist.', extra_tags="info")
 
     return redirect('client-list')
 
