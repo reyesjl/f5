@@ -6,16 +6,81 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'events/details.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/css/details.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
     <script src="{% static 'events/js/details.js' %}" defer></script>
 
-    <title>Events</title>
+    <title>Event details</title>
 </head>
 <body>
+    {% include 'includes/navigation.html' %}
+
+    <div class="container stack-large">
+        <div class="jumbotron stack-small">
+            <h1 class="jumbotron-title">{{ event.name }}</h1>
+        </div>
+
+        <div class="general stack-small">
+            <div class="section-header border">
+                <h2>When and where</h2>
+            </div>
+            <div class="flexbox stack-small">
+                <div class="column">
+                    <div class="dates">
+                        <p>Location: {{ event.location }}</p>
+                        <p>Starts: {{ event.start_date }}</p>
+                        <p>Ends: {{ event.end_date }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="register stack-small">
+            <div class="section-header border">
+                <h2>Register</h2>
+            </div>
+            <div class="flexbox">
+                <div class="column">
+                    How to Attend?
+                </div>
+                <div class="column">
+                    {% if event.registration_required and event.payment_required %}
+                    <div class="roles">
+                        <div class="stack-small">
+                            {% for role in roles %}
+                                <div>
+                                    Register as <a class="link red" href="{% url 'rsvp-create' event_slug=event.slug role_id=role.id %}">{{ role.name }} ${{ role.cost }}</a>
+                                </div>
+                            {% empty %}
+                                <a class="link red" href="">No Roles Avaiable</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                        {% if event.registration_required %}
+                            <a class="link red" href="{% url 'rsvp-create-no-role' event_slug=event.slug %}">click here</a>
+                        {% else %}
+                            <p>No payment or registration required for this event.</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="details stack-small">
+            <div class="section-header border">
+                <h2>Details</h2>
+            </div>
+            <div class="event-desc">
+                {{ event.detailed_description | safe }}
+            </div>
+        </div>
+    </div>
+
+    
+
     <div class="container">
         {% include 'includes/notifications.html' %}
-        {% include 'includes/navigation.html' %}
         <div class="pagecontent">
             <div class="pageheader">
                 {% if can_manage %}
@@ -26,36 +91,11 @@
                     <a href="{% url 'event-delete' slug=event.slug %}" class="button danger">Delete</a>
                 </div>
                 {% endif %}
-                <h1 class="pagetitle">{{ event.name }}</h1>
-                <p class="pagesubtitle">{{ event.start_date }} <br> to {{ event.end_date }}</p>
-
-                {% if event.registration_required and event.payment_required %}
-                    <div class="eventroles">
-                        <p class="pagesubtitle roletitle">Select a role:</p>
-                        <div class="buttongroup rolebuttons">
-                            {% for role in roles %}
-                                <a class="button" href="{% url 'rsvp-create' event_slug=event.slug role_id=role.id %}">{{ role.name }} ${{ role.cost }}</a>
-                            {% empty %}
-                                <a class="button disabled" href="">No Roles Avaiable</a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% else %}
-                    {% if event.registration_required %}
-                        <p><a class="button" href="{% url 'rsvp-create-no-role' event_slug=event.slug %}">Register</a></p>
-                    {% else %}
-                        <p><a class="button disabled" href="#">No Action Required</a></p>
-                    {% endif %}
-                {% endif %}
-                
             </div>
-            <div class="pagesection">
-                <h2 class="sectiontitle">Quickview</h2>
-                <p class="sectiontext">{{ event.description }}</p>
-            </div>
+        
 
             <div class="pagesection eventdesc">
-                {{ event.detailed_description | safe }}
+                
             </div>
         </div>
     </div>

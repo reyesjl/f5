@@ -8,40 +8,56 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'events/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'events/css/index.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Events</title>
 </head>
 
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %}
-        <div class="pagecontent">
-            <div class="pageheader">
-                <h1 class="pagetitle">Events</h1>
-                <p class="pagesubtitle">Register for upcoming camps, purchase game tickets, and find local rugby.</p>
-                <!-- Manager actions -->
-                {% if can_manage %}
-                <p>
-                    <a href="{% url 'event-create' %}" class="button go">Create New</a>
-                </p>
-                {% endif %}
+    {% include 'includes/navigation.html' %}
+
+    <div class="container stack-large">
+        <div class="jumbotron stack-small">
+            <h1 class="jumbotron-title">Discover. <br />Attend. <br />Connect.</h1>
+            <p class="jumbotron-subtitle">Join thousands coming together to enjoy the greatest game on earth!</p>
+        </div>
+
+        <div class="types stack-small">
+            <div>
+                Sort by type
             </div>
+            <ul class="type-list">
+                <li class="typelist-item">
+                    <a class="typelist-link {% if type == 'all' %}active{% endif %}" href="?type=all">all</a>
+                </li>
+                <li class="typelist-item">
+                    <a class="typelist-link {% if type == 'camp' %}active{% endif %}" href="?type=camp">camps</a>
+                </li>
+                <li class="typelist-item">
+                    <a class="typelist-link {% if type == 'tournament' %}active{% endif %}" href="?type=tournament">tournaments</a>
+                </li>
+                <li class="typelist-item">
+                    <a class="typelist-link {% if type == 'game' %}active{% endif %}" href="?type=game">games</a>
+                </li>
+            </ul>
+        </div>
 
-            {% include 'events/_filters_snippet.html' %}
-
-            <div class="pagesection">
-                <h2 class="sectiontitle">Upcoming Events</h2>
+        <div class="events stack-small">
+            <div class="section-header stack-small">
+                <h2>Upcoming events</h2>
+                <p>Featured events have been <span class="highlight yellow">marked</span> in yellow.</p>
+            </div>
+            <ul class="event-list">
                 {% for event in events %}
                 {% include 'events/_event_snippet.html' %}
                 {% empty %}
                 <p>No upcoming events.</p>
                 {% endfor %}
-            </div>
-
+            </ul>
         </div>
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 
 </html>

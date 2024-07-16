@@ -35,14 +35,41 @@
   border-radius: 8px;
 }
 
+.image-tagline {
+  padding: .25rem;
+  font-size: .8rem;
+  color: gray;
+}
+
 /* Formatted text */
+.jumbotron-title {
+  font-weight: 400;
+  font-size: 6rem;
+  line-height: 100px;
+}
+
+.jumbotron-subtitle {
+  width: 60%;
+}
+
 .link.black {
   color: black;
   text-decoration: underline;
 }
 
+.link.red {
+  color: red;
+  text-decoration: underline;
+}
+
 .highlight {
   color: red;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.highlight.yellow {
+  color: #ffcd28;
   font-style: italic;
   font-weight: 600;
 }
@@ -59,6 +86,25 @@
 
 .stack-small > * + * {
   margin-block-start: 1rem;
+}
+
+/* Sections */
+.section-wrapper .title {
+  font-weight: 600;
+}
+
+.section-wrapper > * {
+  padding-top: 1rem;
+  border-top: 4px solid lightgray;
+}
+
+.section-wrapper > * + * {
+  margin-left: 1rem;
+}
+
+.section-link {
+  color: red;
+  display: block;
 }
 
 /* Boxed content  */
@@ -79,6 +125,7 @@
   text-align: left;
 }
 
+/* After larger */
 @media (min-width: 680px) {
   .flexbox {
     width: 100%;
@@ -90,5 +137,30 @@
     -webkit-flex: 1;
     flex: 1;
     background: none;
+  }
+}
+
+/* After smaller */
+@media screen and (max-width: 680px) {
+  .section-wrapper>* {
+    padding: 1rem 0 0 0;
+  }
+
+  .section-wrapper > * + * {
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+
+  .section-link {
+    text-align: right;
+  }
+
+  .jumbotron-title {
+    font-size: 3rem;
+    line-height: 50px;
+  }
+
+  .jumbotron-subtitle {
+    width: 100%;
   }
 }

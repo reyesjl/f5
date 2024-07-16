@@ -1,19 +1,12 @@
-<div class="event">
-    {% if event.featured %}
-        <div class="eventfeatured">Featured!</div>
-    {% endif %}
-    <h3 class="eventname"><a href="{% url 'event-detail' slug=event.slug %}"><span>&#9737;</span> {{ event.name }}</a></h3>
-    <div class="eventdate">
-        <span>{{ event.start_date }} to {{ event.end_date }}</span>
+<li class="event {% if event.featured %}featured{% endif %} stack-small">
+    <div class="eventflex">
+        <div class="date">
+            <span class="day">{{ event.start_date|date:"d" }}</span>
+            <span class="month">{{ event.start_date|date:"M" }}</span>
+        </div>
+        <div class="type">{{ event.event_type }}</div>
     </div>
-    <div class="eventtype">
-        <span class="eventtag">#{{ event.event_type }}</span>
-    </div>
-    <p class="eventdesc">{{ event.description }}</p>
-
-    <div class="register_and_price">
-        {% if event.registration_required %}
-            <p class="eventregister">*Register to attend</p>
-        {% endif %}
-    </div>
-</div>
+    <div class="title">{{ event.name }}</div>
+    <p class="description">{{ event.description|truncatewords:30 }}</p>
+    <p class="link"><a class="link black" href="{% url 'event-detail' slug=event.slug %}">view event</a></p>
+</li>

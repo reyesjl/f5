@@ -1,0 +1,60 @@
+.event {
+    border-top: 4px solid gray;
+    padding: 1rem;
+}
+
+.event.featured {
+    background: #ffcd28;
+}
+
+.event .date {
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-transform: lowercase;
+}
+
+.event .title {
+    font-size: 1.6rem;
+    font-style: italic;
+}
+
+.event .type {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: fit-content;
+    padding: 2px 4px;
+    font-size: .8rem;
+}
+
+.eventflex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event .description {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.event .link {
+    text-align: right;
+}
+
+.type-list {
+    display: flex;
+    gap: .25rem;
+}
+
+.typelist-link {
+    border: 1px solid black;
+    padding: 0 8px;
+    text-decoration: none;
+    color: black;
+    border-radius: 20px;
+    font-size: .9rem;
+}
+
+.typelist-link.active {
+    background-color: black;
+    color: white;
+}

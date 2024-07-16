@@ -19,8 +19,8 @@ def event_list(request):
     events = Event.objects.all()
 
     # filter on event type
-    event_type = request.GET.get("event_type")
-    if event_type:
+    event_type = request.GET.get("type")
+    if event_type and event_type != 'all':
         events = events.filter_by_event_type(event_type)
 
     # filter on event status    
@@ -33,6 +33,7 @@ def event_list(request):
     can_manage = check_user(request.user, "event_manager")
 
     context = {
+        "type": event_type,
         "events": events,
         "can_manage": can_manage,
     }
