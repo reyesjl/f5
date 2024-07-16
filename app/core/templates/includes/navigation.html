@@ -1,43 +1,20 @@
-<div class="nav">
-    <div class="controls">
-        <div id="togglemenu" class="menubutton">
-            <div class="menustripe"></div>
-            <div class="menustripe"></div>
-            <div class="menustripe"></div>
-        </div>
-        {% if user.is_authenticated %}
-            <div class="account">
-                <a href="{% url 'member-dashboard' user.username %}">
-                    <img class="accountimage" src="https://place-hold.it/50x50" alt="profile image">
-                </a>
-            </div>
-        {% else %}
-            <ul class="accountmenu">
-                <li class="menuitem"><a class="menulink" href="{% url 'member-login' %}">Login</a></li>
-            </ul>
-        {% endif %}
-    </div>
-</div>
+<!-- built-in notification system -->
+{% include 'includes/notifications.html' %}
 
-<div class="sidemenu">
-    <div class="closewrapper">
-        <button class="closebutton">&#x2715;</button>
+{% load static %}
+<div class="navwrapper">
+    <div class="navlogo">
+        <a id="logo" href="/">
+            <img src="{% static 'core/images/f5logo.png' %}" />
+        </a>
+        <a id="text" href="/">
+            Firstfive
+        </a>
     </div>
-    {% if user.is_authenticated %}
-    <div class="menuprofile">
-        <div class="avatar">
-            <img src="https://place-hold.it/164x164" />
-        </div>
-        <a class="username" href="{% url 'member-dashboard' user.username %}">{{ user.username }}</a>
-    </div>
-    {% endif %}
-    <ul class="menulist">
-        <li class="menuitem"><a class="menulink" href="/">Home</a></li>
-        <li class="menuitem"><a class="menulink" href="{% url 'event-list' %}">Events</a></li>
-        <li class="menuitem"><a class="menulink" href="{% url 'health-home' %}">Health</a></li>
-        <li class="menuitem"><a class="menulink" href="{% url 'clubs-home' %}">Clubs</a></li>
-        {% if user.is_authenticated %}
-            <li class="menuitem"><a class="menulink" href="{% url 'member-logout' %}">Logout</a></li>
-        {% endif %}
-    </ul> 
+    <ul class="navlist">
+        <li class="navitem"><a class="navlink" href="/">Home</a></li>
+        <li class="navitem"><a class="navlink" href="{% url 'event-list' %}">Events</a></li>
+        <li class="navitem"><a class="navlink" href="{% url 'health-home' %}">Health</a></li>
+        <li class="navitem"><a class="navlink" href="{% url 'member-login' %}">Login</a></li>
+    </ul>
 </div>

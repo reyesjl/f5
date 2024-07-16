@@ -29,4 +29,5 @@ urlpatterns = [
     # client health profiles
     path("clients/<int:client_id>/create-health-profile/", views.create_health_profile, name='create-health-profile'),
     path("clients/<int:client_id>/update-health-profile/", views.update_health_profile, name='update-health-profile'),
+    path('clients/update-profile/', views.update_profile, name='update_profile'),
 ]

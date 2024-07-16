@@ -1,288 +1,94 @@
-@import url('nav.css');
+@import url('normalize.css');
+@import url('navigation.css');
 @import url('notifications.css');
 @import url("https://use.typekit.net/wme5som.css");
 
-* {
-    font-family: Arial, Helvetica, sans-serif;
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
-.breadcrumbs {
-    display: flex;
-    color: gray;
-    padding: .5rem 1rem;
-    background: rgb(231, 231, 231);
-    border-radius: 12px;
-    font-size: .8rem;
-    gap: .5rem;
-    width: fit-content;
-    text-transform: capitalize;
-}
-
-.breadcrumbs a {
-    color: darkred;
-}
-
-.brandwrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.weblogo {
-    max-width: 100%;
-    width: 250px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.weblogo.small {
-    margin-bottom: 1rem;
-    width: 150px;
-}
-
-.weblogo.small img {
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-}
-
-.link {
-    font-style: italic;
-    font-size: .9rem;
-    text-transform: lowercase;
-}
-
-.link.primary {
-    color: darkred;
-}
-
-.button {
-    padding: .25rem .75rem;
-    text-decoration: none;
-    color: white;
-    background: linear-gradient(to right, #aaaaaa 5%, #333333 60%);
-    background-position: 25%;
-    background-size: 330% 100%;
-    font-size: .9rem;
-    border-radius: 5px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-}
-
-.button:hover {
-    background: linear-gradient(to right, #919191 60%, #919191 60%);
-    cursor: pointer;
-}
-
-.button.disabled {
-    opacity: 50%;
-    pointer-events: none;
-}
-
-.button.medium {
-    padding: .5rem 1rem;
-}
-
-.buttongroup {
-    padding: 1rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .25rem;
-}
-
-
-/* Specific colors */
-.button.go {
-    border: none;
-    color: white;
-    font-weight: normal;
-    background: linear-gradient(to right, #47aaff 5%, #1a6ac2 60%);
-    background-position: 25%;
-    background-size: 330% 100%;
-    text-transform: none;
-}
-
-.button.go:hover {
-    background: linear-gradient(to right, #47aaff 60%, #54a7ff 60%);
-}
-
-.button.warning {
-    border: none;
-    color: white;
-    font-weight: normal;
-    background: linear-gradient(to right, #ffcc47 5%, #cca11a 60%);
-    background-position: 25%;
-    background-size: 330% 100%;
-    text-transform: none;
-}
-
-.button.warning:hover {
-    background: linear-gradient(to right, #ffcc47 60%, #ffce2e 60%);
-}
-
-.button.danger {
-    border: none;
-    color: white;
-    font-weight: normal;
-    background: linear-gradient(to right, #ff4747 5%, #c21a1a 60%);
-    background-position: 25%;
-    background-size: 330% 100%;
-    text-transform: none;
-}
-
-.button.danger:hover {
-    background: linear-gradient(to right, #ff4747 60%, #f93939 60%);
-}
-
-.align-right {
-    text-align: right;
-}
-
-.align-center {
-    text-align: center;
-}
-
-.align-left {
-    text-align: left;
-}
-
-.splitshot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.splitpole {
-    display: flex;
-    flex-direction: column;
-}
-
+/* General  */
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-}
-
-.pagecontent {
     padding: 1rem;
 }
 
-.pagecontent.thin {
-    max-width: 400px;
-    margin: 0 auto;
+.section {
+    margin-top: 2.5rem;
 }
 
-.pageheader {
-    margin-top: 2rem;
-    margin-bottom: 3rem;
+.section-header {
+  padding-bottom: .5rem;
 }
 
-.pagetitle {
-    margin: 0;
-    font-family: aileron, Arial;
-    font-weight: 800;
-    font-style: normal;
+.section-header.border {
+  border-bottom: 1px solid black;
 }
 
-.pagesubtitle {
-    margin-top: .5rem;
-    margin-bottom: .75rem;
-    color: #666;
-    font-family: aileron, Arial;
-    font-style: italic;
-    font-weight: 300;
+.section-image {
+  border: 1px solid gray;
+  padding: 1px;
+  border-radius: 8px;
+  margin-top: 2rem;
 }
 
-.pagesection {
-    margin-bottom: 3rem;
+.section-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
-.sectiontitle {
-    margin: 0;
-    margin-bottom: .5rem;
-    font-family: aileron, Arial;
-    font-weight: 800;
-    font-style: italic;
-    color: darkred;
+/* Formatted text */
+.link.black {
+  color: black;
+  text-decoration: underline;
 }
 
-.sectiontext {
-    margin: 0;
-    margin-bottom: .75rem;
-    line-height: 1.5rem;
+.highlight {
+  color: red;
+  font-style: italic;
+  font-weight: 600;
 }
 
-.sectionsubtitle {
-    margin-top: 0rem;
-    margin-bottom: 1rem;
-    color: gray;
-    font-weight: 300;
-    font-size: 1rem;
-    font-family: aileron, Arial;
-    font-style: italic;
+/* Stacked content */
+[class^='stack'] > * {
+  /* top and bottom margins in horizontal-tb writing mode */
+  margin-block: .5rem;
 }
 
-.generallist  {
-    margin: 0;
+.stack-large > * + * {
+  margin-block-start: 3rem;
 }
 
-.generallist li {
-    margin-bottom: .5rem;
-    line-height: 1.3rem;
+.stack-small > * + * {
+  margin-block-start: 1rem;
 }
 
-.greentext {
-    color: darkgreen;
-    font-size: .8rem;
-    font-style: italic;
-    font-weight: bold;
-    text-transform: uppercase;
+/* Boxed content  */
+.box {
+    padding: 1rem;
 }
 
-.redtext {
-    color: darkred;
-    font-size: .8rem;
-    font-style: italic;
-    font-weight: bold;
-    text-transform: uppercase;
+.bordered.box {
+    border: 1px solid black;
 }
 
-.bluetext {
-    color: darkblue;
-    font-size: .8rem;
-    font-style: italic;
-    font-weight: bold;
-    text-transform: uppercase; 
+/* Columns */
+.flexbox .title {
+  font-size: 1.2rem;
 }
 
-.featured-text {
-    font-family: aileron, Arial;
-    font-size: .8rem;
-    font-weight: 800;
-    color: darkblue;
-    font-style: italic;
-    animation: blink 1s infinite alternate;
-    padding-bottom: .5rem;
+.column {
+  text-align: left;
 }
 
-@keyframes blink {
-    0% { color: darkblue; } /* Start with darkred */
-    50% { color: darkgoldenrod; } /* Blink to yellow at 50% */
-    100% { color: darkblue; } /* Back to darkred at 100% */
-}
+@media (min-width: 680px) {
+  .flexbox {
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+	}
 
-.hiddentext {
-    font-weight: bold;
-    font-style: italic;
-    font-size: .9rem;
-}
-
-@media (max-width: 680px) {
-    .pageheader {
-        margin-top: 1rem;
-        margin-bottom: 2rem;
-    }
+  .column {
+    -webkit-flex: 1;
+    flex: 1;
+    background: none;
+  }
 }

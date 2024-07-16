@@ -6,7 +6,6 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/tables.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
@@ -37,38 +36,50 @@
                     <a href="{% url 'update-health-profile' client.id %}" class="button warning">Edit</a>
                 </div>
                 <div class="pagesection">
-                    <h3 class="sectiontitle">Health Profile</h3>
+                    <h3 class="sectiontitle">Performance Metrics</h3>
                     <!-- Add other fields as needed -->
-                    <table class="health-profile-table">
-                        <thead>
-                            <tr>
-                                <th>Height (cm)</th>
-                                <th>Weight (lb)</th>
-                                <th>Squat (lb)</th>
-                                <th>Bench Press (lb)</th>
-                                <th>Chin-ups</th>
-                                <th>Deadlift (lb)</th>
-                                <th>Bronco (HH:MM)</th>
-                                <th>Broad Jump (cm)</th>
-                                <th>Vertical Jump (cm)</th>
-                                <th>40m Sprint (s)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span>Height (cm)</span> {{ health_profile.height }}</td>
-                                <td><span>Weight (kg)</span> {{ health_profile.weight }}</td>
-                                <td><span>Squat (kg)</span> {{ health_profile.squat }}</td>
-                                <td><span>Bench Press (kg)</span> {{ health_profile.bench }}</td>
-                                <td><span>Chin-ups</span> {{ health_profile.chin_up }}</td>
-                                <td><span>Deadlift (kg)</span> {{ health_profile.deadlift }}</td>
-                                <td><span>Bronco (HH:MM)</span> {{ health_profile.bronco }}</td>
-                                <td><span>Broad Jump (m)</span> {{ health_profile.broad_jump }}</td>
-                                <td><span>Vertical Jump (m)</span> {{ health_profile.vertical }}</td>
-                                <td><span>40m Sprint (s)</span> {{ health_profile.forty_meter_sprint }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="health-profile-container">
+                        <div class="card" data-label="Height (cm)">
+                            <div class="value" data-field="height">{{health_profile.height}}</div>
+                            <div class="label">Height (cm)</div>
+                        </div>
+                        <div class="card" data-label="Weight (lb)">
+                            <div class="value" data-field="weight">{{health_profile.weight}}</div>
+                            <div class="label">Weight (lb)</div>
+                        </div>
+                        <div class="card" data-label="Squat (lb)">
+                            <div class="value" data-field="squat">{{health_profile.squat}}</div>
+                            <div class="label">Squat (lb)</div>
+                        </div>
+                        <div class="card" data-label="Bench Press (lb)">
+                            <div class="value" data-field="bench">{{health_profile.bench}}</div>
+                            <div class="label">Bench Press (lb)</div>
+                        </div>
+                        <div class="card" data-label="Chin-ups">
+                            <div class="value" data-field="chin_up">{{health_profile.chin_up}}</div>
+                            <div class="label">Chin-ups</div>
+                        </div>
+                        <div class="card" data-label="Deadlift (lb)">
+                            <div class="value" data-field="deadlift">{{health_profile.deadlift}}</div>
+                            <div class="label">Deadlift (lb)</div>
+                        </div>
+                        <div class="card" data-label="Bronco (HH:MM)">
+                            <div class="value" data-field="bronco">{{ health_profile.bronco}}</div>
+                            <div class="label">Bronco (HH:MM)</div>
+                        </div>
+                        <div class="card" data-label="Broad Jump (cm)">
+                            <div class="value" data-field="broad_jump">{{health_profile.broad_jump}}</div>
+                            <div class="label">Broad Jump (cm)</div>
+                        </div>
+                        <div class="card" data-label="Vertical Jump (cm)">
+                            <div class="value" data-field="vertical">{{health_profile.vertical}}</div>
+                            <div class="label">Vertical Jump (cm)</div>
+                        </div>
+                        <div class="card" data-label="40m Sprint (s)">
+                            <div class="value" data-field="forty_meter_sprint">{{health_profile.forty_meter_sprint}}</div>
+                            <div class="label">40m Sprint (s)</div>
+                        </div>
+                    </div>
                 </div>
             {% else %}
                 <div class="buttongroup">

@@ -1,0 +1,57 @@
+.jumbotron-title {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 6rem;
+  line-height: 100px;
+}
+
+.jumbotron-subtitle {
+  width: 60%;
+}
+
+.section-wrapper .title {
+  font-weight: 600;
+}
+
+.section-wrapper > * {
+  padding-top: 1rem;
+  border-top: 4px solid lightgray;
+}
+
+.section-wrapper > * + * {
+  margin-left: 1rem;
+}
+
+.section-link {
+  color: red;
+  display: block;
+}
+
+#featured-image {
+  filter: saturate(0);
+}
+
+@media screen and (max-width: 680px) {
+  .jumbotron-title {
+    font-size: 3rem;
+    line-height: 50px;
+  }
+
+  .jumbotron-subtitle {
+    width: 100%;
+  }
+
+  .section-wrapper>* {
+    padding: 1rem 0 0 0;
+  }
+
+  .section-wrapper > * + * {
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+
+  .service-link {
+    text-align: right;
+  }
+}
+

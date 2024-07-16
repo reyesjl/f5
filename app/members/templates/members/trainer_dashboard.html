@@ -6,8 +6,7 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'members/css/quickview.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/trainer.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Trainer Dashboard</title>
@@ -17,8 +16,40 @@
         {% include 'includes/navigation.html' %} 
         {% include 'includes/notifications.html' %} 
         <div class="pagecontent">
-            <h2 class="pagetitle">Trainer's Dashboard</h2>
-            <div class="pageheader">
+            <div class="welcome-banner">
+                <div class="welcome-statement">
+                    Welcome, <br /> <span class="welcome-username">{{ user.username }}</span>
+                </div>
+            </div>
+            <div class="dashwrapper">
+                <ul class="dashlist">
+                    <li class="dashlist-item">
+                        <a class="dashlist-link" href="{% url 'client-list' %}">
+                            <div class="link-logo yellow">C</div>
+                            <span class="link-label">Clients</span>
+                        </a>
+                    </li>
+                    <li class="dashlist-item">
+                        <a class="dashlist-link" href="#">
+                            <div class="link-logo green">R</div>
+                            <span class="link-label">Requests</span>
+                        </a>
+                    </li>
+                    <li class="dashlist-item">
+                        <a class="dashlist-link" href="{% url 'blog-home' %}">
+                        <div class="link-logo orange">A</div>
+                            <span class="link-label">Articles</span>
+                        </a>
+                    </li>
+                    <li class="dashlist-item">
+                        <a class="dashlist-link" href="{% url 'plan-list' %}">
+                            <div class="link-logo blue">P</div>
+                            <span class="link-label">Plans</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="pageheader">
                 <div class="profile-wrapper">
                     <div class="profile-image">
                         <img src="https://place-hold.it/164x164" alt="profile_image" />
@@ -30,31 +61,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="pagesection">
-                <h3 class="sectiontitle">Quickview</h3>
-                <div class="metrics-container">
-                    <ul class="metrics-list">
-                        <li class="metrics-item">
-                            <div class="metric-value">{{ total_health_clients }}</div>
-                            <div class="metric-label"><a class="metric-link" href="{% url 'client-list' %}">Health Clients</a></div>
-                        </li>
-                        <li class="metrics-item">
-                            <div class="metric-value">{{ total_plans }}</div>
-                            <div class="metric-label"><a class="metric-link" href="{% url 'plan-list' %}">Plans</a></div>
-                        </li>
-                        <li class="metrics-item">
-                            <div class="metric-value">{{ total_articles }}</div>
-                            <div class="metric-label"><a class="metric-link" href="{% url 'blog-home' %}">Articles</a></div>
-                        </li>
-                        <li class="metrics-item">
-                            <div class="metric-value">{{ total_users }}</div>
-                            <div class="metric-label"><a class="metric-link" href="{% url 'member-list' %}">Members</a></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
+            </div> -->
         </div>
     </div>
 </body>

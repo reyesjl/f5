@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
@@ -7,6 +8,10 @@ from blog.models import Article
 from .forms import PlanForm, HealthProfileForm
 from members.models import CustomUser
 from core.utils import check_user, get_object_or_error
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -283,3 +288,24 @@ def update_health_profile(request, client_id):
         'client': client,
     }
     return render(request, 'clients/update_health_profile.html', context)
+
+@require_POST
+def update_profile(request):
+    data = json.loads(request.body.decode('utf-8'))
+    field = data.get('field')
+    value = data.get('value')
+    user = get_object_or_error(Client, id=15).user  # Assuming the user is logged in and request.user is the current user
+
+    if not field or not value:
+        return JsonResponse({'error': 'Invalid data'}, status=400)
+
+    try:
+        profile = get_object_or_error(HealthProfile, user=user)  # Assuming HealthProfile has a OneToOneField to user
+        if hasattr(profile, field):
+            setattr(profile, field, value)
+            profile.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'error': 'Invalid field'}, status=400)
+    except HealthProfile.DoesNotExist:
+        return JsonResponse({'error': 'Profile not found'}, status=404)
