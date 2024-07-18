@@ -1,98 +1,71 @@
-.formwrapper {
-    width: 400px;
-    max-width: 90%;
-    margin: 0 auto;
-    padding-bottom: 5rem;
-}
-
-.formwrapper.wide {
-    width: 100%;
-}
-
-.formwrapper form {
+.form-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    width: 300px;
+    max-width: 90%;
+    margin: 0 auto;
 }
 
-.formwrapper label {
-    font-weight: bold;
-    font-style: italic; 
-    display: block;
-    margin-bottom: .25rem;
+.form-wrapper .logo {
+    max-width: 200px;
 }
 
-.formwrapper input[type="text"],
-.formwrapper input[type="email"],
-.formwrapper input[type="password"],
-.ck-editor-container,
-.formwrapper select {
-    border: 2px solid black; 
-    border-radius: 8px;
-    padding: .5rem; 
-    margin-bottom: 10px; 
-    width: 100%;
-    font-weight: bold;
-}
-
-#id_bronco {
-   width: 210px; 
-}
-
-.ck-editor-container {
-    font-weight: normal;
-}
-
-.formwrapper textarea {
-    border: 2px solid black; 
-    border-radius: 8px;
-    padding: .5rem; 
-    margin-bottom: 10px; 
+.form-wrapper .logo img {
     width: 100%;
 }
 
-
-.formwrapper input[type="date"], 
-.formwrapper input[type="number"] {
-    border: 2px solid black; 
-    border-radius: 8px;
-    padding: .5rem; 
-    margin-bottom: 10px; 
-    font-weight: bold;
+.form-fields {
+    width: 100%;
 }
 
-/* Style submit button */
-.formwrapper button[type="submit"] {
-    padding: 10px 20px;
-    color: white;
-    font-weight: normal;
-    background: linear-gradient(to right, #ff4747 5%, #c21a1a 60%);
-    background-position: 25%;
-    background-size: 330% 100%;
+.form-fields input[type=text],
+.form-fields input[type=password] {
+    padding: 5px;
+    outline: none;
     border: none;
+    border-left: 2px solid gray;
+    border-bottom: 1px dotted gray;
 }
 
-/* Hover effect on submit button */
-.formwrapper button[type="submit"]:hover {
-    background: linear-gradient(to right, #ff4747 30%, #c21a1a 60%);
-}
-
-.errorlist {
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
-
-.errorlist li {
-    margin: .5rem;
-    font-weight: bold;
-    font-size: .8rem;
-    color: darkred;
-    font-style: italic;
+.form-fields div {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
 }
 
 .helptext {
     font-size: .9rem;
     color: gray;
     margin-bottom: .5rem;
+}
+
+.form-submit {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-submit button {
+    padding: 6px 0;
+    width: 100%;
+    font-weight: 600;
+    background: black;
+    color: white;
+}
+
+.form-submit button:hover {
+    cursor: pointer;
+}
+
+.errorlist {
+    border: 1px solid gray;
+    padding: .5rem;
+}
+
+.errorlist li {
+    color: crimson;
+    font-size: .8rem;
+    font-weight: 600;
+    font-style: italic;
 }
