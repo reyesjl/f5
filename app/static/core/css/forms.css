@@ -16,6 +16,10 @@
     text-align: center;
 }
 
+.form-wrapper .text-wrapper {
+    text-align: center;
+}
+
 .form-wrapper .logo {
     width: 200px;
     max-width: 100%;
