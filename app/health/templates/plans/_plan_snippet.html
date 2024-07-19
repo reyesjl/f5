@@ -1,17 +1,21 @@
-<div class="media-element">
-    <a class="element-link" href="{% url 'plan-detail' slug=plan.slug %}">
-        <img class="element-image" src="{{ plan.featured_image.url }}"
-            alt="plan image placeholder" />
-        <div class="element-title">{{ plan.title|truncatechars:55 }}</div>
+<li class="plan stack-small">
+    <a href="{% url 'plan-detail' slug=plan.slug %}">
+        <div class="plan-cover">
+            <img src="{{ plan.featured_image.url }}" />
+        </div>
     </a>
-    <div class="featured-text">Featured!</div>
-</div>
-{% empty %}
-<div class="media-element">
-    <a class="element-link" href="#">
-        <img class="element-image" src="https://place-hold.it/320x480"
-            alt="plan image placeholder" />
-        <div class="element-title">No plans found.</div>
-    </a>
-    <div class="featured-text">Coming soon!</div>
-</div>
+    <div class="plan-meta">
+        <div class="plan-title">
+            <a class="link black" href="{% url 'plan-detail' slug=plan.slug %}">{{ plan.title}}</a>
+        </div>
+        <div class="plan-views">
+            {{ plan.views }} <i class="fa-solid fa-eye"></i>
+        </div>
+        <div class="plan-category">
+            {{ plan.get_type_display }}
+        </div>
+        <div class="plan-author">
+            {{ plan.author }}
+        </div>
+    </div>
+</li>

@@ -2,13 +2,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 400px;
     max-width: 90%;
     margin: 0 auto;
+    justify-content: center;
+}
+
+.form-wrapper.spacer {
+    margin-bottom: 3rem;
+}
+
+.form-wrapper .title {
+    text-align: center;
 }
 
 .form-wrapper .logo {
-    max-width: 200px;
+    width: 200px;
+    max-width: 100%;
 }
 
 .form-wrapper .logo img {
@@ -20,11 +30,12 @@
 }
 
 .form-fields input[type=text],
+.form-fields input[type=email],
 .form-fields input[type=password] {
     padding: 5px;
     outline: none;
     border: none;
-    border-left: 2px solid gray;
+    border-left: 4px solid black;
     border-bottom: 1px dotted gray;
 }
 

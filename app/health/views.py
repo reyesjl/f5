@@ -60,7 +60,6 @@ def mental_index(request):
     }
     return render(request, "health/mental.html", context)
 
-@user_has_role("health_manager")
 def plan_list(request):
     plans = Plan.objects.all()
     can_manage = check_user(request.user, "health_manager")
@@ -77,13 +76,13 @@ def plan_list(request):
     if status == "featured":
         plans = plans.featured()
 
-    # Filter on type
-    type = request.GET.get("plan_type")
-    if type:
-        if type != 'all':
-            plans = plans.by_type(type)
+    # filter on event type
+    plan_type = request.GET.get("type")
+    if plan_type and plan_type != 'all':
+        plans = plans.by_type(plan_type)
 
     context = {
+        "type": plan_type,
         "plans": plans,
         "can_manage": can_manage,
     }

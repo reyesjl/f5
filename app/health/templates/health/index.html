@@ -8,6 +8,9 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'health/css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Health</title>
@@ -28,20 +31,42 @@
             <!-- <h1 class="jumbotron-title">Be Better. <br />Go Faster. <br />Feel Stronger.</h1> -->
             <h1 class="jumbotron-title">Follow plans <br />that work<br />for you.</h1>
 
-            <p class="jumbotron-subtitle">We provide free resources to support your journey. 
-                Read our <span class="highlight">blog</span> to learn more, or schedule a 
-                <span class="highlight">one-on-one</span> with a trainer for a personalized plan.</p>
+            <p class="jumbotron-subtitle">We provide free resources to support your journey.
+                Read our <span class="highlight">blog</span> to learn more, or schedule a
+                <span class="highlight">one-on-one</span> with a trainer for a personalized plan.
+            </p>
         </div>
 
         <div class="plans stack-small">
             <div class="section-header stack-small">
-                <h2>Featured plans</h2>
-                <p>Crafted by certified trainers for strength, fitness, and nutrition.</p>
+                <div class="justify-between">
+                    <h2>Featured plans</h2>
+                    <a class="link red" href="{% url 'plan-list' %}">view all</a>
+                </div>
+                <p>Crafted by certified trainers with a focus on strength, fitness, and nutrition.</p>
             </div>
             <ul class="plan-list">
                 {% for plan in plans %}
-                <li class="plan">
-                    <a class="link black" href="{% url 'plan-detail' slug=plan.slug %} ">{{ plan.title}}</a>
+                <li class="plan stack-small">
+                    <a href="{% url 'plan-detail' slug=plan.slug %}">
+                        <div class="plan-cover">
+                            <img src="{{ plan.featured_image.url }}" />
+                        </div>
+                    </a>
+                    <div class="plan-meta">
+                        <div class="plan-title">
+                            <a class="link black" href="{% url 'plan-detail' slug=plan.slug %}">{{ plan.title}}</a>
+                        </div>
+                        <div class="plan-views">
+                            {{ plan.views }} <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <div class="plan-category">
+                            {{ plan.get_type_display }}
+                        </div>
+                        <div class="plan-author">
+                            {{ plan.author }}
+                        </div>
+                    </div>
                 </li>
                 {% empty %}
                 <p>No featured plans.</p>

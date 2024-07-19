@@ -39,22 +39,3 @@
 .event .link {
     text-align: right;
 }
-
-.type-list {
-    display: flex;
-    gap: .25rem;
-}
-
-.typelist-link {
-    border: 1px solid black;
-    padding: 0 8px;
-    text-decoration: none;
-    color: black;
-    border-radius: 20px;
-    font-size: .9rem;
-}
-
-.typelist-link.active {
-    background-color: black;
-    color: white;
-}

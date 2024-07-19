@@ -8,68 +8,52 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'health/css/plan.css' %}">
-    <script src="{% static 'core/js/nav.js' %}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/planlist.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>Plans</title>
 </head>
 
 <body>
-    <div class="container">
-        {% include 'includes/notifications.html' %}
-        {% include 'includes/navigation.html' %}
-        <div class="pagecontent">
-            <div class="pageheader"> 
-                <h1 class="pagetitle">Plans</h1>
-                <p class="pagesubtitle">Find any plan from here.</p>
-                {% if can_manage %}
-                <p>
-                    <a href="{% url 'plan-create' %}" class="button go">Create Plan</a>
-                </p>
-                {% endif %}
+    {% include 'includes/navigation.html' %}
+
+    <div class="container stack-large">
+        <div class="plans stack-small">
+            <div class="section-header stack-small">
+                <h2>Find fitness plans</h2>
             </div>
-
-            {% include 'plans/_filters_snippet.html' %}
-
-            <div class="pagesection">
-                <h3 class="sectiontitle">All Plans [{{ plans.count }}]</h3>
-                {% for plan in plans %}
-                <div class="planobject">
-                    <!-- Plan feature status -->
-                    {% if plan.featured %}
-                    <div class="featured-text planstatus">Featured</div>
-                    {% endif %}
-
-                    <h3 class="plantitle">
-                        <a href="{% url 'plan-detail' slug=plan.slug %}">{{ plan.title }}</a>
-                    </h3>
-
-                    <div class="quick-actions">
-                        <!-- Toggle status -->
-                        {% if plan.status == 'draft' %}
-                        <a class="button publish"
-                            href="{% url 'quick-action' slug=plan.slug action='toggle-status' %}">Publish</a>
-                        {% else %}
-                        <a class="button publish"
-                            href="{% url 'quick-action' slug=plan.slug action='toggle-status' %}">Unpublish</a>
-                        {% endif %}
-
-                        <!-- Toggle featured status -->
-                        <a class="button toggle-featured"
-                            href="{% url 'quick-action' slug=plan.slug action='toggle-featured' %}">
-                            {% if plan.featured %}Unfeature{% else %}Feature{% endif %}
-                        </a>
-                        
-                    </div>
-
+            <div class="type-filters filter-wrapper stack-small">
+                <div>
+                    Sort by type
                 </div>
+                <ul class="filter-list">
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'all' %}active{% endif %}" href="?type=all">all</a>
+                    </li>
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'strength_and_conditioning' %}active{% endif %}" href="?type=strength_and_conditioning">strength and conditioning</a>
+                    </li>
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'nutrition' %}active{% endif %}" href="?type=nutrition">nutrition</a>
+                    </li>
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'mental' %}active{% endif %}" href="?type=mental">mental</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="plan-list">
+                {% for plan in plans %}
+                {% include 'plans/_plan_snippet.html' %}
                 {% empty %}
                 <p>No plans found.</p>
                 {% endfor %}
-            </div>
-
+            </ul>
         </div>
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 
 </html>

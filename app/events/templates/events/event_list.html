@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'events/css/index.css' %}">
-    <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Events</title>
 </head>
@@ -21,34 +20,32 @@
         <div class="jumbotron stack-small">
             <h1 class="jumbotron-title">Discover. <br />Attend. <br />Connect.</h1>
             <p class="jumbotron-subtitle">Recieve a free <span class="highlight">rugby resume</span> when you attend a camp, exclusive <span class="highlight">ticket deals</span> on the regular, and first access to community events.</p>
-        </div>
-
-        <div class="types stack-small">
-            <div>
-                Sort by type
-            </div>
-            <ul class="type-list">
-                <li class="typelist-item">
-                    <a class="typelist-link {% if type == 'all' %}active{% endif %}" href="?type=all">all</a>
-                </li>
-                <li class="typelist-item">
-                    <a class="typelist-link {% if type == 'camp' %}active{% endif %}" href="?type=camp">camps</a>
-                </li>
-                <li class="typelist-item">
-                    <a class="typelist-link {% if type == 'tournament' %}active{% endif %}" href="?type=tournament">tournaments</a>
-                </li>
-                <li class="typelist-item">
-                    <a class="typelist-link {% if type == 'game' %}active{% endif %}" href="?type=game">games</a>
-                </li>
-            </ul>
-        </div>
-
+        </div> 
         <div class="events stack-small">
             <div class="section-header stack-small">
                 <h2>Upcoming events</h2>
                 <p>Featured events have been <span class="highlight yellow">marked</span> in yellow.</p>
             </div>
-            <ul class="event-list">
+            <div class="type-filters filter-wrapper stack-small">
+                <div>
+                    Sort by type
+                </div>
+                <ul class="filter-list">
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'all' %}active{% endif %}" href="?type=all">all</a>
+                    </li>
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'camp' %}active{% endif %}" href="?type=camp">camps</a>
+                    </li>
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'tournament' %}active{% endif %}" href="?type=tournament">tournaments</a>
+                    </li>
+                    <li class="filter-item">
+                        <a class="filter-link {% if type == 'game' %}active{% endif %}" href="?type=game">games</a>
+                    </li>
+                </ul>
+            </div>
+            <ul id="results" class="event-list">
                 {% for event in events %}
                 {% include 'events/_event_snippet.html' %}
                 {% empty %}
