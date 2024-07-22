@@ -1,0 +1,13 @@
+.plan-header {
+    align-items: flex-end;
+}
+
+.plan-cover {
+    margin-right: 1rem;
+    width: 21%;
+    max-width: 100%;
+}
+
+.plan-cover img {
+    width: 100%;
+}

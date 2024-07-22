@@ -8,6 +8,20 @@
     justify-content: center;
 }
 
+.form-wrapper.align-left {
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+.form-wrapper.wide {
+    width: 900px;
+}
+
+.form-wrapper.wider {
+    width: 1200px;
+}
+
 .form-wrapper.spacer {
     margin-bottom: 3rem;
 }
@@ -41,6 +55,28 @@
     border: none;
     border-left: 4px solid black;
     border-bottom: 1px dotted gray;
+}
+
+.form-fields input[type=checkbox] {
+    width: fit-content;
+}
+
+a {
+    color: blue;
+}
+
+textarea {
+    padding: 5px;
+    border: none;
+    border-left: 4px solid black;
+    border-bottom: 1px dotted gray;
+}
+
+select {
+    padding: 5px;
+    border: none;
+    border-left: 4px solid black;
+    border-bottom: 1px dotted gray; 
 }
 
 .form-fields div {
