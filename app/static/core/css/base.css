@@ -71,6 +71,17 @@
   color: white;
 }
 
+/* Action links */
+.action-links {
+  border: 1px dotted gray;
+  padding: .5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+}
+
 /* Formatted text */
 .jumbotron-title {
   font-weight: 400;

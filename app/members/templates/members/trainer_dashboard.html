@@ -6,63 +6,50 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'members/css/trainer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>Trainer Dashboard</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        {% include 'includes/notifications.html' %} 
-        <div class="pagecontent">
-            <div class="welcome-banner">
-                <div class="welcome-statement">
-                    Welcome, <br /> <span class="welcome-username">{{ user.username }}</span>
-                </div>
+    {% include 'includes/navigation.html' %} 
+    <div class="container stack-large">
+        <div class="profile-wrapper">
+            <div class="profile-image">
+                <img src="https://place-hold.it/164x164" alt="profile_image" />
             </div>
-            <div class="dashwrapper">
-                <ul class="dashlist">
-                    <li class="dashlist-item">
-                        <a class="dashlist-link" href="{% url 'client-list' %}">
-                            <div class="link-logo yellow">C</div>
-                            <span class="link-label">Clients</span>
-                        </a>
-                    </li>
-                    <li class="dashlist-item">
-                        <a class="dashlist-link" href="#">
-                            <div class="link-logo green">R</div>
-                            <span class="link-label">Requests</span>
-                        </a>
-                    </li>
-                    <li class="dashlist-item">
-                        <a class="dashlist-link" href="{% url 'blog-home' %}">
-                        <div class="link-logo orange">A</div>
-                            <span class="link-label">Articles</span>
-                        </a>
-                    </li>
-                    <li class="dashlist-item">
-                        <a class="dashlist-link" href="{% url 'plan-list' %}">
-                            <div class="link-logo blue">P</div>
-                            <span class="link-label">Plans</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- <div class="pageheader">
-                <div class="profile-wrapper">
-                    <div class="profile-image">
-                        <img src="https://place-hold.it/164x164" alt="profile_image" />
+            <div class="profile-info stack-small">
+                <div class="profile-meta">
+                    <div class="user-role">
+                        {% if user.is_staff %}
+                            staff
+                        {% elif user.is_trainer %}
+                            trainer
+                        {% else %}
+                            member
+                        {% endif %}
                     </div>
-                    <div class="profile-info">
-                        <div class="username">{{ user.username }}</div>
-                        <div class="fullname">
-                            <span>{{ user.first_name }} {{ user.last_name }}</span>
-                        </div>
+                    <div class="username">{{ user.username }}</div>
+                    <div class="fullname">
+                        <span>{{ user.first_name }} {{ user.last_name }}</span>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
+        <div class="profile-bio">
+            {{ user.bio }}
+        </div>
+        <div class="stack-small">
+            <div class="account-actions">
+                <p>Account</p>
+                <div class="action-links">
+                    <a class="link red" href="#">set name</a>
+                    <a class="link red" href="#">set bio</a>
+                    <a class="link red" href="#">set profile</a>
+                    <a class="link red" href="{% url 'member-logout' %}">logout</a>
+                </div>
+            </div>
+        </div>      
     </div>
 </body>
 </html>

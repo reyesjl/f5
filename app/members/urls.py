@@ -24,10 +24,10 @@ urlpatterns = [
     path("<str:username>/detail/", views.member_detail, name="member-detail"),
     path("<str:username>/update/", views.member_update, name="member-update"),
     path("<str:username>/profile/", views.member_profile, name="member-profile"),
-    path("<str:username>/dashboard/", views.member_dashboard, name="member-dashboard"),
-    path("<str:username>/admin-dashboard/", views.admin_dashboard, name="admin-dashboard"),
-    path("<str:username>/trainer-dashboard/", views.trainer_dashboard, name="trainer-dashboard"),
-    path("<str:username>/player-dashboard/", views.player_dashboard, name="player-dashboard"),
+    path("dashboard/", views.member_dashboard, name="member-dashboard"),
+    path("admin-dashboard/", views.admin_dashboard, name="admin-dashboard"),
+    path("trainer-dashboard/", views.trainer_dashboard, name="trainer-dashboard"),
+    path("player-dashboard/", views.player_dashboard, name="player-dashboard"),
 
     # Management
     #path("<str:username>/roles/", views.member-edit),

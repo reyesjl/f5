@@ -1,62 +1,58 @@
 .profile-wrapper {
+    width: 400px;
+    border: 1px solid black;
+    max-width: 100%;
+    padding: .5rem;
+}
+
+.user-rank-role {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    color: gray;
+    font-weight: 600;
+    font-size: .9rem;
+    text-transform: uppercase;
+    padding: .5rem;
+    border-bottom: 1px dotted gray;
 }
 
-.profile-image {
-    max-width: 164px;
+.avatar-wrapper {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 2rem 0;
 }
 
-.profile-image img {
+.user-avatar {
     width: 100%;
+}
+
+.user-avatar img {
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 50%;
     aspect-ratio: 1 / 1;
 }
 
 .username {
-    font-size: 1.5rem;
-}
-
-.fullname {
-    color: gray;
-    font-size: .8rem;
-}
-
-.health-profile-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
-}
-
-.card {
-    flex: 1 1 20%;
-    box-sizing: border-box;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 10px;
-}
-
-.card .value {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-.card .label {
-    border-top: 1px solid black;
-    font-size: 1em;
-    color: #555;
+    text-align: center;
     font-weight: bold;
+    font-size: 1.2rem;
+    padding-bottom: .5rem;
+}
+
+.profile-metrics > div {
+    padding: .5rem;
+}
+
+.metrics-title {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: .9rem;
+    padding: .5rem;
+    border-bottom: 1px dotted gray;
 }
 
 @media (max-width: 680px) {
-    .profile-wrapper {
-        flex-direction: column;
-    }
-    
-    .profile-info {
-        order: -1;
-    }
+
 }

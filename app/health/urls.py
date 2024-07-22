@@ -10,7 +10,7 @@ urlpatterns = [
 
     # movements
 
-    # exercises
+    
 
     # plans
     path("plans/", views.plan_list, name="plan-list"),
@@ -19,6 +19,9 @@ urlpatterns = [
     path("plans/<slug:slug>/update/", views.plan_update, name="plan-update"),
     path("plans/<slug:slug>/delete/", views.plan_delete, name="plan-delete"),
     path("plans/<slug:slug>/quick-action/<str:action>/", views.quick_action, name="quick-action"),
+
+    # exercises
+    path("plans/<slug:slug>/exercises/create/", views.exercise_create, name="exercise-create"),
 
     # clients 
     path("clients/", views.client_list, name='client-list'),

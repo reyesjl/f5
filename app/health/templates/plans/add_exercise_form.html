@@ -9,20 +9,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
 
-    <title>Update Plan</title>
+    <title>Add Exercise</title>
 </head>
 
 <body>
     {% include 'includes/navigation.html' %}
     <div class="container stack-large">
-        <h1>Plan Update</h1>
-        <div class="form-wrapper wider align-left spacer">
-            <form method="post" enctype="multipart/form-data" class="form-fields stack-small">
+        <h1>Add Exercise</h1>
+        <div class="form-wrapper thin align-left spacer">
+            <form method="post" class="form-fields stack-small">
                 {% csrf_token %}
                 {{ form }}
 
                 <div class="form-submit">
-                    <button class="button" type="submit">Update</button>
+                    <button class="button" type="submit">Add</button>
                 </div>
             </form>
         </div>

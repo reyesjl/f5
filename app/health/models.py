@@ -5,7 +5,58 @@ from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
 from members.models import CustomUser
 
+class ClientQuerySet(models.QuerySet):
+    def by_username(self, username):
+        return self.filter(user__username=username)
 
+    def by_user(self, user):
+        return self.filter(user=user)
+    
+    def by_trainer(self, username):
+        return self.filter(trainer__username=username)
+    
+class Client(models.Model):
+    trainer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='clients')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client_profile')
+
+    objects = ClientQuerySet.as_manager()
+
+    def __str__(self):
+        return self.user.username
+    
+class HealthProfile(models.Model):
+	user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='health_profile')
+	height = models.DecimalField(max_digits=5, decimal_places=2)
+	weight = models.DecimalField(max_digits=5, decimal_places=2)
+	squat = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	bench = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	chin_up = models.IntegerField(null=True, blank=True)
+	deadlift = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	bronco = models.CharField(max_length=8, null=True, blank=True, help_text="Enter duration in HH:MM format")
+	broad_jump = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	vertical = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	forty_meter_sprint = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+
+	def __str__(self):
+		return f"Client Profile of {self.user.username}"
+    
+class Movement(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='health/movement_images/')
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+class Exercise(models.Model):
+    movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
+    sets = models.PositiveIntegerField()
+    reps = models.PositiveIntegerField()
+    plan = models.ForeignKey('Plan', on_delete=models.CASCADE, related_name='exercises', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.movement.name} - {self.sets} sets of {self.reps} reps - {self.plan.title}"
+    
 class PlanQuerySet(models.QuerySet):
     def published(self):
         return self.filter(status="published")
@@ -57,9 +108,6 @@ class Plan(models.Model):
     )
     featured = models.BooleanField(default=False)
     excerpt = models.TextField(max_length=300, blank=True)
-    content = CKEditor5Field(
-        "Text", config_name="extends", default=None, blank=True, null=True
-    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.CharField(max_length=200, blank=True)
@@ -90,54 +138,3 @@ class Plan(models.Model):
 
     def __str__(self):
         return self.title
-
-class ClientQuerySet(models.QuerySet):
-    def by_username(self, username):
-        return self.filter(user__username=username)
-
-    def by_user(self, user):
-        return self.filter(user=user)
-    
-    def by_trainer(self, username):
-        return self.filter(trainer__username=username)
-    
-class Client(models.Model):
-    trainer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='clients')
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client_profile')
-
-    objects = ClientQuerySet.as_manager()
-
-    def __str__(self):
-        return self.user.username
-    
-class HealthProfile(models.Model):
-	user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='health_profile')
-	height = models.DecimalField(max_digits=5, decimal_places=2)
-	weight = models.DecimalField(max_digits=5, decimal_places=2)
-	squat = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	bench = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	chin_up = models.IntegerField(null=True, blank=True)
-	deadlift = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	bronco = models.CharField(max_length=8, null=True, blank=True, help_text="Enter duration in HH:MM format")
-	broad_jump = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	vertical = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-	forty_meter_sprint = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-
-	def __str__(self):
-		return f"Client Profile of {self.user.username}"
-    
-class Movement(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='health/movement_images/')
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-class Exercise(models.Model):
-    movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
-    sets = models.PositiveIntegerField()
-    reps = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f"{self.movement.name} - {self.sets} sets of {self.reps} reps"

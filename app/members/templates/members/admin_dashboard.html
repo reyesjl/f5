@@ -6,43 +6,76 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'members/css/quickview.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>Admin Dashboard</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        {% include 'includes/notifications.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                <div class="profile-wrapper">
-                    <div class="profile-image">
-                        <img src="https://place-hold.it/164x164" alt="profile_image" />
-                    </div>
-                    <div class="profile-info">
-                        <div class="username">{{ user.username }}</div>
-                        <div class="fullname">
-                            <span>{{ user.first_name }} {{ user.last_name }}</span>
+    {% include 'includes/navigation.html' %} 
+    <div class="container stack-large">
+        <div class="flexbox">
+            <div class="column">
+                <div class="profile-wrapper stack-small">
+                    <div class="user-rank-role">
+                        <div class="user-level">
+                            {% if profile %}
+                                Lvl. {{ profile.level }}
+                            {% else %}
+                                Lvl. None
+                            {% endif %}
+                        </div>
+                        <div class="user-role">
+                            {% if user.is_staff %}
+                                staff
+                            {% elif user.is_trainer %}
+                                trainer
+                            {% else %}
+                                member
+                            {% endif %}
                         </div>
                     </div>
+                    <div class="avatar-wrapper">
+                        <div class="user-avatar">
+                            <img src="https://place-hold.it/500x500" />
+                        </div>
+                    </div>
+                    <div class="username">@{{user.username }}</div>
                 </div>
-            </div> 
-            <div class="pagesection">
-                <h3 class="sectiontitle">Admin Benefits</h3>
-                <p>You can select any of the metrics above to view their source.</p>
-                <p>If you have the required role, you will see buttons for:</p>
-                <ul>
-                    <li>Creating objects</li>
-                    <li>Viewing objects</li>
-                    <li>Editing objects</li>
-                    <li>Deleting objects</li>
-                    <li>Quick actions on objects</li>
-                </ul>
+            </div>
+            <div class="column">
+                <div class="profile-metrics stack-small">
+                    <div class="user-bio stack-small">
+                        <div class="metrics-title">Biography</div>
+                        <div class="bio-content">{{ user.bio }}</div>
+                    </div>
+                    <div class="user-metrics stack-small">
+                        <div class="metrics-title">Ranking</div>
+                        <div></div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="stack-small">
+            <div class="account-actions">
+                <p>Account</p>
+                <div class="action-links">
+                    <a class="link red" href="#">set name</a>
+                    <a class="link red" href="#">set bio</a>
+                    <a class="link red" href="#">set profile</a>
+                    <a class="link red" href="{% url 'member-logout' %}">logout</a>
+                </div>
+            </div>
+
+            <div class="member-actions">
+                <p>Members</p>
+                <div class="action-links">
+                    <a class="link red" href="#">see all</a>
+                    <a class="link red" href="#">gen report</a>
+                </div>
+            </div>
+        </div>        
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 </html>

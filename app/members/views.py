@@ -82,8 +82,7 @@ def member_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                request.session['username'] = username
-                return redirect('member-dashboard', username=user.username)
+                return redirect('member-dashboard')
     else:
         form = MemberAuthenticationForm()
     return render(request, 'members/login.html', {'form': form})
@@ -125,44 +124,36 @@ def member_profile(request, username):
     return render(request, 'members/profile.html', context)
 
 @login_required
-def member_dashboard(request, username):
-    user = get_object_or_error(CustomUser, username=username)
+def member_dashboard(request):
+    user = request.user
     
     if user.is_staff:
-        return redirect('admin-dashboard', username=user.username)
+        return redirect('admin-dashboard')
     elif user.is_trainer:
-        return redirect('trainer-dashboard', username=user.username)
+        return redirect('trainer-dashboard')
     elif user.groups.filter(name='player').exists():
-        return redirect('player-dashboard', username=user.username)
+        return redirect('player-dashboard')
     else:
         # Default dashboard view for users without specific groups
         return render(request, 'members/dashboard.html', {'user': user})
-    
+
 @login_required
 @user_has_role("admin")
-def admin_dashboard(request, username):
-    user = get_object_or_error(CustomUser, username=username)
-    total_users = CustomUser.objects.count()
-    total_events = Event.objects.count()
-    total_articles = Article.objects.count()
+def admin_dashboard(request):
+    user = request.user
+    profile = get_object_or_error(UserProfile, user=user)
 
     context = {
-        'total_users': total_users,
-        'total_events': total_events,
-        'total_articles': total_articles,
         'user': user,
+        'profile': profile,
     }
     return render(request, 'members/admin_dashboard.html', context)
 
 @login_required
 @user_has_role("trainer")
-def trainer_dashboard(request, username):
-    try:
-        user = CustomUser.objects.get(username=username)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
-    health_clients = Client.objects.by_trainer(username).count()
+def trainer_dashboard(request):
+    user = request.user
+    health_clients = Client.objects.by_trainer(user.username).count()
     context = {
         'user': user,
         'health_clients': health_clients,
@@ -171,12 +162,8 @@ def trainer_dashboard(request, username):
 
 @login_required
 @user_has_role("player")
-def player_dashboard(request, username):
-    try:
-        user = CustomUser.objects.get(username=username)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+def player_dashboard(request):
+    user = request.user
     
     context = {
         'user': user,

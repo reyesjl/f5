@@ -5,7 +5,7 @@ from django.contrib import messages
 from core.decorator import user_has_role, is_trainer
 from .models import HealthProfile, Plan, Client
 from blog.models import Article
-from .forms import PlanForm, HealthProfileForm
+from .forms import PlanForm, HealthProfileForm, ExerciseForm
 from members.models import CustomUser
 from core.utils import check_user, get_object_or_error
 
@@ -104,14 +104,8 @@ def plan_create(request):
 
 def plan_detail(request, slug):
     can_manage = check_user(request.user, "health_manager")
-    try:
-        plan = Plan.objects.by_slug(slug=slug)
-    except Plan.DoesNotExist:
-        messages.error(request, "The requested plan does not exist.", extra_tags="error")
-        return render(request, "core/error.html")
-    except Exception as e:
-        messages.error(request, f"An unexpected error occurred: {e}", extra_tags="error")
-        return render(request, "core/error.html")
+    plan = get_object_or_error(Plan, slug=slug)
+    exercises = plan.exercises.all()
     
     if not can_manage and plan.status == 'draft':
         messages.error(request, f"This plan is not published.", extra_tags="error")
@@ -119,24 +113,18 @@ def plan_detail(request, slug):
     
     context = {
         "plan": plan,
+        "exercises": exercises,
         "can_manage": can_manage
     }
     
     return render(request, "plans/plan_detail.html", context)
 
-@user_has_role("health_manager")
+@is_trainer
 def plan_update(request, slug):
-    try:
-        plan_instance = Plan.objects.by_slug(slug=slug)
-    except Plan.DoesNotExist:
-        messages.error(request, "The requested plan does not exist.", extra_tags="error")
-        return render(request, "core/error.html")
-    except Exception as e:
-        messages.error(request, f"An unexpected error occurred: {e}", extra_tags="error")
-        return render(request, "core/error.html")
+    plan = get_object_or_error(Plan, slug=slug)
     
     if request.method == "POST":
-        form = PlanForm(request.POST, request.FILES, instance=plan_instance)
+        form = PlanForm(request.POST, request.FILES, instance=plan)
         if form.is_valid():
             plan = form.save(commit=False)
             plan.author = request.user.username
@@ -144,7 +132,7 @@ def plan_update(request, slug):
             messages.success(request, "Plan updated successfully.", extra_tags="success")
             return redirect('plan-list')
     else:
-        form = PlanForm(instance=plan_instance)
+        form = PlanForm(instance=plan)
 
     return render(request, "plans/plan_update.html", {"form": form})
 
@@ -172,6 +160,21 @@ def plan_delete(request, slug):
         return redirect("health-home")
     
     return render(request, "plans/plan_delete_confirm.html", {"plan": plan})
+
+@is_trainer
+def exercise_create(request, slug):
+    plan = get_object_or_error(Plan, slug=slug)
+    if request.method == "POST":
+        form = ExerciseForm(request.POST)
+        if form.is_valid():
+            exercise = form.save(commit=False)
+            exercise.plan = plan
+            exercise.save()
+            return redirect('plan-detail', slug=slug)
+    else:
+        form = ExerciseForm()
+
+    return render(request, 'plans/add_exercise_form.html', {'form': form, 'plan': plan})
 
 @user_has_role("health_manager")
 def quick_action(request, slug, action):

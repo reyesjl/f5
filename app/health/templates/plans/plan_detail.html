@@ -36,8 +36,24 @@
                 </div>
             </div>
         </div>
-        <div class="planbody">
-            {{ plan.content | safe }}
+        <div>
+            <div class="action-links">
+                <a class="link red" href="{% url 'exercise-create' slug=plan.slug %}">+ add exercise</a>
+                <a class="link red" href="{% url 'plan-update' slug=plan.slug %}">edit plan info</a>
+            </div>
+            <ul class="exercise-list">
+                {% for exercise in exercises %}
+                    <li class="list-item">
+                        <div class="exercise-name">{{ exercise.movement.name }}</div>
+                        <div class="exercise-image">
+                            <img src="{{ exercise.movement.image.url }}" alt="exercise visual"/>
+                        </div>
+                        <div class="exercise-meta"><span class="highlight">{{ exercise.sets }}</span> sets of <span class="highlight">{{ exercise.reps }}</span></div>
+                    </li>
+                    {% empty %}
+                    <p>No exercises have been added to this plan yet.</p>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </body>
