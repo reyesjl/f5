@@ -53,6 +53,18 @@
     border-bottom: 1px dotted gray;
 }
 
+.metrics-list {
+
+}
+
+.metrics-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted gray;
+    margin-bottom: 1rem;
+    padding: 0 .5rem .25rem .5rem;
+}
+
 @media (max-width: 680px) {
 
 }

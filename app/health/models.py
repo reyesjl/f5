@@ -57,6 +57,12 @@ class Exercise(models.Model):
     def __str__(self):
         return f"{self.movement.name} - {self.sets} sets of {self.reps} reps - {self.plan.title}"
     
+class Meal(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='health/meal_images/')
+    description = models.TextField()
+    plan = models.ForeignKey('Plan', on_delete=models.CASCADE, related_name='meals', null=True, blank=True)
+    
 class PlanQuerySet(models.QuerySet):
     def published(self):
         return self.filter(status="published")
@@ -108,6 +114,7 @@ class Plan(models.Model):
     )
     featured = models.BooleanField(default=False)
     excerpt = models.TextField(max_length=300, blank=True)
+    content = CKEditor5Field('Text', config_name='extends', default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.CharField(max_length=200, blank=True)

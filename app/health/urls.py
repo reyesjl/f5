@@ -8,10 +8,6 @@ urlpatterns = [
     path("nutrition/", views.nutrition_index, name="nutrition-home"),
     path("mental/", views.mental_index, name="mental-home"),
 
-    # movements
-
-    
-
     # plans
     path("plans/", views.plan_list, name="plan-list"),
     path("plans/create/", views.plan_create, name="plan-create"),
@@ -20,8 +16,10 @@ urlpatterns = [
     path("plans/<slug:slug>/delete/", views.plan_delete, name="plan-delete"),
     path("plans/<slug:slug>/quick-action/<str:action>/", views.quick_action, name="quick-action"),
 
-    # exercises
+    # exercises & movements
     path("plans/<slug:slug>/exercises/create/", views.exercise_create, name="exercise-create"),
+    path("plans/<slug:slug>/meals/create/", views.meal_create, name="meal-create"),
+    path("exercises/movements/create/", views.movement_create, name="movement-create"),
 
     # clients 
     path("clients/", views.client_list, name='client-list'),

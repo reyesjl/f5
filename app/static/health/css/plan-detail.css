@@ -1,15 +1,19 @@
-.plan-header {
-    align-items: flex-end;
+.plan-title {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .plan-cover {
-    margin-right: 1rem;
-    width: 21%;
+    width: 400px;
+    margin: 0 auto;
     max-width: 100%;
 }
 
 .plan-cover img {
+    padding: .25rem;
+    border: 1px solid black;
+    border-radius: 5px;
     width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .exercise-list {
@@ -41,5 +45,13 @@
 @media(max-width: 680px) {
     .exercise-list .list-item {
         width: 100%;
+    }
+
+    .plan-cover {
+        margin-bottom: 1.5rem;
+    }
+
+    .desc {
+        display: none;
     }
 }

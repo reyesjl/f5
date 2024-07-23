@@ -5,7 +5,7 @@ from django.contrib import messages
 from core.decorator import user_has_role, is_trainer
 from .models import HealthProfile, Plan, Client
 from blog.models import Article
-from .forms import PlanForm, HealthProfileForm, ExerciseForm
+from .forms import PlanForm, HealthProfileForm, ExerciseForm, MovementForm, MealForm
 from members.models import CustomUser
 from core.utils import check_user, get_object_or_error
 
@@ -175,6 +175,32 @@ def exercise_create(request, slug):
         form = ExerciseForm()
 
     return render(request, 'plans/add_exercise_form.html', {'form': form, 'plan': plan})
+
+@is_trainer
+def meal_create(request, slug):
+    plan = get_object_or_error(Plan, slug=slug)
+    if request.method == "POST":
+        form = MealForm(request.POST, request.FILES)
+        if form.is_valid():
+            meal = form.save(commit=False)
+            meal.plan = plan
+            meal.save()
+            return redirect('plan-detail', slug=slug)
+    else:
+        form = MealForm()
+    return render(request, 'plans/add_meal_form.html', {'form': form, 'plan': plan})
+
+@is_trainer
+def movement_create(request):
+    if request.method == "POST":
+        form = MovementForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('member-dashboard')
+    else:
+        form = MovementForm()
+    
+    return render(request, 'plans/add_movement_form.html', {'form': form})
 
 @user_has_role("health_manager")
 def quick_action(request, slug, action):

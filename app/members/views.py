@@ -138,7 +138,7 @@ def member_dashboard(request):
         return render(request, 'members/dashboard.html', {'user': user})
 
 @login_required
-@user_has_role("admin")
+@is_staff
 def admin_dashboard(request):
     user = request.user
     profile = get_object_or_error(UserProfile, user=user)
@@ -150,23 +150,27 @@ def admin_dashboard(request):
     return render(request, 'members/admin_dashboard.html', context)
 
 @login_required
-@user_has_role("trainer")
+@is_staff_or_trainer
 def trainer_dashboard(request):
     user = request.user
+    profile = get_object_or_error(UserProfile, user=user)
     health_clients = Client.objects.by_trainer(user.username).count()
+    
     context = {
         'user': user,
+        'profile': profile,
         'health_clients': health_clients,
     }
     return render(request, 'members/trainer_dashboard.html', context)
 
 @login_required
-@user_has_role("player")
 def player_dashboard(request):
     user = request.user
+    profile = get_object_or_error(UserProfile, user=user)
     
     context = {
         'user': user,
+        'profile': profile,
     }
     return render(request, 'members/player_dashboard.html', context)
     

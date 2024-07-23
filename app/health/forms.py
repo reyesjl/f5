@@ -1,5 +1,5 @@
 from django import forms
-from .models import Plan, HealthProfile, Exercise, Movement
+from .models import Plan, HealthProfile, Exercise, Movement, Meal
 
 class ExerciseForm(forms.ModelForm):
     class Meta:
@@ -9,6 +9,11 @@ class ExerciseForm(forms.ModelForm):
 class MovementForm(forms.ModelForm):
     class Meta:
         model = Movement
+        fields = ['name', 'image', 'description']
+
+class MealForm(forms.ModelForm):
+    class Meta:
+        model = Meal
         fields = ['name', 'image', 'description']
 
 class PlanForm(forms.ModelForm):
@@ -22,8 +27,8 @@ class PlanForm(forms.ModelForm):
     class Meta:
         model = Plan
         fields = [
-            'title', 'type', 'featured', 'excerpt', 'tags',
-            'featured_image', 'status', 'reading_time'
+            'title', 'type', 'featured', 'excerpt', 'content', 
+            'tags', 'featured_image', 'status', 'reading_time'
         ]
 
 class HealthProfileForm(forms.ModelForm):

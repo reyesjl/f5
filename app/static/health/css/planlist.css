@@ -1,0 +1,15 @@
+.plan-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.plan {
+    width: 20%;
+}
+
+@media (max-width: 680px) {
+    .plan {
+        width: 45%;
+    }
+}

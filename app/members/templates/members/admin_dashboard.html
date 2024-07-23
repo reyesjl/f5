@@ -50,8 +50,25 @@
                         <div class="bio-content">{{ user.bio }}</div>
                     </div>
                     <div class="user-metrics stack-small">
-                        <div class="metrics-title">Ranking</div>
-                        <div></div>
+                        <div class="metrics-title">Fitness Metrics</div>
+                        <ul class="metrics-list">
+                            <li class="metrics-item">
+                                <div class="metric-label">Bronco</div>
+                                <div class="metric-value">4:47</div>
+                            </li>
+                            <li class="metrics-item">
+                                <div class="metric-label">Bench Press</div>
+                                <div class="metric-value">205</div>
+                            </li>
+                            <li class="metrics-item">
+                                <div class="metric-label">Squat</div>
+                                <div class="metric-value">315</div>
+                            </li>
+                            <li class="metrics-item">
+                                <div class="metric-label">Chin Ups</div>
+                                <div class="metric-value">12</div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -62,7 +79,7 @@
                 <div class="action-links">
                     <a class="link red" href="#">set name</a>
                     <a class="link red" href="#">set bio</a>
-                    <a class="link red" href="#">set profile</a>
+                    <a class="link red" href="#">set avatar</a>
                     <a class="link red" href="{% url 'member-logout' %}">logout</a>
                 </div>
             </div>
@@ -72,6 +89,16 @@
                 <div class="action-links">
                     <a class="link red" href="#">see all</a>
                     <a class="link red" href="#">gen report</a>
+                </div>
+            </div>
+
+            <div class="member-actions">
+                <p>Objects</p>
+                <div class="action-links">
+                    <a class="link red" href="#">create event</a>
+                    <a class="link red" href="{% url 'plan-create' %}">create plan</a>
+                    <a class="link red" href="#">add movement</a>
+                    <a class="link red" href="{% url 'article-create' %}">create article</a>
                 </div>
             </div>
         </div>        

@@ -20,7 +20,7 @@
             <form method="post" enctype="multipart/form-data" class="form-fields stack-small">
                 {% csrf_token %}
                 {{ form }}
-
+                {{ form.media }}
                 <div class="form-submit">
                     <button class="button" type="submit">Update</button>
                 </div>
