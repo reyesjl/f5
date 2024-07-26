@@ -1,11 +1,11 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from .models import Event, EventRole, Rsvp
 from .forms import EventForm, EventRoleForm, RsvpForm, UpdateRsvpForm
-from core.decorator import user_has_role
-from core.utils import check_user
+from core.decorator import user_has_role, is_staff_or_trainer, is_staff
+from core.utils import check_user, get_object_or_error
 import stripe
 
 # Stripe Setup
@@ -30,33 +30,24 @@ def event_list(request):
 
     # only show upcoming events
     events = events.upcoming()
-    can_manage = check_user(request.user, "event_manager")
 
     context = {
         "type": event_type,
         "events": events,
-        "can_manage": can_manage,
     }
     return render(request, "events/event_list.html", context)
 
 def event_detail(request, slug):
-    try:
-        event = Event.objects.by_slug(slug)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
-    
-    can_manage = check_user(request.user, "event_manager")
+    event = get_object_or_error(Event, slug=slug)
     roles = event.roles.all()
 
     context = {
         "event": event, 
         "roles": roles,
-        "can_manage": can_manage
     }
     return render(request, "events/event_detail.html", context)
 
-@user_has_role("event_manager")
+@is_staff
 def event_create(request):
     if request.method == "POST":
         form = EventForm(request.POST)
@@ -68,13 +59,9 @@ def event_create(request):
 
     return render(request, "events/event_form.html", {"form": form})
 
-@user_has_role("event_manager")
+@is_staff
 def event_update(request, slug):
-    try:
-        event = Event.objects.by_slug(slug)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    event = get_object_or_error(Event, slug=slug)
 
     if request.method == "POST":
         form = EventForm(request.POST, instance=event)
@@ -86,13 +73,9 @@ def event_update(request, slug):
 
     return render(request, "events/event_update.html", {"form": form})
 
-@user_has_role("event_manager")
+@is_staff
 def event_delete(request, slug):
-    try:
-        event = Event.objects.by_slug(slug)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    event = get_object_or_error(Event, slug=slug)
     
     if request.method == "POST":
         event.delete()
@@ -100,14 +83,9 @@ def event_delete(request, slug):
     
     return render(request, "events/event_delete_confirm.html", {"event": event})
 
-@user_has_role("event_manager")
+@is_staff
 def role_create(request, event_slug):
-    try:
-        event = Event.objects.by_slug(event_slug)
-    except Exception as e:
-        message = e
-        messages.errors(request, e, extra_tags="error")
-        return render(request, "core/error.html", {"message": message})
+    event = get_object_or_error(Event, slug=event_slug)
     
     if request.method == "POST":
         form = EventRoleForm(request.POST)
@@ -127,15 +105,9 @@ def role_create(request, event_slug):
 
     return render(request, "roles/role_create.html", context)
 
-
-@user_has_role("event_manager")
+@is_staff
 def role_list(request, event_slug):
-    try:
-        event = Event.objects.by_slug(event_slug)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
-    
+    event = get_object_or_error(Event, slug=event_slug)
     roles = event.roles.all()
 
     context = {
@@ -147,16 +119,8 @@ def role_list(request, event_slug):
 
 @user_has_role("event_manager")
 def role_delete(request, event_slug, role_id):
-    try:
-        event = Event.objects.by_slug(event_slug)
-        role = EventRole.objects.get(id=role_id, event=event)
-    except Event.DoesNotExist:
-        return render(request, "core/error.html", {"message": "Event not found"})
-    except EventRole.DoesNotExist:
-        return render(request, "core/error.html", {"message": "Role not found"})
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    event = get_object_or_error(Event, slug=event_slug)
+    role = get_object_or_error(EventRole, id=role_id, event=event)
     
     role.delete()
     messages.success(request, "Role has been deleted.", extra_tags="success")
@@ -165,15 +129,9 @@ def role_delete(request, event_slug, role_id):
 # RSVP Views
 # =============================================================================
 
-@user_has_role("event_manager")
+@is_staff
 def rsvp_list(request, event_slug):
-    try:
-        event = Event.objects.by_slug(event_slug)
-    except Event.DoesNotExist:
-        return render(request, "core/error.html", {"message": "Event not found"})
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    event = get_object_or_error(Event, slug=event_slug)
     
     paid_filter = request.GET.get('paid')
     if paid_filter is not None:
@@ -252,7 +210,7 @@ def rsvp_create(request, event_slug, role_id=None):
     }
     return render(request, "rsvps/rsvp_form.html", context)
 
-@user_has_role("event_manager")
+@is_staff
 def rsvp_detail(request, event_slug, rsvp_slug):
     try:
         event = Event.objects.by_slug(event_slug)
@@ -275,7 +233,7 @@ def rsvp_detail(request, event_slug, rsvp_slug):
 
     return render(request, "rsvps/rsvp_detail.html", context)
 
-@user_has_role("event_manager")
+@is_staff
 def rsvp_update(request, event_slug, rsvp_slug):
     try:
         event = Event.objects.by_slug(event_slug)
@@ -302,7 +260,7 @@ def rsvp_update(request, event_slug, rsvp_slug):
     }
     return render(request, "rsvps/rsvp_update.html", context)
 
-@user_has_role("event_manager")
+@is_staff
 def rsvp_delete(request, event_slug, rsvp_slug):
     try:
         event = Event.objects.by_slug(event_slug)

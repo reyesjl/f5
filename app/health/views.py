@@ -97,16 +97,10 @@ def plan_create(request):
     return render(request, "plans/plan_create.html", {"form": form})
 
 def plan_detail(request, slug):
-    can_manage = request.user.is_trainer
     plan = get_object_or_error(Plan, slug=slug)
-    
-    if not can_manage and plan.status == 'draft':
-        messages.error(request, f"This plan is not published.", extra_tags="error")
-        return render(request, "core/error.html")
     
     context = {
         "plan": plan,
-        "can_manage": can_manage
     }
     
     return render(request, "plans/plan_detail.html", context)
