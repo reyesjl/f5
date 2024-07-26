@@ -28,6 +28,12 @@ ALLOWED_HOSTS = ['198.58.111.53', 'f5rugby.com', 'www.f5rugby.com']
 # Cookies and Sessions 1 hour limit
 SESSION_COOKIE_AGE = 3600
 
+# CSRF
+CSRF_TRUSTED_ORIGINS = [
+    'https://f5rugby.com',
+    'http://f5rugby.com',
+]
+
 # Stripe config
 STRIPE_TEST_PUBLIC = env('STRIPE_TEST_PUBLIC')
 STRIPE_TEST_SECRET = env('STRIPE_TEST_SECRET')
