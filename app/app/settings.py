@@ -8,8 +8,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Initialize environment variables
 env = environ.Env()
 
+# Explicit directory
+env_file = BASE_DIR.parent / '.env'
+
 # Read the env file
-environ.Env.read_env()
+environ.Env.read_env(env_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -20,7 +23,7 @@ SECRET_KEY = env('F5_SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['198.58.111.53', 'f5rugby.com', 'www.f5rugby.com']
 
 # Cookies and Sessions 1 hour limit
 SESSION_COOKIE_AGE = 3600
@@ -130,6 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -166,7 +170,7 @@ customColorPalette = [
     },
 ]
 
-CKEDITOR_5_CONFIGS = { 
+CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': ['heading', '|', 'bold', 'italic', 'link',
                     'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],

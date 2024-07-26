@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Client Detail</title>
+</head>
+<body>
+    <div class="container">
+        {% include 'includes/navigation.html' %} 
+        {% include 'includes/notifications.html' %} 
+        <div class="pagecontent">
+            <div class="pageheader">
+                <div class="profile-wrapper">
+                    <div class="profile-image">
+                        <!-- You can replace the placeholder with an actual image URL -->
+                        <img src="https://place-hold.it/164x164" alt="profile_image" />
+                    </div>
+                    <div class="profile-info">
+                        <div class="username">{{ client.user.username }}</div>
+                        <div class="fullname">
+                            <span>{{ client.user.first_name }} {{ client.user.last_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if client.user.health_profile %}
+                <div class="buttongroup">
+                    <a href="{% url 'update-health-profile' client.id %}" class="button warning">Edit</a>
+                </div>
+                <div class="pagesection">
+                    <h3 class="sectiontitle">Performance Metrics</h3>
+                    <!-- Add other fields as needed -->
+                    <div class="health-profile-container">
+                        <div class="card" data-label="Height (cm)">
+                            <div class="value" data-field="height">{{health_profile.height}}</div>
+                            <div class="label">Height (cm)</div>
+                        </div>
+                        <div class="card" data-label="Weight (lb)">
+                            <div class="value" data-field="weight">{{health_profile.weight}}</div>
+                            <div class="label">Weight (lb)</div>
+                        </div>
+                        <div class="card" data-label="Squat (lb)">
+                            <div class="value" data-field="squat">{{health_profile.squat}}</div>
+                            <div class="label">Squat (lb)</div>
+                        </div>
+                        <div class="card" data-label="Bench Press (lb)">
+                            <div class="value" data-field="bench">{{health_profile.bench}}</div>
+                            <div class="label">Bench Press (lb)</div>
+                        </div>
+                        <div class="card" data-label="Chin-ups">
+                            <div class="value" data-field="chin_up">{{health_profile.chin_up}}</div>
+                            <div class="label">Chin-ups</div>
+                        </div>
+                        <div class="card" data-label="Deadlift (lb)">
+                            <div class="value" data-field="deadlift">{{health_profile.deadlift}}</div>
+                            <div class="label">Deadlift (lb)</div>
+                        </div>
+                        <div class="card" data-label="Bronco (HH:MM)">
+                            <div class="value" data-field="bronco">{{ health_profile.bronco}}</div>
+                            <div class="label">Bronco (HH:MM)</div>
+                        </div>
+                        <div class="card" data-label="Broad Jump (cm)">
+                            <div class="value" data-field="broad_jump">{{health_profile.broad_jump}}</div>
+                            <div class="label">Broad Jump (cm)</div>
+                        </div>
+                        <div class="card" data-label="Vertical Jump (cm)">
+                            <div class="value" data-field="vertical">{{health_profile.vertical}}</div>
+                            <div class="label">Vertical Jump (cm)</div>
+                        </div>
+                        <div class="card" data-label="40m Sprint (s)">
+                            <div class="value" data-field="forty_meter_sprint">{{health_profile.forty_meter_sprint}}</div>
+                            <div class="label">40m Sprint (s)</div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="buttongroup">
+                    <a href="{% url 'create-health-profile' client.id %}" class="button go">Create Health Profile</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

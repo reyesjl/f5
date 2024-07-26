@@ -1,0 +1,8 @@
+#featured-image {
+  filter: saturate(0);
+}
+
+@media screen and (max-width: 680px) {
+  
+}
+

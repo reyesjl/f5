@@ -7,94 +7,108 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/scroller.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{% static 'core/js/nav.js' %}" defer></script>
-    <script src="{% static 'core/js/scroller.js' %}" defer></script>
 
     <title>Health</title>
 </head>
 
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %}
-        {% include 'includes/notifications.html' %}
-        <div class="pagecontent">
-            <div class="pageheader">
-                <h1 class="pagetitle">Health</h1>
-                <p class="pagesubtitle">Discover free plans and blogs to learn from. Meet with an expert for a free
-                    evaluation.</p>
-                <!-- Manager actions -->
-                {% if can_manage %}
-                <p>
-                    <a href="{% url 'plan-list' %}" class="button">All Plans</a>
-                    <a href="{% url 'plan-create' %}" class="button go">Create Plan</a>
-                    <a href="{% url 'blog-home' %}" class="button">Blog Home</a>
-                    <a href="{% url 'article-create' %}" class="button go">Create Article</a>
-                </p>
-                {% endif %}
-            </div>
+    <!-- admin shit -->
+    <!-- <p class="buttongroup">
+        <a href="{% url 'plan-list' %}" class="button">All Plans</a>
+        <a href="{% url 'plan-create' %}" class="button go">Create Plan</a>
+        <a href="{% url 'blog-home' %}" class="button">Blog Home</a>
+        <a href="{% url 'article-create' %}" class="button go">Create Article</a>
+    </p> -->
 
-            <div class="pagesection">
-                <div class="splitshot">
-                    <h2 class="sectiontitle">Featured Plans</h2>
-                    <div class="scrollerbuttons">
-                        <div id="scroll-left" class="button" alt="scroll left">&#171;</div>
-                        <div id="scroll-right" class="button" alt="scroll right">&#187;</div>
+    {% include 'includes/navigation.html' %}
+    <div class="container stack-large">
+        <div class="jumbotron stack-small">
+            <!-- <h1 class="jumbotron-title">Be Better. <br />Go Faster. <br />Feel Stronger.</h1> -->
+            <h1 class="jumbotron-title">Follow plans <br />that work<br />for you.</h1>
+
+            <p class="jumbotron-subtitle">We provide free resources to support your journey.
+                Read our <span class="highlight">blog</span> to learn more, or schedule a
+                <span class="highlight">one-on-one</span> with a trainer for a personalized plan.
+            </p>
+        </div>
+
+        <div class="plans stack-small">
+            <div class="section-header stack-small">
+                <div class="justify-between">
+                    <h2>Featured plans</h2>
+                    <a class="link red" href="{% url 'plan-list' %}">view all</a>
+                </div>
+                <p>Crafted by certified trainers with a focus on strength, fitness, and nutrition.</p>
+            </div>
+            <ul class="plan-list">
+                {% for plan in plans %}
+                <li class="plan stack-small">
+                    <a href="{% url 'plan-detail' slug=plan.slug %}">
+                        <div class="plan-cover">
+                            <img src="{{ plan.featured_image.url }}" />
+                        </div>
+                    </a>
+                    <div class="plan-meta">
+                        <div class="plan-title">
+                            <a class="link black" href="{% url 'plan-detail' slug=plan.slug %}">{{ plan.title}}</a>
+                        </div>
+                        <div class="plan-views">
+                            {{ plan.views }} <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <div class="plan-category">
+                            {{ plan.get_type_display }}
+                        </div>
+                        <div class="plan-author">
+                            {{ plan.author }}
+                        </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>No featured plans.</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section stack-small">
+            <div class="section-header">
+                <h2>Categories</h2>
+            </div>
+            <div class="section-wrapper flexbox gap">
+                <div class="column">
+                    <div class="stack-small">
+                        <span class="title">Strength & Fitness</span>
+                        <p>Strength training isn't just about building muscle mass; it enhances various aspects of a
+                            player's game, from power and resilience to injury prevention and overall athleticism.</p>
+                        <a class="section-link" href="/health/strength">Explore</a>
                     </div>
                 </div>
-                <div class="media-scroller snaps-inline">
-                    {% for plan in plans %}
-                    <div class="media-element">
-                        <a class="element-link" href="{% url 'plan-detail' slug=plan.slug %}">
-                            <img class="element-image" src="{{ plan.featured_image.url }}"
-                                alt="plan image placeholder" />
-                            <div class="element-title">{{ plan.title|truncatechars:55 }}</div>
-                        </a>
-                        <div class="featured-text">Featured!</div>
+                <div class="column">
+                    <div class="stack-small">
+                        <span class="title">Nutrition</span>
+                        <p>Crucial in an athlete's performance and recovery. A balanced
+                            diet provides the necessary fuel for training and competition, aids in muscle repair and
+                            growth, and helps maintain overall health.</p>
+                        <a class="section-link" href="/health/nutrition">Explore</a>
                     </div>
-                    {% empty %}
-                    <div class="media-element">
-                        <a class="element-link" href="#">
-                            <img class="element-image" src="https://place-hold.it/320x480"
-                                alt="plan image placeholder" />
-                            <div class="element-title">No plans found.</div>
-                        </a>
-                        <div class="featured-text">Coming soon!</div>
-                    </div>
-                    {% endfor %}
                 </div>
-            </div>
-            <div class="pagesection">
-                <h2 class="sectiontitle">Strength & Conditioning</h2>
-                <p class="sectiontext">
-                    Strength training isn't just about building muscle mass; it enhances various aspects of a
-                    player's game, from power and resilience to injury prevention and overall athleticism. Here’s a
-                    closer look at why strength training is indispensable for rugby players.
-                </p>
-                <a class="button" href="strength/">Get Strong</a>
-            </div>
-            <div class="pagesection">
-                <h2 class="sectiontitle">Nutrition Info</h2>
-                <p class="sectiontext">
-                    Nutrition plays a crucial role in an athlete's performance and recovery. A well-balanced diet
-                    provides the necessary fuel for training and competition, aids in muscle repair and growth, and
-                    helps maintain overall health. Learn about the best dietary practices, essential nutrients, and
-                    meal plans tailored for rugby players.
-                </p>
-                <a class="button" href="nutrition/">Get Healthy</a>
-            </div>
-            <div class="pagesection">
-                <h2 class="sectiontitle">Mental Fitness</h2>
-                <p class="sectiontext">
-                    Mental fitness is as important as physical fitness for athletes. Techniques such as mindfulness,
-                    visualization, and positive self-talk can enhance focus, reduce stress, and improve overall
-                    performance. Explore strategies to strengthen your mental resilience and keep your mind sharp on and
-                    off the field.
-                </p>
-                <a class="button" href="mental/">Get Sharp</a>
+                <div class="column">
+                    <div class="stack-small">
+                        <span class="title">Mental Focus</span>
+                        <p>As important as physical fitness for athletes. Techniques such as
+                            mindfulness, visualization, and positive self-talk can enhance focus, reduce stress, and
+                            improve overall performance.</p>
+                        <a class="section-link" href="/health/mental">Explore</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 
 </html>

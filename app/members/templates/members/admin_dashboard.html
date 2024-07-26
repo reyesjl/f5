@@ -6,34 +6,103 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
     <script src="{% static 'core/js/nav.js' %}" defer></script>
 
-    <title>Admin Dashboard</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        {% include 'includes/notifications.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                <div class="brandwrapper">
-                    <h1 class="pagetitle">{{ user.username }}</h1>
-                    <p class="pagesubtitle align-center">{{ user.email }}</p>
-                    <p class="pagesubtitle">Lvl. 0</p>
+    {% include 'includes/navigation.html' %} 
+    <div class="container stack-large">
+        <div class="flexbox">
+            <div class="column">
+                <div class="profile-wrapper stack-small">
+                    <div class="user-rank-role">
+                        <div class="user-level">
+                            {% if profile %}
+                                Lvl. {{ profile.level }}
+                            {% else %}
+                                Lvl. None
+                            {% endif %}
+                        </div>
+                        <div class="user-role">
+                            {% if user.is_staff %}
+                                staff
+                            {% elif user.is_trainer %}
+                                trainer
+                            {% else %}
+                                member
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="avatar-wrapper">
+                        <div class="user-avatar">
+                            <img src="https://place-hold.it/500x500" />
+                        </div>
+                    </div>
+                    <div class="username">@{{user.username }}</div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="profile-metrics stack-small">
+                    <div class="user-bio stack-small">
+                        <div class="metrics-title">Biography</div>
+                        <div class="bio-content">{{ user.bio }}</div>
+                    </div>
+                    <div class="user-metrics stack-small">
+                        <div class="metrics-title">Fitness Metrics</div>
+                        <ul class="metrics-list">
+                            <li class="metrics-item">
+                                <div class="metric-label">Bronco</div>
+                                <div class="metric-value">4:47</div>
+                            </li>
+                            <li class="metrics-item">
+                                <div class="metric-label">Bench Press</div>
+                                <div class="metric-value">205</div>
+                            </li>
+                            <li class="metrics-item">
+                                <div class="metric-label">Squat</div>
+                                <div class="metric-value">315</div>
+                            </li>
+                            <li class="metrics-item">
+                                <div class="metric-label">Chin Ups</div>
+                                <div class="metric-value">12</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stack-small">
+            <div class="account-actions">
+                <p>Account</p>
+                <div class="action-links">
+                    <a class="link red" href="#">set name</a>
+                    <a class="link red" href="#">set bio</a>
+                    <a class="link red" href="#">set avatar</a>
+                    <a class="link red" href="{% url 'member-logout' %}">logout</a>
                 </div>
             </div>
 
-            <div class="pagesection">
-                <h3 class="sectiontitle">Admin Benefits</h3>
-                <ul class="generallist">
-                    <li>You can manage <a href="#">/users</a></li>
-                    <li>You can manage <a href="#">/events</a></li>
-                    <li>You can manage <a href="#">/blogs</a></li>
-                    <li>You can manage <a href="#">/plans</a></li>
-                    <li>You can <a href="#">generate</a> reports</li>
-                </ul>
+            <div class="member-actions">
+                <p>Members</p>
+                <div class="action-links">
+                    <a class="link red" href="#">see all</a>
+                    <a class="link red" href="#">gen report</a>
+                </div>
             </div>
-        </div>
+
+            <div class="member-actions">
+                <p>Objects</p>
+                <div class="action-links">
+                    <a class="link red" href="#">create event</a>
+                    <a class="link red" href="{% url 'plan-create' %}">create plan</a>
+                    <a class="link red" href="#">add movement</a>
+                    <a class="link red" href="{% url 'article-create' %}">create article</a>
+                </div>
+            </div>
+        </div>        
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 </html>

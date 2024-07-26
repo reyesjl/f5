@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/filters.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/client-list.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Clients</title>
+</head>
+
+<body>
+    <div class="container">
+        {% include 'includes/notifications.html' %}
+        {% include 'includes/navigation.html' %}
+        <div class="pagecontent">
+            <div class="pageheader"> 
+                <h1 class="pagetitle">My Clients [{{ clients.count }}]</h1>
+                <p class="pagesubtitle">Find and manager all your clients here.</p>
+            </div>
+
+            {% comment %} Filter can go here later... {% endcomment %}
+
+            <div class="pagesection">
+                <div class="client-wrapper">
+                    <ul class="clientlist">
+                    {% for client in clients %}
+                        <li class="clientlist-item">
+                            <a class="username-link" href="{% url 'client-detail' client.id %}">{{ client.user.username }}</a>
+                            <div class="item-actions">
+                                <a href="{% url 'member-update' client.user.username %}" class="button warning"><i class="fa fa-pencil"></i></a>
+                                <a href="{% url 'client-remove' client.user.username %}" class="button danger"><i class="fa fa-trash"></i></a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

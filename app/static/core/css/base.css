@@ -1,257 +1,214 @@
-@import url('nav.css');
+@import url('normalize.css');
+@import url('navigation.css');
 @import url('notifications.css');
 @import url("https://use.typekit.net/wme5som.css");
 
-* {
-    font-family: Arial, Helvetica, sans-serif;
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
-.breadcrumbs {
-    display: flex;
-    color: gray;
-    padding: .5rem 1rem;
-    background: rgb(231, 231, 231);
-    border-radius: 12px;
-    font-size: .8rem;
-    gap: .5rem;
-    width: fit-content;
-    text-transform: capitalize;
-}
-
-.breadcrumbs a {
-    color: darkred;
-}
-
-.brandwrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.weblogo {
-    max-width: 100%;
-    width: 250px;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.link {
-    font-style: italic;
-    font-size: .9rem;
-    text-transform: lowercase;
-}
-
-.link.primary {
-    color: darkred;
-}
-
-.button {
-    padding: .25rem .75rem;
-    border: 1px solid black;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    font-size: .9rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-}
-
-.buttongroup {
-    padding: 1rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .25rem;
-}
-
-.button:hover {
-    background: black;
-    color: white;
-    cursor: pointer;
-}
-
-.button.disabled {
-    opacity: 50%;
-    pointer-events: none;
-}
-
-.button.go {
-    border-color: darkgreen;
-    color: darkgreen;
-}
-
-.button.go:hover {
-    background-color: darkgreen;
-    color: white;
-}
-
-.button.warning {
-    border-color: darkgoldenrod;
-    color: darkgoldenrod;
-}
-
-.button.warning:hover {
-    background: darkgoldenrod;
-    color: white;
-}
-
-.button.danger {
-    border-color: darkred;
-    color: darkred;
-}
-
-.button.danger:hover {
-    background: darkred;
-    color: white;
-}
-
-.align-right {
-    text-align: right;
-}
-
-.align-center {
-    text-align: center;
-}
-
-.align-left {
-    text-align: left;
-}
-
-.splitshot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.splitpole {
-    display: flex;
-    flex-direction: column;
-}
-
+/* General  */
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-}
-
-.pagecontent {
     padding: 1rem;
 }
 
-.pageheader {
-    margin-top: 2rem;
-    margin-bottom: 3rem;
+.section {
+    margin-top: 2.5rem;
 }
 
-.pagetitle {
-    margin: 0;
-    font-family: aileron, Arial;
-    font-weight: 800;
-    font-style: normal;
+.section-header {
+  padding-bottom: .5rem;
 }
 
-.pagesubtitle {
-    margin-top: .5rem;
-    margin-bottom: .75rem;
-    color: #666;
-    font-family: aileron, Arial;
-    font-style: italic;
-    font-weight: 300;
+.section-header.border {
+  border-bottom: 1px solid black;
 }
 
-.pagesection {
-    margin-bottom: 3rem;
+.section-image {
+  border: 1px solid gray;
+  padding: 1px;
+  border-radius: 8px;
+  margin-top: 2rem;
 }
 
-.sectiontitle {
-    margin: 0;
-    margin-bottom: .5rem;
-    font-family: aileron, Arial;
-    font-weight: 800;
-    font-style: italic;
-    color: darkred;
+.section-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
-.sectiontext {
-    margin: 0;
-    margin-bottom: .75rem;
-    line-height: 1.5rem;
+.image-tagline {
+  padding: .25rem;
+  font-size: .8rem;
+  color: gray;
 }
 
-.sectionsubtitle {
-    margin-top: 0rem;
-    margin-bottom: 1rem;
-    color: gray;
-    font-weight: 300;
-    font-size: 1rem;
-    font-family: aileron, Arial;
-    font-style: italic;
+/* Filters */
+.filter-wrapper {
+  padding: .5rem .5rem .2rem .5rem;
+  border: 1px dotted gray;
 }
 
-.generallist  {
-    margin: 0;
+.filter-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: .25rem 0;
 }
 
-.generallist li {
-    margin-bottom: .5rem;
-    line-height: 1.3rem;
+.filter-item {
+  margin: 0 .25rem .5rem 0;
 }
 
-.greentext {
-    color: darkgreen;
-    font-size: .8rem;
-    font-style: italic;
-    font-weight: bold;
-    text-transform: uppercase;
+.filter-link {
+  border: 1px solid black;
+  padding: 0 8px;
+  text-decoration: none;
+  color: black;
+  border-radius: 20px;
+  font-size: .9rem;
 }
 
-.redtext {
-    color: darkred;
-    font-size: .8rem;
-    font-style: italic;
-    font-weight: bold;
-    text-transform: uppercase;
+.filter-link.active {
+  background-color: black;
+  color: white;
 }
 
-.bluetext {
-    color: darkblue;
-    font-size: .8rem;
-    font-style: italic;
-    font-weight: bold;
-    text-transform: uppercase; 
+/* Action links */
+.action-links {
+  border: 1px dotted gray;
+  padding: .5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
 }
 
-.featured-text {
-    font-family: aileron, Arial;
-    font-size: .8rem;
-    font-weight: 800;
-    color: darkblue;
-    font-style: italic;
-    animation: blink 1s infinite alternate;
-    padding-bottom: .5rem;
+/* Formatted text */
+.jumbotron-title {
+  font-weight: 400;
+  font-size: 6rem;
+  line-height: 100px;
 }
 
-@keyframes blink {
-    0% { color: darkblue; } /* Start with darkred */
-    50% { color: darkgoldenrod; } /* Blink to yellow at 50% */
-    100% { color: darkblue; } /* Back to darkred at 100% */
+.jumbotron-subtitle {
+  width: 60%;
 }
 
-.hiddentext {
-    font-weight: bold;
-    font-style: italic;
-    font-size: .9rem;
+.link.black {
+  color: black;
+  text-decoration: underline;
 }
 
-@media (max-width: 680px) {
-    .pageheader {
-        margin-top: 1rem;
-        margin-bottom: 2rem;
-    }
+.link.red {
+  color: red;
+  text-decoration: underline;
+}
+
+.highlight {
+  color: red;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.highlight.yellow {
+  color: #ffcd28;
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* Stacked content */
+[class^='stack'] > * {
+  /* top and bottom margins in horizontal-tb writing mode */
+  margin-block: .5rem;
+}
+
+.stack-large > * + * {
+  margin-block-start: 3rem;
+}
+
+.stack-small > * + * {
+  margin-block-start: 1rem;
+}
+
+/* Sections */
+.section-wrapper .title {
+  font-weight: 600;
+}
+
+.section-wrapper > * {
+  padding-top: 1rem;
+  border-top: 4px solid lightgray;
+}
+
+.section-wrapper > * + * {
+  margin-left: 1rem;
+}
+
+.section-link {
+  color: red;
+  display: block;
+}
+
+/* Boxed content  */
+.box {
+    padding: 1rem;
+}
+
+.bordered.box {
+    border: 1px solid black;
+}
+
+/* Columns */
+.flexbox .title {
+  font-size: 1.2rem;
+}
+
+.column {
+  text-align: left;
+}
+
+/* Often used */
+.justify-between {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+/* After larger */
+@media (min-width: 680px) {
+  .flexbox {
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+	}
+
+  .column {
+    -webkit-flex: 1;
+    flex: 1;
+    background: none;
+  }
+}
+
+/* After smaller */
+@media screen and (max-width: 680px) {
+  .section-wrapper>* {
+    padding: 1rem 0 0 0;
+  }
+
+  .section-wrapper > * + * {
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+
+  .section-link {
+    text-align: right;
+  }
+
+  .jumbotron-title {
+    font-size: 3rem;
+    line-height: 50px;
+  }
+
+  .jumbotron-subtitle {
+    width: 100%;
+  }
 }

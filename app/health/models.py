@@ -1,9 +1,45 @@
+from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django_ckeditor_5.fields import CKEditor5Field
+from members.models import CustomUser
 
+class ClientQuerySet(models.QuerySet):
+    def by_username(self, username):
+        return self.filter(user__username=username)
 
+    def by_user(self, user):
+        return self.filter(user=user)
+    
+    def by_trainer(self, username):
+        return self.filter(trainer__username=username)
+    
+class Client(models.Model):
+    trainer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='clients')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client_profile')
+
+    objects = ClientQuerySet.as_manager()
+
+    def __str__(self):
+        return self.user.username
+    
+class HealthProfile(models.Model):
+	user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='health_profile')
+	height = models.DecimalField(max_digits=5, decimal_places=2)
+	weight = models.DecimalField(max_digits=5, decimal_places=2)
+	squat = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	bench = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	chin_up = models.IntegerField(null=True, blank=True)
+	deadlift = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	bronco = models.CharField(max_length=8, null=True, blank=True, help_text="Enter duration in HH:MM format")
+	broad_jump = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	vertical = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	forty_meter_sprint = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+
+	def __str__(self):
+		return f"Client Profile of {self.user.username}"
+    
 class PlanQuerySet(models.QuerySet):
     def published(self):
         return self.filter(status="published")
@@ -55,9 +91,6 @@ class Plan(models.Model):
     )
     featured = models.BooleanField(default=False)
     excerpt = models.TextField(max_length=300, blank=True)
-    content = CKEditor5Field(
-        "Text", config_name="extends", default=None, blank=True, null=True
-    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.CharField(max_length=200, blank=True)
@@ -65,7 +98,6 @@ class Plan(models.Model):
         upload_to="plan_featured_images/", blank=True, null=True
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
-    reading_time = models.IntegerField(choices=READING_TIME_CHOICES, default=5)
     views = models.PositiveIntegerField(default=0)
     likes = models.PositiveIntegerField(default=0)
 

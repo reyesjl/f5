@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,49 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
-    <script src="{% static 'core/js/nav.js' %}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/login.css' %}">
 
     <title>Log In</title>
 </head>
-<body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                <h1 class="pagetitle">Log In</h1>
-                <p class="pagesubtitle">Welcome back to First Five Rugby!</p>
-            </div>
 
-            <div class="formwrapper wide">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    {{ form.media }}
-                    
+<body>
+    {% include 'includes/navigation.html' %}
+    <div class="container stack-large">
+        <div class="form-wrapper">
+            <div class="logo">
+                <img src="{% static 'core/images/f5logo.png' %}" alt="first five rugby" />
+            </div>
+            <h1>Log In</h1>
+            <p>Welcome back to First Five Rugby!</p>
+
+            <form method="post" class="form-fields stack-small">
+                {% csrf_token %}
+                {{ form }}
+                {{ form.media }}
+
+                <div class="form-submit">
                     <button class="button" type="submit">Login</button>
-                </form>
+                </div>
+            </form>
+        </div>
+
+        <div class="support-link">
+            <a class="link red" href="{% url 'member-login-support' %}">Help, I can't sign in</a>
+        </div>
+
+        <div class="signup-wrapper flexbox">
+            <div class="column">
+                <div class="action">
+                    <h3 class="action-title align-center">New to F5?</h3>
+                    <a class="link red" href="{% url 'member-signup' %}">Create an Account</a>
+                </div>
+            </div>
+            <div class="column">
+                <div class="tagline">It's free and easy. Discover thousands of resources with millions of rugby fans
+                    just like you.</div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

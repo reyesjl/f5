@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
+    <script src="{% static 'core/js/nav.js' %}" defer></script>
+
+    <title>Support Success</title>
+</head>
+
+<body>
+    <div class="container">
+        {% include 'includes/notifications.html' %}
+        {% include 'includes/navigation.html' %}
+        <div class="pagecontent">
+            <div class="pageheader">
+                <h1 class="pagetitle">Support Success!</h1>
+                <p class="pagesubtitle">Your ticket has been submitted and will be reviewed by our team.</p>
+            </div>
+            <div class="pagesection">
+                <p>Please allow 24 hours for our team to reach out to you regarding the problem.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

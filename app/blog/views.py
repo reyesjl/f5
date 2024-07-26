@@ -5,7 +5,6 @@ from core.utils import check_user
 from core.decorator import user_has_role
 from .models import Article
 
-@user_has_role("blog_manager")
 def index(request):
     articles = Article.objects.published()
     can_manage = check_user(request.user, "blog_manager")
@@ -22,7 +21,9 @@ def article_create(request):
     if request.method == "POST":
         form = ArticleForm(request.POST)
         if form.is_valid():
-            form.save()
+            article = form.save(commit=False)
+            article.author = request.user.username
+            article.save()
             messages.success(request, "Article has been added.", extra_tags="success")
             return redirect('health-home')
     else:
@@ -64,7 +65,10 @@ def article_update(request, slug):
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
-            form.save()
+            article = form.save(commit=False)
+            article.author = request.user.username
+            article.save()
+            messages.success(request, "Article has been updated.", extra_tags="success")
             return redirect('article-detail', slug=article.slug)
     else:
         form = ArticleForm(instance=article)

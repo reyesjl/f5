@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,31 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
-    <script src="{% static 'core/js/nav.js' %}" defer></script>
 
     <title>Sign Up</title>
 </head>
-<body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                <h1 class="pagetitle">Sign Up</h1>
-                <p class="pagesubtitle">Welcome to First Five Rugby!</p>
-            </div>
 
-            <div class="formwrapper wide">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    {{ form.media }}
-                    
-                    <button class="button" type="submit">Signup</button>
-                </form>
+<body>
+    {% include 'includes/navigation.html' %}
+    <div class="container stack-large">
+        <div class="form-wrapper spacer">
+            <div class="logo">
+                <img src="{% static 'core/images/f5logo.png' %}" alt="first five rugby" />
             </div>
+            <h1 class="title">Sign Up</h1>
+            <p>Welcome to First Five Rugby!</p>
+
+            <form method="post" class="form-fields stack-small">
+                {% csrf_token %}
+                {{ form }}
+                {{ form.media }}
+
+                <div class="form-submit">
+                    <button class="button" type="submit">Signup</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
+
 </html>
