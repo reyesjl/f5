@@ -21,7 +21,7 @@ environ.Env.read_env(env_file)
 SECRET_KEY = env('F5_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['198.58.111.53', 'f5rugby.com', 'www.f5rugby.com']
 
@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ['198.58.111.53', 'f5rugby.com', 'www.f5rugby.com']
 SESSION_COOKIE_AGE = 3600
 
 # CSRF
+CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     'https://f5rugby.com',
     'http://f5rugby.com',
