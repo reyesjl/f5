@@ -40,29 +40,6 @@ class HealthProfile(models.Model):
 	def __str__(self):
 		return f"Client Profile of {self.user.username}"
     
-class Movement(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='health/movement_images/')
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-class Exercise(models.Model):
-    movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
-    sets = models.PositiveIntegerField()
-    reps = models.PositiveIntegerField()
-    plan = models.ForeignKey('Plan', on_delete=models.CASCADE, related_name='exercises', null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.movement.name} - {self.sets} sets of {self.reps} reps - {self.plan.title}"
-    
-class Meal(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='health/meal_images/')
-    description = models.TextField()
-    plan = models.ForeignKey('Plan', on_delete=models.CASCADE, related_name='meals', null=True, blank=True)
-    
 class PlanQuerySet(models.QuerySet):
     def published(self):
         return self.filter(status="published")
@@ -114,7 +91,6 @@ class Plan(models.Model):
     )
     featured = models.BooleanField(default=False)
     excerpt = models.TextField(max_length=300, blank=True)
-    content = CKEditor5Field('Text', config_name='extends', default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.CharField(max_length=200, blank=True)
@@ -122,7 +98,6 @@ class Plan(models.Model):
         upload_to="plan_featured_images/", blank=True, null=True
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
-    reading_time = models.IntegerField(choices=READING_TIME_CHOICES, default=5)
     views = models.PositiveIntegerField(default=0)
     likes = models.PositiveIntegerField(default=0)
 

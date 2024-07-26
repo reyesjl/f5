@@ -1,18 +1,12 @@
-import json
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
 from core.decorator import user_has_role, is_trainer
 from .models import HealthProfile, Plan, Client
 from blog.models import Article
-from .forms import PlanForm, HealthProfileForm, ExerciseForm, MovementForm, MealForm
+from .forms import PlanForm, HealthProfileForm
 from members.models import CustomUser
 from core.utils import check_user, get_object_or_error
-
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
-
 
 def index(request):
     plans = Plan.objects.published().featured()
@@ -103,9 +97,8 @@ def plan_create(request):
     return render(request, "plans/plan_create.html", {"form": form})
 
 def plan_detail(request, slug):
-    can_manage = check_user(request.user, "health_manager")
+    can_manage = request.user.is_trainer
     plan = get_object_or_error(Plan, slug=slug)
-    exercises = plan.exercises.all()
     
     if not can_manage and plan.status == 'draft':
         messages.error(request, f"This plan is not published.", extra_tags="error")
@@ -113,7 +106,6 @@ def plan_detail(request, slug):
     
     context = {
         "plan": plan,
-        "exercises": exercises,
         "can_manage": can_manage
     }
     
@@ -160,63 +152,6 @@ def plan_delete(request, slug):
         return redirect("health-home")
     
     return render(request, "plans/plan_delete_confirm.html", {"plan": plan})
-
-@is_trainer
-def exercise_create(request, slug):
-    plan = get_object_or_error(Plan, slug=slug)
-    if request.method == "POST":
-        form = ExerciseForm(request.POST)
-        if form.is_valid():
-            exercise = form.save(commit=False)
-            exercise.plan = plan
-            exercise.save()
-            return redirect('plan-detail', slug=slug)
-    else:
-        form = ExerciseForm()
-
-    return render(request, 'plans/add_exercise_form.html', {'form': form, 'plan': plan})
-
-@is_trainer
-def meal_create(request, slug):
-    plan = get_object_or_error(Plan, slug=slug)
-    if request.method == "POST":
-        form = MealForm(request.POST, request.FILES)
-        if form.is_valid():
-            meal = form.save(commit=False)
-            meal.plan = plan
-            meal.save()
-            return redirect('plan-detail', slug=slug)
-    else:
-        form = MealForm()
-    return render(request, 'plans/add_meal_form.html', {'form': form, 'plan': plan})
-
-@is_trainer
-def movement_create(request):
-    if request.method == "POST":
-        form = MovementForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('member-dashboard')
-    else:
-        form = MovementForm()
-    
-    return render(request, 'plans/add_movement_form.html', {'form': form})
-
-@user_has_role("health_manager")
-def quick_action(request, slug, action):
-    try:
-        plan = Plan.objects.by_slug(slug)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
-    
-    if action == 'toggle-featured':
-        plan.featured = not plan.featured
-    elif action == 'toggle-status':
-        plan.status = 'published' if plan.status == 'draft' else 'draft'
-
-    plan.save()
-    return redirect('plan-list')
 
 # clients
 @user_has_role("trainer")
@@ -316,24 +251,3 @@ def update_health_profile(request, client_id):
         'client': client,
     }
     return render(request, 'clients/update_health_profile.html', context)
-
-@require_POST
-def update_profile(request):
-    data = json.loads(request.body.decode('utf-8'))
-    field = data.get('field')
-    value = data.get('value')
-    user = get_object_or_error(Client, id=15).user  # Assuming the user is logged in and request.user is the current user
-
-    if not field or not value:
-        return JsonResponse({'error': 'Invalid data'}, status=400)
-
-    try:
-        profile = get_object_or_error(HealthProfile, user=user)  # Assuming HealthProfile has a OneToOneField to user
-        if hasattr(profile, field):
-            setattr(profile, field, value)
-            profile.save()
-            return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'error': 'Invalid field'}, status=400)
-    except HealthProfile.DoesNotExist:
-        return JsonResponse({'error': 'Profile not found'}, status=404)
