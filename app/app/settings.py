@@ -21,19 +21,16 @@ environ.Env.read_env(env_file)
 SECRET_KEY = env('F5_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['198.58.111.53', 'f5rugby.com', 'www.f5rugby.com']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 # Cookies and Sessions 1 hour limit
-SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = env.int('SESSION_COOKIE_AGE', default=3600)
 
 # CSRF
-CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = [
-    'https://f5rugby.com',
-    'http://f5rugby.com',
-]
+CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', default=False)
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
 # Stripe config
 STRIPE_TEST_PUBLIC = env('STRIPE_TEST_PUBLIC')
