@@ -49,12 +49,6 @@
         </div>
         <div class="stack-large">
             <div class="action-links">
-                {% if plan.type == 'strength_and_conditioning' %}
-                    <a class="link red" href="{% url 'exercise-create' slug=plan.slug %}">+ add exercise</a>
-                {% endif %}
-                {% if plan.type == 'nutrition' %}
-                    <a class="link red" href="{% url 'meal-create' slug=plan.slug %}">+ add meal</a>
-                {% endif %}
                 <a class="link red" href="{% url 'plan-update' slug=plan.slug %}">edit plan info</a>
             </div>
 
