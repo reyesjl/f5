@@ -2,3 +2,5 @@ media/
 venv/
 *.pyc
 .env
+staticfiles/
+private_key
