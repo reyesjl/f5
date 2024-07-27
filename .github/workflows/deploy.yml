@@ -1,4 +1,4 @@
-name: Django CI/CD
+name: Deploy to Production
 
 on:
   push:
@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: '3.12.3'
 
@@ -23,27 +23,31 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    # Uncomment to run tests before deploying
     # - name: Run Tests
     #   run: |
     #     python manage.py test
 
+    - name: Setup SSH key
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > private_key
+        chmod 600 private_key
+
     - name: Copy files via SSH
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
         SSH_USERNAME: f5local
       run: |
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
-        rsync -avz --exclude 'venv' --exclude '.git' --exclude '.github' -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" . $SSH_USERNAME@$SSH_HOST:/var/www/f5
+        rsync -avz --exclude 'venv' --exclude '.git' --exclude '.github' -e "ssh -i private_key -o StrictHostKeyChecking=no" . $SSH_USERNAME@$SSH_HOST:/var/www/f5
 
-    - name: Restart Gunicorn
+    - name: Restart Gunicorn and Nginx
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
         SSH_USERNAME: f5local
       run: |
-        ssh -i private_key.pem -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST << 'EOF'
+        ssh -i private_key -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST << 'EOF'
           sudo systemctl restart gunicorn
           sudo systemctl restart nginx
         EOF
