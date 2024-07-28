@@ -12,7 +12,7 @@ class PlanForm(forms.ModelForm):
     class Meta:
         model = Plan
         fields = [
-            'title', 'type', 'featured', 'excerpt',
+            'title', 'type', 'featured', 'excerpt', 'document',
             'tags', 'featured_image', 'status',
         ]
 

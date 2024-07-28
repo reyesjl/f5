@@ -91,11 +91,12 @@ class Plan(models.Model):
     )
     featured = models.BooleanField(default=False)
     excerpt = models.TextField(max_length=300, blank=True)
+    document = models.FileField(upload_to='health/plans/document/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.CharField(max_length=200, blank=True)
     featured_image = models.ImageField(
-        upload_to="plan_featured_images/", blank=True, null=True
+        upload_to="health/plans/covers/", blank=True, null=True
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
     views = models.PositiveIntegerField(default=0)
