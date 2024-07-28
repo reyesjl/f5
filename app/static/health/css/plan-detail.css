@@ -42,7 +42,7 @@
     margin: 0 auto;
 }
 
-@media(max-width: 680px) {
+@media(max-width: 768px) {
     .exercise-list .list-item {
         width: 100%;
     }

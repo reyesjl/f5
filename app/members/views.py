@@ -126,53 +126,18 @@ def member_profile(request, username):
 @login_required
 def member_dashboard(request):
     user = request.user
-    
+    profile = get_object_or_error(UserProfile, user=user)
+
     if user.is_staff:
-        return redirect('admin-dashboard')
+        context = {
+            user: 'user',
+            profile: 'profile',
+        }
+        return render(request, 'members/staff_dashboard.html', context)
     elif user.is_trainer:
-        return redirect('trainer-dashboard')
-    elif user.groups.filter(name='player').exists():
-        return redirect('player-dashboard')
+        return render(request, 'members/trainer_dashboard.html', {'user': user})
     else:
-        # Default dashboard view for users without specific groups
         return render(request, 'members/dashboard.html', {'user': user})
-
-@login_required
-@is_staff
-def admin_dashboard(request):
-    user = request.user
-    profile = get_object_or_error(UserProfile, user=user)
-
-    context = {
-        'user': user,
-        'profile': profile,
-    }
-    return render(request, 'members/admin_dashboard.html', context)
-
-@login_required
-@is_staff_or_trainer
-def trainer_dashboard(request):
-    user = request.user
-    profile = get_object_or_error(UserProfile, user=user)
-    health_clients = Client.objects.by_trainer(user.username).count()
-    
-    context = {
-        'user': user,
-        'profile': profile,
-        'health_clients': health_clients,
-    }
-    return render(request, 'members/trainer_dashboard.html', context)
-
-@login_required
-def player_dashboard(request):
-    user = request.user
-    profile = get_object_or_error(UserProfile, user=user)
-    
-    context = {
-        'user': user,
-        'profile': profile,
-    }
-    return render(request, 'members/player_dashboard.html', context)
     
 def member_logout(request):
     logout(request)

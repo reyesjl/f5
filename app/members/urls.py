@@ -25,9 +25,6 @@ urlpatterns = [
     path("<str:username>/update/", views.member_update, name="member-update"),
     path("<str:username>/profile/", views.member_profile, name="member-profile"),
     path("dashboard/", views.member_dashboard, name="member-dashboard"),
-    path("admin-dashboard/", views.admin_dashboard, name="admin-dashboard"),
-    path("trainer-dashboard/", views.trainer_dashboard, name="trainer-dashboard"),
-    path("player-dashboard/", views.player_dashboard, name="player-dashboard"),
 
     # Management
     #path("<str:username>/roles/", views.member-edit),

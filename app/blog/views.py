@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from .forms import ArticleForm
-from core.utils import check_user
+from core.utils import check_user, get_object_or_error
 from core.decorator import user_has_role
 from .models import Article
 
@@ -29,7 +29,7 @@ def article_create(request):
     else:
         form = ArticleForm()
 
-    return render(request, "articles/article_create.html", {"form": form})
+    return render(request, "articles/article_form.html", {"form": form})
 
 def article_detail(request, slug):
     can_manage = check_user(request.user, "blog_manager")
@@ -54,13 +54,7 @@ def article_detail(request, slug):
 
 @user_has_role("blog_manager")
 def article_update(request, slug):
-    try:
-        article = Article.objects.by_slug(slug=slug)
-    except Article.DoesNotExist:
-        messages.error(request, f"The requested article does not exists.", extra_tags="error")
-    except Exception as e:
-        messages.error(request, f"An unexpected error occured: {e}", extra_tags="error")
-        return render(request, "core/error.html")
+    article = get_object_or_error(Article, slug=slug)
     
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)
@@ -73,7 +67,7 @@ def article_update(request, slug):
     else:
         form = ArticleForm(instance=article)
     
-    return render(request, "articles/article_update.html", {"form": form})
+    return render(request, "articles/article_form.html", {"form": form})
 
 @user_has_role("blog_manager")
 def article_delete(request, slug):

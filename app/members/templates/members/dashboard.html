@@ -7,39 +7,38 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
-    <script src="{% static 'core/js/nav.js' %}" defer></script>
+    <script src="{% static 'members/js/dashboard.js' %}" defer></script>
 
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        {% include 'includes/notifications.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                <div class="profile-wrapper">
-                    <div class="profile-image">
-                        <img src="https://place-hold.it/164x164" alt="profile_image" />
-                    </div>
-                    <div class="profile-info">
-                        <div class="username">{{ profile.username }}</div>
-                        <div class="fullname">
-                            <span>{{ profile.first_name }} {{ profile.last_name }}</span>
-                        </div>
-                    </div>
-                </div>
+    {% include 'includes/navigation.html' %}
+    <div class="container stack-large">
+        <div class="profile-wrapper">
+            <div class="avatar"><a href="#"><img src="https://place-hold.it/250x250"></a></div>
+            <div class="metadata">
+                <div class="username">{{ user.username }}</div>
+                <div class="fullname">{{user.first_name}} {{user.last_name}}</div>
+                <div class="bio">{{ user.bio }}</div>
             </div>
+        </div>
 
-            <div class="pagesection">
-                <h3 class="sectiontitle">Member Benefits</h3>
-                <ul class="generallist">
-                    <li>Access to information.</li>
-                    <li>Building the community.</li>
-                    <li>Engage with topics and ideas.</li>
-                    <li>Discover all deals early!</li>
-                </ul>
+        <div class="actions-wrapper">
+            <div class="action-list">
+                <div class="action-item" onclick="openTab('settings', this)">Settings</div>
+            </div>
+            <div class="action-content">
+                <div id="settings" class="actions account-actions">
+                    <ul class="action-links">
+                        <li><a class="link red" href="#">edit avatar</a></li>
+                        <li><a class="link red" href="#">edit profile</a></li>
+                        <li><a class="link red" href="{% url 'member-profile' user.username %}">view my profile</a></li>
+                        <li><a class="link red" href="{% url 'member-logout' %}">logout</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 </html>

@@ -77,9 +77,17 @@
     flex-wrap: wrap;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 768px) {
     .navwrapper {
         flex-direction: column;
         gap: .5rem;
+    }
+
+    .navlink {
+        font-size: .9rem;
+    }
+
+    .navlogo #text {
+        font-size: .9rem;
     }
 }

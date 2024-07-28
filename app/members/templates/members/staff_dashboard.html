@@ -22,19 +22,16 @@
                 <div class="bio">{{ user.bio }}</div>
             </div>
         </div>
-
         <div class="actions-wrapper">
             <div class="action-list">
                 <div class="action-item" onclick="openTab('settings', this)">Settings</div>
                 <div class="action-item" onclick="openTab('content', this)">Content</div>
-                <div class="action-item" onclick="openTab('clients', this)">Clients</div>
             </div>
             <div class="action-content">
                 <div id="settings" class="actions account-actions">
                     <ul class="action-links">
                         <li><a class="link red" href="#">edit avatar</a></li>
                         <li><a class="link red" href="#">edit profile</a></li>
-                        <li><a class="link red" href="{% url 'member-profile' user.username %}">view my profile</a></li>
                         <li><a class="link red" href="{% url 'member-logout' %}">logout</a></li>
                     </ul>
                 </div>
@@ -43,12 +40,6 @@
                         <li><a class="link red" href="{% url 'article-create' %}">create article</a></li>
                         <li><a class="link red" href="{% url 'event-create' %}">create event</a></li>
                         <li><a class="link red" href="{% url 'plan-create' %}">create plan</a></li>
-                    </ul>
-                </div>
-                <div id="clients" class="actions content-actions">
-                    <ul class="action-links">
-                        <li><a class="link red" href="">new requests</a></li>
-                        <li><a class="link red" href="">manage clients</a></li>
                     </ul>
                 </div>
             </div>
