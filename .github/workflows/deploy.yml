@@ -25,7 +25,7 @@ jobs:
         source venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        ls -R
+        cd app/
         python manage.py collectstatic --noinput
 
     - name: Setup SSH key
