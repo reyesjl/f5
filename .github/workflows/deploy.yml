@@ -18,19 +18,13 @@ jobs:
       with:
         python-version: '3.12.3'
 
-    - name: Install dependencies
+    - name: Create and activate virtual environment, install dependencies, and collect static files
+      shell: bash
       run: |
+        python -m venv venv
+        source venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    # Uncomment to run tests before deploying
-    # - name: Run Tests
-    #   run: |
-    #     python manage.py test
-
-    - name: Collect static files
-      run: |
-        source venv/bin/activate
         python manage.py collectstatic --noinput
 
     - name: Setup SSH key
