@@ -28,6 +28,11 @@ jobs:
     #   run: |
     #     python manage.py test
 
+    - name: Collect static files
+      run: |
+        source venv/bin/activate
+        python manage.py collectstatic --noinput
+
     - name: Setup SSH key
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
