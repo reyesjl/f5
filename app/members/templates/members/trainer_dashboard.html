@@ -31,7 +31,7 @@
             <div class="action-list">
                 <div class="action-item" onclick="openTab('settings', this)">Settings</div>
                 <div class="action-item" onclick="openTab('content', this)">Content</div>
-                <div class="action-item" onclick="openTab('clients', this)">Clients</div>
+                <div class="action-item" onclick="openTab('requests', this)">Training requests</div>
             </div>
             <div class="action-content">
                 <div id="settings" class="actions account-actions">
@@ -48,6 +48,26 @@
                         <li><a class="link red" href="{% url 'event-create' %}">create event</a></li>
                         <li><a class="link red" href="{% url 'plan-create' %}">create plan</a></li>
                     </ul>
+                </div>
+                <div id="requests" class="actions content-actions">
+                    <div class="request-list">
+                        {% for request in requests %}
+                            <div class="request-item">
+                                <div class="request-trainer-date">
+                                    <div class="request-trainer">
+                                        <a class="link black" href="">{{ request.user.username }}</a>
+                                    </div>
+                                    <div class="request-date">
+                                        {{ request.requested_date }} @ {{ request.requested_time }}
+                                    </div>
+                                </div>
+                                <div class="request-status {{ request.status|lower }}">
+                                    {{ request.get_status_display }}
+                                    <i class="fa-regular fa-circle-dot"></i>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div id="clients" class="actions content-actions">
                     <ul class="action-links">

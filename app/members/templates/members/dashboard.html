@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <script src="{% static 'members/js/dashboard.js' %}" defer></script>
 
     <title>Dashboard</title>
@@ -30,6 +31,7 @@
         <div class="actions-wrapper">
             <div class="action-list">
                 <div class="action-item" onclick="openTab('settings', this)">Settings</div>
+                <div class="action-item" onclick="openTab('requests', this)">Training requests</div>
             </div>
             <div class="action-content">
                 <div id="settings" class="actions account-actions">
@@ -39,6 +41,26 @@
                         <li><a class="link red" href="{% url 'member-profile' user.username %}">view my profile</a></li>
                         <li><a class="link red" href="{% url 'member-logout' %}">logout</a></li>
                     </ul>
+                </div>
+                <div id="requests" class="actions content-actions">
+                    <div class="request-list">
+                        {% for request in requests %}
+                            <div class="request-item">
+                                <div class="request-trainer-date">
+                                    <div class="request-trainer">
+                                        {{ request.trainer.username }}
+                                    </div>
+                                    <div class="request-date">
+                                        {{ request.requested_date }} @ {{ request.requested_time }}
+                                    </div>
+                                </div>
+                                <div class="request-status {{ request.status|lower }}">
+                                    {{ request.get_status_display }}
+                                    <i class="fa-regular fa-circle-dot"></i>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

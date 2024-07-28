@@ -213,7 +213,7 @@ def request_trainer_session(request, trainer_id):
             session_request.user = request.user
             session_request.trainer = trainer
             session_request.save()
-            return redirect('profile', trainer_id=trainer.id)
+            return render(request, 'trainers/request_trainer_success.html', {'trainer': trainer})
     else:
         form = TrainerSessionRequestForm()
     return render(request, 'trainers/request_trainer_session_form.html', {'form': form, 'trainer': trainer})

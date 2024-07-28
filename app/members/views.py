@@ -8,7 +8,7 @@ from .forms import MemberCreationForm, MemberUpdateForm, MemberAuthenticationFor
 from .models import CustomUser, UserProfile
 from events.models import Event
 from blog.models import Article
-from health.models import Plan, Client
+from health.models import Plan, Client, TrainerSessionRequest
 
 @login_required
 @user_has_role("health_manager")
@@ -126,7 +126,7 @@ def member_profile(request, username):
 @login_required
 def member_dashboard(request):
     user = request.user
-    profile = get_object_or_error(request,UserProfile, user=user)
+    profile = get_object_or_error(request, UserProfile, user=user)
 
     if user.is_staff:
         context = {
@@ -135,9 +135,19 @@ def member_dashboard(request):
         }
         return render(request, 'members/staff_dashboard.html', context)
     elif user.is_trainer:
-        return render(request, 'members/trainer_dashboard.html', {'user': user})
+        requests = TrainerSessionRequest.objects.filter(trainer=user)
+        context = {
+            'user': user,
+            'requests': requests,
+        }
+        return render(request, 'members/trainer_dashboard.html', context)
     else:
-        return render(request, 'members/dashboard.html', {'user': user})
+        requests = TrainerSessionRequest.objects.filter(user=user)
+        context = {
+            'user': user,
+            'requests': requests,
+        }
+        return render(request, 'members/dashboard.html', context)
 
 @login_required
 def update_profile(request):

@@ -23,4 +23,5 @@ urlpatterns = [
 
     # trainers
     path("trainers/<int:trainer_id>/request-session/", views.request_trainer_session, name='request-trainer-session'),
+    #path("sessions/<int:trainer_id>/update-session/", views.update_session_update, name='update-trainer-session'),
 ]
