@@ -32,74 +32,19 @@
             </div>
             <div class="column">
                 <div class="plan-metadata stack-small">
-                    <h2 class="plan-title">{{ plan.title }}</h2>
-                    <p class="author">by <a class="link red" href="{% url 'member-profile' plan.author %}">{{ plan.author }}</a></p>
-                    <p class="date">{{ plan.views }} views {{ plan.created_at }}</p>
+                    <div>
+                        <h2 class="plan-title">{{ plan.title }}</h2>
+                        <p class="author">written by <a class="link red" href="{% url 'member-profile' plan.author %}">{{ plan.author }}</a></p>
+                        <p class="date">{{ plan.views }} views {{ plan.created_at }}</p>
+                    </div>
                     <p class="desc">{{ plan.excerpt }}</p>
+                    <div class="download">
+                        {% if plan.document %}
+                        <a href="{{ plan.document.url }}" class="link red">Download Plan PDF</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flexbox plan-header">
-            
-            <div class="column">
-                <div class="plan-metadata">
-                    
-                </div>
-            </div>
-        </div>
-        <div class="stack-large">
-            <div class="action-links">
-                <a class="link red" href="{% url 'plan-update' slug=plan.slug %}">edit plan info</a>
-            </div>
-
-            <!-- RICH TEXT CONTENT -->
-            {% if plan.content %}
-            <div class="content stack-small">
-                <div class="section-header border">
-                    <h2>Content</h2>
-                </div>
-
-                <div>{{ plan.content | safe }}</div>
-            </div>
-            {% else %}
-                <div>This plan does not have a rich text content.</div>
-            {% endif %}
-
-            <!-- EXERCISES -->
-            {% if exercises %}
-            <div class="exercises stack-small">
-                <div class="section-header border">
-                    <h2>Exercises</h2>
-                </div>
-                <ul class="exercise-list">
-                    {% for exercise in exercises %}
-                        <li class="list-item">
-                            <div class="exercise-name">{{ exercise.movement.name }}</div>
-                            <div class="exercise-image">
-                                <img src="{{ exercise.movement.image.url }}" alt="exercise visual"/>
-                            </div>
-                            <div class="exercise-meta"><span class="highlight">{{ exercise.sets }}</span> sets of <span class="highlight">{{ exercise.reps }}</span></div>
-                        </li>
-                        {% empty %}
-                        <p>No exercises have been added to this plan yet.</p>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% else %}
-            <div>This plan does not have any exercises.</div>
-            {% endif %}
-            
-            <!-- MEALS -->
-            {% if meals %}
-            <div class="exercises stack-small">
-                <div class="section-header border">
-                    <h2>Meals</h2>
-                </div>
-            </div>
-            {% else %}
-                <div>This plan does not have any meals.</div>
-            {% endif %}
-
         </div>
     </div>
     {% include 'includes/footer.html' %}

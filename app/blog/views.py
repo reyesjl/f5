@@ -30,7 +30,7 @@ def article_create(request):
     return render(request, "articles/article_form.html", {"form": form})
 
 def article_detail(request, slug):
-    article = get_object_or_error(Article, slug=slug)
+    article = get_object_or_error(request,Article, slug=slug)
     
     context = {
         "article": article,
@@ -40,7 +40,7 @@ def article_detail(request, slug):
 
 @is_staff_or_trainer
 def article_update(request, slug):
-    article = get_object_or_error(Article, slug=slug)
+    article = get_object_or_error(request,Article, slug=slug)
     
     if request.method == "POST":
         form = ArticleForm(request.POST, instance=article)
@@ -57,7 +57,7 @@ def article_update(request, slug):
 
 @is_staff_or_trainer
 def article_delete(request, slug):
-    article = get_object_or_error(Article, slug=slug)
+    article = get_object_or_error(request,Article, slug=slug)
     
     if request.method == "POST":
         article.delete()

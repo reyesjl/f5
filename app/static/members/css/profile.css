@@ -48,6 +48,7 @@
     width: 30%;
     max-width: 100%;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 .action-list {
@@ -81,6 +82,13 @@
     gap: 10px;
 }
 
+.profile-actions {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 768px) {
     .avatar {
         width: 80px;
@@ -90,6 +98,10 @@
     .profile-wrapper {
         flex-direction: row;
         align-items: center;
+    }
+
+    .profile-actions {
+        justify-content: center;
     }
 
     .metadata {

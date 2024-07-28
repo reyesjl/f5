@@ -38,7 +38,7 @@ def event_list(request):
     return render(request, "events/event_list.html", context)
 
 def event_detail(request, slug):
-    event = get_object_or_error(Event, slug=slug)
+    event = get_object_or_error(request,Event, slug=slug)
     roles = event.roles.all()
 
     context = {
@@ -61,7 +61,7 @@ def event_create(request):
 
 @is_staff
 def event_update(request, slug):
-    event = get_object_or_error(Event, slug=slug)
+    event = get_object_or_error(request,Event, slug=slug)
 
     if request.method == "POST":
         form = EventForm(request.POST, instance=event)
@@ -75,7 +75,7 @@ def event_update(request, slug):
 
 @is_staff
 def event_delete(request, slug):
-    event = get_object_or_error(Event, slug=slug)
+    event = get_object_or_error(request,Event, slug=slug)
     
     if request.method == "POST":
         event.delete()
@@ -85,7 +85,7 @@ def event_delete(request, slug):
 
 @is_staff
 def role_create(request, event_slug):
-    event = get_object_or_error(Event, slug=event_slug)
+    event = get_object_or_error(request,Event, slug=event_slug)
     
     if request.method == "POST":
         form = EventRoleForm(request.POST)
@@ -107,7 +107,7 @@ def role_create(request, event_slug):
 
 @is_staff
 def role_list(request, event_slug):
-    event = get_object_or_error(Event, slug=event_slug)
+    event = get_object_or_error(request,Event, slug=event_slug)
     roles = event.roles.all()
 
     context = {
@@ -119,8 +119,8 @@ def role_list(request, event_slug):
 
 @user_has_role("event_manager")
 def role_delete(request, event_slug, role_id):
-    event = get_object_or_error(Event, slug=event_slug)
-    role = get_object_or_error(EventRole, id=role_id, event=event)
+    event = get_object_or_error(request,Event, slug=event_slug)
+    role = get_object_or_error(request,EventRole, id=role_id, event=event)
     
     role.delete()
     messages.success(request, "Role has been deleted.", extra_tags="success")
@@ -131,7 +131,7 @@ def role_delete(request, event_slug, role_id):
 
 @is_staff
 def rsvp_list(request, event_slug):
-    event = get_object_or_error(Event, slug=event_slug)
+    event = get_object_or_error(request,Event, slug=event_slug)
     
     paid_filter = request.GET.get('paid')
     if paid_filter is not None:

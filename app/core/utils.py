@@ -7,13 +7,14 @@ def check_user(user, role):
     Utility function to check if a user has a specific role.
     """
     return user.is_authenticated and user.groups.filter(name=role).exists()
-
-def get_object_or_error(model, **kwargs):
+    
+def get_object_or_error(request, model, **kwargs):
     """
     Utility function to get an object or render an error page if it doesn't exist.
     
     Args:
     - model: The Django model class to query.
+    - request: The HttpRequest object.
     - kwargs: Field lookups for the query.
     
     Returns:
@@ -24,7 +25,7 @@ def get_object_or_error(model, **kwargs):
         return model.objects.get(**kwargs)
     except ObjectDoesNotExist:
         message = f"{model.__name__} with {kwargs} does not exist."
-        return render(kwargs.get('request'), "core/error.html", {'message': message})
+        return render(request, "core/error.html", {'message': message})
     except Exception as e:
         message = str(e)
-        return render(kwargs.get('request'), "core/error.html", {'message': message})
+        return render(request, "core/error.html", {'message': message})

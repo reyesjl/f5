@@ -90,6 +90,20 @@
   width: 60%;
 }
 
+.link.button {
+  padding: 2px 5px;
+  font-size: .9rem;
+  color: black;
+  background: lightgray;
+  border-radius: 5px;
+}
+
+.link.button:hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+
 .link.black {
   color: black;
   text-decoration: underline;

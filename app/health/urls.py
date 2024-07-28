@@ -20,4 +20,7 @@ urlpatterns = [
     path("clients/<int:client_id>/", views.client_detail, name='client-detail'),
     path("clients/<str:trainer_username>/<str:client_username>/add/", views.client_add, name='client-add'),
     path("clients/<str:client_username>/remove/", views.client_remove, name='client-remove'),
+
+    # trainers
+    path("trainers/<int:trainer_id>/request-session/", views.request_trainer_session, name='request-trainer-session'),
 ]

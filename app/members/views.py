@@ -33,7 +33,7 @@ def member_list(request):
 
 @is_staff_or_trainer
 def member_detail(request, username):
-    user = get_object_or_error(CustomUser, username=username)
+    user = get_object_or_error(request,CustomUser, username=username)
     context = {
         'profile': user,
     }
@@ -41,7 +41,7 @@ def member_detail(request, username):
 
 @is_staff_or_trainer
 def member_update(request, username):
-    profile = get_object_or_error(CustomUser, username=username)
+    profile = get_object_or_error(request,CustomUser, username=username)
     print(profile)
 
     if request.method == 'POST':
@@ -126,7 +126,7 @@ def member_profile(request, username):
 @login_required
 def member_dashboard(request):
     user = request.user
-    profile = get_object_or_error(UserProfile, user=user)
+    profile = get_object_or_error(request,UserProfile, user=user)
 
     if user.is_staff:
         context = {

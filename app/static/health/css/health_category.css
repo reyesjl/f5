@@ -9,10 +9,12 @@
     display: flex;
     align-items: center;
     padding: 4px;
-    padding-right: 8px;
+    padding-right: 10px;
     background: rgb(224, 224, 224);
     border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
     border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .trainer-avatar {
@@ -31,10 +33,4 @@
 }
 
 @media (max-width: 768px) {
-    .trainer-list {
-        justify-content: space-between;
-    }
-    .trainer-card {
-        width: 48%;
-    }
 }

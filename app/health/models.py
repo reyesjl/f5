@@ -121,3 +121,23 @@ class Plan(models.Model):
 
     def __str__(self):
         return self.title
+
+class TrainerSessionRequest(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'), 
+        ('accepted', 'Accepted'), 
+        ('rejected', 'Rejected')
+        )
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='session_requests')
+    trainer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='trainer_sessions')
+    requested_date = models.DateField()
+    requested_time = models.TimeField()
+    additional_details = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} requests {self.trainer.username} for {self.requested_date} at {self.requested_time}"

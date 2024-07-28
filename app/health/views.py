@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from core.decorator import user_has_role, is_staff, is_trainer, is_staff_or_trainer
-from .models import HealthProfile, Plan, Client
+from .models import HealthProfile, Plan, Client, TrainerSessionRequest
 from blog.models import Article
-from .forms import PlanForm, HealthProfileForm
+from .forms import PlanForm, TrainerSessionRequestForm
 from members.models import CustomUser
 from core.utils import check_user, get_object_or_error
 
@@ -97,7 +98,7 @@ def plan_create(request):
     return render(request, "plans/plan_form.html", {"form": form})
 
 def plan_detail(request, slug):
-    plan = get_object_or_error(Plan, slug=slug)
+    plan = get_object_or_error(request,Plan, slug=slug)
     
     context = {
         "plan": plan,
@@ -107,7 +108,7 @@ def plan_detail(request, slug):
 
 @is_staff_or_trainer
 def plan_update(request, slug):
-    plan = get_object_or_error(Plan, slug=slug)
+    plan = get_object_or_error(request,Plan, slug=slug)
     
     if request.method == "POST":
         form = PlanForm(request.POST, request.FILES, instance=plan)
@@ -135,11 +136,7 @@ def plan_delete(request, slug):
     - Rendered HTML template for plan deletion confirmation
     - Redirects to health home on successful deletion
     """
-    try:
-        plan = Plan.objects.by_slug(slug)
-    except Exception as e:
-        message = e
-        return render(request, "core/error.html", {"message": message})
+    plan = get_object_or_error(request, Plan, slug=slug)
     
     if request.method == "POST":
         plan.delete()
@@ -150,7 +147,7 @@ def plan_delete(request, slug):
 # clients
 @is_trainer
 def client_list(request):
-    trainer = get_object_or_error(CustomUser, username=request.user.username)
+    trainer = get_object_or_error(request, CustomUser, username=request.user.username)
     clients = trainer.clients.all()
 
     # Filter by search query
@@ -170,8 +167,8 @@ def client_list(request):
 
 @is_trainer
 def client_detail(request, client_id):
-    client = get_object_or_error(Client, id=client_id)
-    health_profile = get_object_or_error(HealthProfile, user=client.user)
+    client = get_object_or_error(request, Client, id=client_id)
+    health_profile = get_object_or_error(request, HealthProfile, user=client.user)
     
     context = {
         'client': client,
@@ -181,8 +178,8 @@ def client_detail(request, client_id):
 
 @is_trainer
 def client_add(request, trainer_username, client_username):
-    trainer = get_object_or_error(CustomUser, username=trainer_username)
-    client = get_object_or_error(CustomUser, username=client_username)
+    trainer = get_object_or_error(request, CustomUser, username=trainer_username)
+    client = get_object_or_error(request, CustomUser, username=client_username)
     
     # Check if client already exists for this trainer
     if trainer.clients.filter(user=client).exists():
@@ -196,8 +193,8 @@ def client_add(request, trainer_username, client_username):
 
 @is_trainer
 def client_remove(request, client_username):
-    user = get_object_or_error(CustomUser, username=client_username) 
-    client = get_object_or_error(Client, user=user)
+    user = get_object_or_error(request, CustomUser, username=client_username) 
+    client = get_object_or_error(request,Client, user=user)
     
     if request.method == 'POST':
         client.delete()
@@ -205,3 +202,18 @@ def client_remove(request, client_username):
         return redirect('client-list')
     
     return render(request, 'clients/client_remove_confirm.html', {'client': client})
+
+@login_required()
+def request_trainer_session(request, trainer_id):
+    trainer = get_object_or_error(request, CustomUser, id=trainer_id, is_trainer=True)
+    if request.method == 'POST':
+        form = TrainerSessionRequestForm(request.POST)
+        if form.is_valid():
+            session_request = form.save(commit=False)
+            session_request.user = request.user
+            session_request.trainer = trainer
+            session_request.save()
+            return redirect('profile', trainer_id=trainer.id)
+    else:
+        form = TrainerSessionRequestForm()
+    return render(request, 'trainers/request_trainer_session_form.html', {'form': form, 'trainer': trainer})

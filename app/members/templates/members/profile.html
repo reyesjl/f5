@@ -7,7 +7,9 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
+    <script src="{% static 'core/js/base.js' %}" defer></script>
     <title>Profile</title>
 </head>
 <body>
@@ -23,6 +25,17 @@
                 <div class="username">{{ profile.username }}</div>
                 <div class="fullname">{{profile.first_name}} {{profile.last_name}}</div>
                 <div class="bio">{{ profile.bio }}</div>
+
+                <div class="profile-actions">
+                    {% if profile.is_trainer %}
+                    <div class="action">
+                        <a class="link button" href="{% url 'request-trainer-session' trainer_id=profile.id %}">Request Trainer</a>
+                    </div>
+                    {% endif %}
+                    <div class="action">
+                        <a class="link button" onclick="copyToClipboard()"><i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

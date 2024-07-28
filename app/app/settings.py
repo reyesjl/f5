@@ -38,6 +38,7 @@ STRIPE_TEST_SECRET = env('STRIPE_TEST_SECRET')
 
 # Django user
 AUTH_USER_MODEL = "members.CustomUser"
+LOGIN_URL = '/members/login/'
 
 # Application definition
 INSTALLED_APPS = [

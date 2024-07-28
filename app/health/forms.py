@@ -1,5 +1,5 @@
 from django import forms
-from .models import Plan, HealthProfile
+from .models import Plan, HealthProfile, TrainerSessionRequest
 
 class PlanForm(forms.ModelForm):
     tags = forms.CharField(
@@ -43,4 +43,14 @@ class HealthProfileForm(forms.ModelForm):
             'broad_jump': 'Enter broad jump distance in inches.',
             'vertical': 'Enter vertical jump height in inches.',
             'forty_meter_sprint': 'Enter 40-meter sprint time in seconds.',
+        }
+
+class TrainerSessionRequestForm(forms.ModelForm):
+    class Meta:
+        model = TrainerSessionRequest
+        fields = ['requested_date', 'requested_time', 'additional_details']
+        widgets = {
+            'requested_date': forms.DateInput(attrs={'type': 'date'}),
+            'requested_time': forms.TimeInput(attrs={'type': 'time'}),
+            'additional_details': forms.Textarea(attrs={'rows': 4}),
         }
