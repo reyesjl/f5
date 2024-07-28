@@ -15,7 +15,11 @@
     {% include 'includes/navigation.html' %}
     <div class="container stack-large">
         <div class="profile-wrapper">
-            <div class="avatar"><a href="#"><img src="https://place-hold.it/250x250"></a></div>
+            {% if user.avatar %}
+                <div class="avatar"><a href="{% url 'update-avatar' %}"><img src="{{ user.avatar.url }}"></a></div>
+            {% else %}
+                <div class="avatar"><a href="{% url 'update-avatar' %}"><img src="https://place-hold.it/150x150"></a></div>
+            {% endif %}
             <div class="metadata">
                 <div class="username">{{ user.username }}</div>
                 <div class="fullname">{{user.first_name}} {{user.last_name}}</div>
@@ -32,8 +36,8 @@
             <div class="action-content">
                 <div id="settings" class="actions account-actions">
                     <ul class="action-links">
-                        <li><a class="link red" href="#">edit avatar</a></li>
-                        <li><a class="link red" href="#">edit profile</a></li>
+                        <li><a class="link red" href="{% url 'update-avatar' %}">edit avatar</a></li>
+                        <li><a class="link red" href="{% url 'update-profile' %}">edit profile</a></li>
                         <li><a class="link red" href="{% url 'member-profile' user.username %}">view my profile</a></li>
                         <li><a class="link red" href="{% url 'member-logout' %}">logout</a></li>
                     </ul>

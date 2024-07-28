@@ -26,6 +26,10 @@ urlpatterns = [
     path("<str:username>/profile/", views.member_profile, name="member-profile"),
     path("dashboard/", views.member_dashboard, name="member-dashboard"),
 
+    # Settings
+    path("settings/update-profile/", views.update_profile, name="update-profile"),
+    path("settings/update-avatar/", views.update_avatar, name="update-avatar"),
+
     # Management
     #path("<str:username>/roles/", views.member-edit),
 ]

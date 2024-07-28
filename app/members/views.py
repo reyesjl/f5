@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, logout
 from core.decorator import user_has_role, is_trainer, is_staff, is_staff_or_trainer
 from core.utils import check_user, get_object_or_error
 from django.contrib.auth.decorators import login_required
-from .forms import MemberCreationForm, MemberUpdateForm, MemberAuthenticationForm, SupportTicketForm
+from .forms import MemberCreationForm, MemberUpdateForm, MemberAuthenticationForm, SupportTicketForm, UpdateProfileForm, UpdateAvatarForm
 from .models import CustomUser, UserProfile
 from events.models import Event
 from blog.models import Article
@@ -138,6 +138,39 @@ def member_dashboard(request):
         return render(request, 'members/trainer_dashboard.html', {'user': user})
     else:
         return render(request, 'members/dashboard.html', {'user': user})
+
+@login_required
+def update_profile(request):
+    user = request.user
+
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('member-dashboard')
+    else:
+        form = UpdateProfileForm(instance=user)
+    
+    context = {
+        'form': form,
+    }
+    return render(request, "members/settings/update_profile_form.html", context)
+
+@login_required
+def update_avatar(request):
+    user = request.user
+
+    if request.method == 'POST':
+        form = UpdateAvatarForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('member-dashboard')
+    else:
+        form = UpdateAvatarForm(instance=user)
+    context = {
+        'form': form,
+    }
+    return render(request, "members/settings/update_avatar_form.html", context)
     
 def member_logout(request):
     logout(request)

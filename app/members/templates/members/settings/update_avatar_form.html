@@ -9,17 +9,17 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
 
-    <title>Event Form</title>
+    <title>Avatar Form</title>
 </head>
 
 <body>
     {% include 'includes/navigation.html' %} 
-    <div class="container stack-large">
+    <div class="container-sm stack-large">
         <div class="form-wrapper spacer">
-            <h2>Event Form</h2>
-            <p>Complete the form to create/update an event.</p>
+            <h2>Update Avatar</h2>
+            <p>Complete the form to update your avatar.</p>
 
-            <form method="post" class="form-fields stack-small">
+            <form method="post" enctype="multipart/form-data" class="form-fields stack-small">
                 {% csrf_token %}
                 {{ form }}
                 {{ form.media }}

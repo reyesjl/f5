@@ -8,9 +8,19 @@ class CustomUser(AbstractUser):
         help_text='Designates whether this user is a trainer.'
     )
     bio = models.TextField(blank=True, null=True)
+    avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True)
 
     def __str__(self):
         return self.username
+    
+    def save(self, *args, **kwargs):
+        try:
+            this = CustomUser.objects.get(id=self.id)
+            if this.avatar != self.avatar:
+                this.avatar.delete(save=False)
+        except CustomUser.DoesNotExist:
+            pass  # This means the user is being created, not updated
+        super(CustomUser, self).save(*args, **kwargs)
 
 class Avatar(models.Model):
     name = models.CharField(max_length=100)
