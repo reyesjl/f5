@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     padding: 4px;
+    padding-right: 8px;
     background: rgb(224, 224, 224);
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
