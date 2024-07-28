@@ -17,7 +17,7 @@
             {% if profile.avatar %}
                 <div class="avatar"><a href="{{profile.avatar.url}}"><img src="{{ profile.avatar.url }}"></a></div>
             {% else %}
-                <div class="avatar"><a href="{% url 'update-avatar' %}"><img src="https://place-hold.it/150x150"></a></div>
+                <div class="avatar"><a href="https://place-hold.it/150x150"><img src="https://place-hold.it/150x150"></a></div>
             {% endif %}
             <div class="metadata">
                 <div class="username">{{ profile.username }}</div>

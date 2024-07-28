@@ -6,88 +6,65 @@
 
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/articles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/scroller.css' %}">
-    <script src="{% static 'core/js/scroller.js' %}" defer></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/health_category.css' %}">
 
-    <title>Health</title>
+    <title>Strength & Conditioning</title>
 </head>
 <body>
-    <div class="container">        
-        <div class="pagecontent">
-            <div class="breadcrumbs">
-                <div><a href="/health/">health</a></div>
-                <div>/</div>
-                <div>strength & conditioning</div>
-            </div>
-            <div class="pageheader">
-                <h1 class="pagetitle">Strength & Conditioning</h1>
-                <p class="pagesubtitle">Discover free plans and blogs to learn from. Meet with an expert for a free evaluation.</p>
-            </div>     
+    {% include 'includes/navigation.html' %} 
+    <div class="container stack-large">
+        <div class="jumbotron stack-small">
+            <div><a class="link red" href="{% url 'nutrition-home' %}">Checkout nutrition. ></a></div>
+            <h1>Strength & Conditioning</h1>
+            <p>Discover free plans and blogs to learn from. Meet with an expert for a free evaluation.</p>
+        </div>
 
-            <div class="pagesection">
-                <div class="splitshot">
-                    <h2 class="sectiontitle">Plans</h2>
-                    <div class="scrollerbuttons">
-                        <div id="scroll-left" class="button" alt="scroll left">&#171;</div>
-                        <div id="scroll-right" class="button" alt="scroll right">&#187;</div>
-                    </div>
-                </div> 
-
-                <div class="media-scroller snaps-inline">
-                    {% for plan in plans %}
-                    <div class="media-element">
-                        <a class="element-link" href="{% url 'plan-detail' slug=plan.slug %}">
-                            <img class="element-image" src="{{ plan.featured_image.url }}"
-                                alt="plan image placeholder" />
-                            <div class="element-title">{{ plan.title|truncatechars:55 }}</div>
-                        </a>
-                        {% if plan.featured %}
-                        <div class="featured-text">Featured!</div>
-                        {% endif %}
-                    </div>
-                    {% empty %}
-                    <div class="media-element">
-                        <a class="element-link" href="#">
-                            <img class="element-image" src="https://place-hold.it/320x480"
-                                alt="plan image placeholder" />
-                            <div class="element-title">No plans found.</div>
-                        </a>
-                        <div class="featured-text">Coming soon!</div>
-                    </div>
-                    {% endfor %}
+        <div class="plans stack-small">
+            <div class="section-header">
+                <div class="justify-between">
+                    <h2>S&C plans</h2>
+                    <a class="link red" href="{% url 'plan-list' %}">view all</a>
                 </div>
             </div>
+        </div>
 
-            <div class="pagesection">
-                <h2 class="sectiontitle">Blogs</h2>
-                <!-- Manager actions -->
-                {% if can_manage %}
-                <p>
-                    <a href="{% url 'article-create' %}" class="button go">Create Article</a>
-                </p>
-                {% endif %}
-                <ul class="article-list">
-                    {% for article in articles %}
-                        {% include "articles/_article_item_snippet.html" %}
-                    {% empty %}
-                    <li class="article-item">
-                    No blogs here yet.
-                    </li>
-                    {% endfor %}
-                </ul>
+        <div class="trainers stack-small">
+            <div class="section-header border">
+                <h2>Trainers 1-on-1</h2>
             </div>
+            <p>Select a trainer from the list below to request a session.</p>
+            
+            <div class="trainer-list">
+            {% for trainer in trainers %}
+            <div class="trainer-card">
+                <div class="trainer-avatar">
+                    {% if trainer.avatar %}
+                        <img src="{{ trainer.avatar.url }}">
+                    {% else %}
+                        <img src="https://place-hold.it/48x48">
+                    {% endif %}
+                </div>
+                <div class="trainer-username">
+                    <a class="link black" href="{% url 'member-profile' username=trainer.username %}">{{ trainer.username }}</a>
+                </div>
+            </div>
+            {% empty %}
+                <div>Trainers coming soon..</div>
+            {% endfor %}
+            </div>
+            <div><a class="link red" href="">Are you a trainer looking to help?</a></div>
+        </div>
 
-            <div class="pagesection">
-                <h2 class="sectiontitle">Coaches</h2>
-                <p class="sectiontext">
-                    <ul>
-                        <li>Asau</li>
-                        <li>Ashley</li>
-                    </ul>
-                </p>
+        <div class="categories stack-small">
+            <div class="section-header border">
+                <h3>Explore other categories</h3>
+            </div>
+            <div class="stack-small">
+                <div><a class="link red" href="{% url 'nutrition-home' %}">Checkout nutrition. ></a></div>
+                <div><a class="link red" href="{% url 'mental-home' %}">Checkout mental. ></a></div>
             </div>
         </div>
     </div>
+    {% include 'includes/footer.html' %}
 </body>
 </html>

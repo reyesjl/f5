@@ -9,31 +9,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/rich.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/css/article_detail.css' %}">
 
-    <script src="{% static 'core/js/nav.js' %}" defer></script>
-    <script src="{% static 'core/js/rich.js' %}" defer></script>
 
-    <title>Article</title>
+    <title>{{ article.title }}</title>
 </head>
 <body>
-    <div class="container">
-        {% include 'includes/navigation.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                {% if can_manage %}
-                <p>
-                    <a href="{% url 'article-update' slug=article.slug %}" class="button warning">Edit</a>
-                    <a href="{% url 'article-delete' slug=article.slug %}" class="button danger">Delete</a>
-                </p>
-                {% endif %}
-                <h1 class="pagetitle">{{ article.title }}</h1>
-                <p class="pagesubtitle">by <a class="article-author-link" href="{% url 'member-profile' article.author %}">{{ article.author }}</a></p>
-                <p class="pagesubtitle">{{ article.views }} views {{ article.created_at }}</p>
-            </div>
-
-            <div class="pagesection richbody">
-                {{ article.content | safe }}
-            </div>
+    {% include 'includes/navigation.html' %} 
+    <div class="container stack-large">
+        <div class="article-header">
+            <h1 class="article-title">{{ article.title }}</h1>
+            <p class="article-author">written by <a class="link red" href="{% url 'member-profile' article.author %}">{{ article.author }}</a></p>
+            <p class="article-views">{{ article.views }} views {{ article.created_at }}</p>
         </div>
+        <div class="article-content">{{ article.content | safe }}</div>
     </div>
 </body>
 </html>

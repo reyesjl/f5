@@ -21,36 +21,36 @@ def index(request):
 def strength_index(request):
     plans = Plan.objects.published().by_type("strength_and_conditioning")
     articles = Article.objects.published().by_type("strength_and_conditioning")
-    can_manage = check_user(request.user, "health_manager")
+    trainers = CustomUser.objects.filter(is_trainer=True)
 
     context = {
         "plans": plans,
         "articles": articles,
-        "can_manage": can_manage,
+        "trainers": trainers,
     }
     return render(request, "health/strength.html", context)
 
 def nutrition_index(request):
     plans = Plan.objects.published().by_type("nutrition")
     articles = Article.objects.published().by_type("nutrition")
-    can_manage = check_user(request.user, "health_manager")
+    trainers = CustomUser.objects.filter(is_trainer=True)
 
     context = {
         "plans": plans,
         "articles": articles,
-        "can_manage": can_manage,
+        "trainers": trainers,
     }
     return render(request, "health/nutrition.html", context)
 
 def mental_index(request):
     plans = Plan.objects.published().by_type("mental")
     articles = Article.objects.published().by_type("mental")
-    can_manage = check_user(request.user, "health_manager")
+    trainers = CustomUser.objects.filter(is_trainer=True)
 
     context = {
         "plans": plans,
         "articles": articles,
-        "can_manage": can_manage,
+        "trainers": trainers,
     }
     return render(request, "health/mental.html", context)
 
