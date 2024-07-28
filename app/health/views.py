@@ -94,7 +94,7 @@ def plan_create(request):
     else:
         form = PlanForm()
 
-    return render(request, "plans/plan_create.html", {"form": form})
+    return render(request, "plans/plan_form.html", {"form": form})
 
 def plan_detail(request, slug):
     plan = get_object_or_error(Plan, slug=slug)
@@ -120,7 +120,7 @@ def plan_update(request, slug):
     else:
         form = PlanForm(instance=plan)
 
-    return render(request, "plans/plan_update.html", {"form": form})
+    return render(request, "plans/plan_form.html", {"form": form})
 
 @is_staff_or_trainer
 def plan_delete(request, slug):

@@ -9,15 +9,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/forms.css' %}">
 
-    <title>Article Form</title>
+    <title>Plan Form</title>
 </head>
 
 <body>
     {% include 'includes/navigation.html' %} 
     <div class="container stack-large">
         <div class="form-wrapper spacer">
-            <h2>Article Form</h2>
-            <p>Complete the form to create/update an article.</p>
+            <h2>Plan Form</h2>
+            <p>Complete the form to create/update a plan.</p>
 
             <form method="post" enctype="multipart/form-data" class="form-fields stack-small">
                 {% csrf_token %}
