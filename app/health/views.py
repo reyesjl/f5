@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 
-from core.decorator import user_has_role, is_trainer
+from core.decorator import user_has_role, is_staff, is_trainer, is_staff_or_trainer
 from .models import HealthProfile, Plan, Client
 from blog.models import Article
 from .forms import PlanForm, HealthProfileForm
@@ -82,7 +82,7 @@ def plan_list(request):
     }
     return render(request, "plans/plan_list.html", context)
 
-@user_has_role("health_manager")
+@is_staff_or_trainer
 def plan_create(request):
     if request.method == "POST":
         form = PlanForm(request.POST, request.FILES)
@@ -105,7 +105,7 @@ def plan_detail(request, slug):
     
     return render(request, "plans/plan_detail.html", context)
 
-@is_trainer
+@is_staff_or_trainer
 def plan_update(request, slug):
     plan = get_object_or_error(Plan, slug=slug)
     
@@ -122,7 +122,7 @@ def plan_update(request, slug):
 
     return render(request, "plans/plan_update.html", {"form": form})
 
-@user_has_role("health_manager")
+@is_staff_or_trainer
 def plan_delete(request, slug):
     """
     Handles the deletion of an existing event.
@@ -148,7 +148,7 @@ def plan_delete(request, slug):
     return render(request, "plans/plan_delete_confirm.html", {"plan": plan})
 
 # clients
-@user_has_role("trainer")
+@is_trainer
 def client_list(request):
     trainer = get_object_or_error(CustomUser, username=request.user.username)
     clients = trainer.clients.all()
@@ -179,7 +179,7 @@ def client_detail(request, client_id):
     }
     return render(request, 'clients/client_detail.html', context)
 
-@user_has_role("trainer")
+@is_trainer
 def client_add(request, trainer_username, client_username):
     trainer = get_object_or_error(CustomUser, username=trainer_username)
     client = get_object_or_error(CustomUser, username=client_username)
@@ -194,7 +194,7 @@ def client_add(request, trainer_username, client_username):
     
     return redirect('client-list')
 
-@user_has_role("trainer")
+@is_trainer
 def client_remove(request, client_username):
     user = get_object_or_error(CustomUser, username=client_username) 
     client = get_object_or_error(Client, user=user)
@@ -205,43 +205,3 @@ def client_remove(request, client_username):
         return redirect('client-list')
     
     return render(request, 'clients/client_remove_confirm.html', {'client': client})
-
-def create_health_profile(request, client_id):
-    client = get_object_or_error(Client, id=client_id)
-
-    if request.method == 'POST':
-        # Assuming you have a form for creating health profiles
-        form = HealthProfileForm(request.POST)
-        if form.is_valid():
-            health_profile = form.save(commit=False)
-            health_profile.user = client.user
-            health_profile.save()
-            messages.success(request, "Health profile has been created.", extra_tags="success")
-            return redirect('client-list')
-    else:
-        form = HealthProfileForm()
-
-    context = {
-        'form': form,
-        'client': client,
-    }
-    return render(request, 'clients/create_health_profile.html', context)
-
-def update_health_profile(request, client_id):
-    client = get_object_or_error(Client, id=client_id)
-    health_profile = get_object_or_error(HealthProfile, user=client.user)
-
-    if request.method == 'POST':
-        form = HealthProfileForm(request.POST, instance=health_profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Health profile has been updated.", extra_tags="success")
-            return redirect('client-detail', client_id=client.id)
-    else:
-        form = HealthProfileForm(instance=health_profile)
-
-    context = {
-        'form': form,
-        'client': client,
-    }
-    return render(request, 'clients/update_health_profile.html', context)
