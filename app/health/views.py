@@ -11,11 +11,11 @@ from core.utils import check_user, get_object_or_error
 
 def index(request):
     plans = Plan.objects.published().featured()
-    can_manage = check_user(request.user, "health_manager")
+    trainers = CustomUser.objects.filter(is_trainer=True)
 
     context = {
         "plans": plans,
-        "can_manage": can_manage
+        "trainers": trainers,
     }
     return render(request, "health/index.html", context)
 

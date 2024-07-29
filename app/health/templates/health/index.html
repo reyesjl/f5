@@ -8,6 +8,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'health/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/health_category.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -106,6 +107,33 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="trainers stack-small">
+            <div class="section-header border">
+                <h2>Trainers 1-on-1</h2>
+            </div>
+            <p>Select a trainer from the list below to request a session.</p>
+            
+            <div class="trainer-list">
+            {% for trainer in trainers %}
+            <div class="trainer-card">
+                <div class="trainer-avatar">
+                    {% if trainer.avatar %}
+                        <img src="{{ trainer.avatar.url }}">
+                    {% else %}
+                        <img src="https://place-hold.it/48x48">
+                    {% endif %}
+                </div>
+                <div class="trainer-username">
+                    <a class="link black" href="{% url 'member-profile' username=trainer.username %}">{{ trainer.username }}</a>
+                </div>
+            </div>
+            {% empty %}
+                <div>Trainers coming soon..</div>
+            {% endfor %}
+            </div>
+            <div><a class="link red" href="">Are you a trainer looking to help?</a></div>
         </div>
     </div>
     {% include 'includes/footer.html' %}
