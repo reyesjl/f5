@@ -206,6 +206,14 @@ def client_remove(request, client_username):
 @login_required()
 def request_trainer_session(request, trainer_id):
     trainer = get_object_or_error(request, CustomUser, id=trainer_id, is_trainer=True)
+    
+    # Check if trainer is at capacity
+    current_requests_count = TrainerSessionRequest.objects.filter(trainer=trainer).count()
+
+    if current_requests_count >= 9:
+        messages.info(request, "This trainer has reached the maximum number of requests. Try again later.", extra_tags="info")
+        return redirect('member-profile', username=trainer.username)
+
     if request.method == 'POST':
         form = TrainerSessionRequestForm(request.POST)
         if form.is_valid():

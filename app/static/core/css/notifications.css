@@ -4,9 +4,22 @@
     gap: .5rem;
     padding: 0 .5rem;
     position: fixed;
-    width: 900px;
+    width: 1200px;
     max-width: 100%;
     top: 1rem;
+    left: 50%;
+    /* margin: 0 auto; */
+    transform: translateX(-50%);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.title-dismiss {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alertdismiss {
+    text-align: right;
 }
 
 .alert.fade-in {

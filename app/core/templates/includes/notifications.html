@@ -1,7 +1,7 @@
 <div class="notifications">
     {% for message in messages %}
         <div class="alert {{ message.extra_tags }} fade-in">
-        <div class="splitshot">
+        <div class="title-dismiss">
             <div class="alerttitle">{{ message.extra_tags }}</div>
             <div class="alertdismiss">&#10005;</div>
         </div>

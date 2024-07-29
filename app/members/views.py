@@ -48,7 +48,7 @@ def member_update(request, username):
         form = MemberUpdateForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            messages.success(request, "User has been updated.", extra_tags="success")
+            messages.info(request, "User has been updated.", extra_tags="info")
             return redirect('member-list')
     else:
         form = MemberUpdateForm(instance=profile)
@@ -133,6 +133,7 @@ def member_dashboard(request):
             user: 'user',
             profile: 'profile',
         }
+        messages.info(request, "Thank you for being a valued staff member. +10px", extra_tags="info")
         return render(request, 'members/staff_dashboard.html', context)
     elif user.is_trainer:
         requests = TrainerSessionRequest.objects.filter(trainer=user)
@@ -140,9 +141,11 @@ def member_dashboard(request):
             'user': user,
             'requests': requests,
         }
+        messages.info(request, "Thank you for being a valued trainer. +10px", extra_tags="info")
         return render(request, 'members/trainer_dashboard.html', context)
     else:
         requests = TrainerSessionRequest.objects.filter(user=user)
+        messages.info(request, "Welcome back, and thank you for using the platform!", extra_tags="info")
         context = {
             'user': user,
             'requests': requests,
