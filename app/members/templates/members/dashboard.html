@@ -59,12 +59,13 @@
                                     <i class="fa-regular fa-circle-dot"></i>
                                 </div>
                             </div>
+                        {% empty %}
+                            <div>No requests found. To request a trainer visit our <a class="link red" href="{% url 'health-home' %}">health</a> services.</div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% include 'includes/footer.html' %}
 </body>
 </html>

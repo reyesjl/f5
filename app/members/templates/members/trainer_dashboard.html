@@ -66,6 +66,8 @@
                                     <i class="fa-regular fa-circle-dot"></i>
                                 </div>
                             </div>
+                        {% empty %}
+                        <div>When someone requests a session with you, it will appear here.</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -78,6 +80,5 @@
             </div>
         </div>
     </div>
-    {% include 'includes/footer.html' %}
 </body>
 </html>
