@@ -13,20 +13,15 @@ from health.models import Plan, Client, TrainerSessionRequest
 @login_required
 @user_has_role("health_manager")
 def member_list(request):
-    users = CustomUser.objects.all()
+    members = CustomUser.objects.all()
 
     # Filter by search query
     search_query = request.GET.get('search', '')
     if search_query:
-        users = users.filter(username__icontains=search_query)
-
-    # Filter by user group
-    user_group_filter = request.GET.get('user_group', 'all')
-    if user_group_filter != 'all':
-            users = users.filter(groups__name=user_group_filter)
+        members = members.filter(username__icontains=search_query)
             
     context = {
-        'users': users,
+        'members': members,
         'search_query': search_query,
     }
     return render(request, "members/member-list.html", context)
@@ -126,31 +121,27 @@ def member_profile(request, username):
 @login_required
 def member_dashboard(request):
     user = request.user
-    profile = get_object_or_error(request, UserProfile, user=user)
+    template = get_dashboard_template_name(user)
+    context = get_dashboard_context(user)
 
+    return render(request, template, context)
+    
+def get_dashboard_template_name(user):
     if user.is_staff:
-        context = {
-            user: 'user',
-            profile: 'profile',
-        }
-        messages.info(request, "Thank you for being a valued staff member. +10px", extra_tags="info")
-        return render(request, 'members/staff_dashboard.html', context)
+        return 'members/staff_dashboard.html'
+    elif user.is_trainer:
+        return 'members/trainer_dashboard.html'
+    return 'members/dashboard.html'
+
+def get_dashboard_context(user):
+    if user.is_staff:
+        return {'user': user}
     elif user.is_trainer:
         requests = TrainerSessionRequest.objects.filter(trainer=user)
-        context = {
-            'user': user,
-            'requests': requests,
-        }
-        messages.info(request, "Thank you for being a valued trainer. +10px", extra_tags="info")
-        return render(request, 'members/trainer_dashboard.html', context)
+        return {'user': user, 'requests': requests}
     else:
         requests = TrainerSessionRequest.objects.filter(user=user)
-        messages.info(request, "Welcome back, and thank you for using the platform!", extra_tags="info")
-        context = {
-            'user': user,
-            'requests': requests,
-        }
-        return render(request, 'members/dashboard.html', context)
+        return {'user': user, 'requests': requests}
 
 @login_required
 def update_profile(request):
