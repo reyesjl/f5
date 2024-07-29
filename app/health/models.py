@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
+from django.utils.timesince import timesince
 from django_ckeditor_5.fields import CKEditor5Field
 from members.models import CustomUser
 
@@ -135,6 +136,20 @@ class TrainerSessionRequest(models.Model):
     additional_details = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+    @property
+    def time_since_creation(self):
+        delta = timezone.now() - self.created_at
+        days = delta.days
+        hours, remainder = divmod(delta.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+
+        if days > 0:
+            return f"{days}d ago"
+        elif hours > 0:
+            return f"{hours}h ago"
+        else:
+            return f"{minutes}m ago"
 
     class Meta:
         ordering = ['-created_at']

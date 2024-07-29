@@ -89,6 +89,8 @@
     justify-content: center;
 }
 
+/* Requests */
+
 .request-list {
     margin-top: 1rem;
     display: flex;
@@ -98,20 +100,67 @@
 
 .request-item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding-bottom: 1rem;
     border-bottom: 1px dotted gray;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: .9rem;
 }
 
-.request-trainer {
+.request-user {
+    width: 40px;
+    margin-right: .5rem;
+}
+
+.request-user img {
+    width: 100%;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.request-username {
     font-weight: 600;
 }
 
-.request-trainer-date {
+.request-metadata {
+    width: 100%;
+}
+
+.request-header {
     display: flex;
-    flex-direction: column;
+    gap: .5rem;
+    align-items: center;
+}
+
+.time-ago {
+    color: gray;
+}
+
+.request-body {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 60%;
+    margin-bottom: .5rem;
+}
+
+.request-datetime {
+    color: gray;
+    font-size: .9rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.request-actions {
+    margin-top: 1rem;
+    display: flex;
+    font-size: 1rem;
+}
+
+.request-actions .action {
+    margin-right: 1rem;
+}
+
+.request-actions .action .link {
+    color: gray;
+}
+
+.request-actions .action .link:hover {
+    color: black;
 }
 
 .request-status.pending {
@@ -157,4 +206,19 @@
         width: 100%;
         text-align: left;
     }
+
+    /* Requests */
+
+    .request-metadata {
+        font-size: .9rem;
+    }
+
+    .request-body {
+        width: 100%;
+    }
+
+    .request-actions {
+        justify-content: space-between;
+    }
+
 }

@@ -217,3 +217,33 @@ def request_trainer_session(request, trainer_id):
     else:
         form = TrainerSessionRequestForm()
     return render(request, 'trainers/request_trainer_session_form.html', {'form': form, 'trainer': trainer})
+
+@is_trainer
+def approve_trainer_session(request, session_id):
+    session_request = get_object_or_error(request, TrainerSessionRequest, id=session_id)
+    if request.user == session_request.trainer:
+        session_request.status = 'accepted'
+        session_request.save()
+    return redirect('member-dashboard')
+
+@is_trainer
+def reset_trainer_session(request, session_id):
+    session_request = get_object_or_error(request, TrainerSessionRequest, id=session_id)
+    if request.user == session_request.trainer:
+        session_request.status = 'pending'
+        session_request.save()
+    return redirect('member-dashboard')
+
+@is_trainer
+def reject_trainer_session(request, session_id):
+    session_request = get_object_or_error(request, TrainerSessionRequest, id=session_id)
+    if request.user == session_request.trainer:
+        session_request.status = 'rejected'
+        session_request.save()
+    return redirect('member-dashboard')
+
+def delete_trainer_session(request, session_id):
+    session_request = get_object_or_error(request, TrainerSessionRequest, id=session_id)
+    if request.user == session_request.trainer or request.user == session_request.user:
+         session_request.delete()
+    return redirect('member-dashboard')

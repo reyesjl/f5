@@ -46,17 +46,30 @@
                     <div class="request-list">
                         {% for request in requests %}
                             <div class="request-item">
-                                <div class="request-trainer-date">
-                                    <div class="request-trainer">
-                                        {{ request.trainer.username }}
-                                    </div>
-                                    <div class="request-date">
-                                        {{ request.requested_date }} @ {{ request.requested_time }}
-                                    </div>
+                                <div class="request-user">
+                                    {% if request.trainer.avatar %}
+                                        <img src="{{ request.trainer.avatar.url }}" />
+                                    {% else %}
+                                        <img src="https://place-hold.it/48x48" />
+                                    {% endif %}
                                 </div>
-                                <div class="request-status {{ request.status|lower }}">
-                                    {{ request.get_status_display }}
-                                    <i class="fa-regular fa-circle-dot"></i>
+                                <div class="request-metadata">
+                                    <div class="request-header">
+                                        <div>{{ request.trainer.username }}</div>
+                                        <div class="time-ago">&#x2022; {{ request.time_since_creation }}</div>
+                                        <div class="request-status {{ request.status|lower }}">
+                                            <i class="fa-regular fa-circle-dot"></i>
+                                        </div>
+                                    </div>
+                                    <div class="request-body">
+                                        {{ request.additional_details }}
+                                    </div>
+                                    <div class="request-datetime">
+                                        <i class="fa-regular fa-clock"></i> {{ request.requested_date }} @ {{ request.requested_time }}
+                                    </div>
+                                    <div class="request-actions">
+                                        <div class="action"><a class="link" href="mailto:{{ request.trainer.email }}"><i class="fa-regular fa-envelope"></i></a></div>
+                                    </div>
                                 </div>
                             </div>
                         {% empty %}

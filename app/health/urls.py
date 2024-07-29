@@ -21,7 +21,10 @@ urlpatterns = [
     path("clients/<str:trainer_username>/<str:client_username>/add/", views.client_add, name='client-add'),
     path("clients/<str:client_username>/remove/", views.client_remove, name='client-remove'),
 
-    # trainers
+    # request sessions
     path("trainers/<int:trainer_id>/request-session/", views.request_trainer_session, name='request-trainer-session'),
-    #path("sessions/<int:trainer_id>/update-session/", views.update_session_update, name='update-trainer-session'),
+    path("trainer/request/<int:session_id>/approve/", views.approve_trainer_session, name="approve-trainer-session"),
+    path("trainer/request/<int:session_id>/reset/", views.reset_trainer_session, name="reset-trainer-session"),
+    path("trainer/request/<int:session_id>/reject/", views.reject_trainer_session, name="reject-trainer-session"),
+    path("trainer/request/<int:session_id>/delete/", views.delete_trainer_session, name="delete-trainer-session"),
 ]
