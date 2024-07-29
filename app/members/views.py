@@ -10,8 +10,6 @@ from events.models import Event
 from blog.models import Article
 from health.models import Plan, Client, TrainerSessionRequest
 
-@login_required
-@user_has_role("health_manager")
 def member_list(request):
     members = CustomUser.objects.all()
 
