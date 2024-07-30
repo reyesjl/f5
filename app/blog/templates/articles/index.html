@@ -13,31 +13,24 @@
     <title>Health</title>
 </head>
 <body>
-    <div class="container">        
-        {% include 'includes/navigation.html' %} 
-        <div class="pagecontent">
-            <div class="pageheader">
-                <h1 class="pagetitle">Blog</h1>
-                <p class="pagesubtitle">Browse articles on various topics from our platform.</p>
-                <!-- Manager actions -->
-                {% if can_manage %}
-                <p>
-                    <a href="{% url 'article-create' %}" class="button go">Create Article</a>
-                </p>
-                {% endif %}
-            </div>     
+    {% include 'includes/navigation.html' %} 
+    <div class="container stack-large">        
+        <div class="jumbotron stack-small">
+            <h1 class="jumbotron-title">Blog</h1>
+            <p class="jumbotron-subtitle">Read what we found during our camps, health service articles, and reports from other live events we visited.</p>
+        </div>
 
-            <div class="pagesection">
-                <ul class="article-list">
-                    {% for article in articles %}
-                        {% include "articles/_article_item_snippet.html" %}
-                    {% empty %}
-                    <li class="article-item">
-                    No blogs here yet.
-                    </li>
-                    {% endfor %}
-                </ul>
+        <div class="article-list">
+            {% for article in articles %}
+            <div class="article">
+                <div class="article-date">
+                    {{ article.created_at|date:"m" }} &#8226; {{ article.created_at|date:"Y" }}
+                </div>
+                <div class="article-title">
+                    <a class="link black" href="{% url 'article-detail' slug=article.slug %}">{{ article.title|truncatewords:40 }}</a>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </body>

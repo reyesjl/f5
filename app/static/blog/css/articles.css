@@ -1,0 +1,16 @@
+.article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.article {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.article-date {
+    color: gray;
+}
