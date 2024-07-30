@@ -1,0 +1,57 @@
+.plan-list {
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: column;
+    grid-auto-columns: 21%;
+    overflow-x: auto;
+    padding-bottom: 2rem;
+    overscroll-behavior-inline: contain;
+}
+
+.plan-cover {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 3rem;
+}
+
+.plan-cover.featured {
+    background: #ffcd28;
+}
+
+.plan-title {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.plan-category {
+    color: gray;
+    font-size: .8rem;
+}
+
+.plan-author {
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.plan-views {
+    margin-top: .5rem;
+    display: flex;
+    font-size: .8rem;
+    gap: .25rem;
+    align-items: center;
+    color: gray;
+}
+
+.plan-cover img {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .plan-list {
+        grid-auto-columns: 49%;
+    }
+
+    .plan-cover {
+        padding: 1.2rem 2rem;
+    }
+}

@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" type="text/css" href="{% static 'health/css/health_category.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/articles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'health/css/plans.css' %}">
 
     <title>Strength & Conditioning</title>
 </head>
@@ -26,6 +28,55 @@
                     <h2>S&C plans</h2>
                     <a class="link red" href="{% url 'plan-list' %}">view all</a>
                 </div>
+            </div>
+            <ul class="plan-list">
+                {% for plan in plans %}
+                <li class="plan stack-small">
+                    <a href="{% url 'plan-detail' slug=plan.slug %}">
+                        <div class="plan-cover">
+                            <img src="{{ plan.featured_image.url }}" />
+                        </div>
+                    </a>
+                    <div class="plan-meta">
+                        <div class="plan-title">
+                            <a class="link black" href="{% url 'plan-detail' slug=plan.slug %}">{{ plan.title}}</a>
+                        </div>
+                        <div class="plan-views">
+                            {{ plan.views }} <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <div class="plan-category">
+                            {{ plan.get_type_display }}
+                        </div>
+                        <div class="plan-author">
+                            {{ plan.author }}
+                        </div>
+                    </div>
+                </li>
+                {% empty %}
+                    <p>No plans for this subject have been made yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="articles stack-small">
+            <div class="section-header border">
+                <div class="justify-between">
+                    <h2>S&C articles</h2>
+                </div>
+            </div>
+            <div class="article-list">
+                {% for article in articles %}
+                <div class="article">
+                    <div class="article-date">
+                        {{ article.created_at|date:"m" }} &#8226; {{ article.created_at|date:"Y" }}
+                    </div>
+                    <div class="article-title">
+                        <a class="link black" href="{% url 'article-detail' slug=article.slug %}">{{ article.title|truncatewords:40 }}</a>
+                    </div>
+                </div>
+                {% empty %}
+                    No articles written for this subject yet.
+                {% endfor %}
             </div>
         </div>
 

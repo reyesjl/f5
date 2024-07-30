@@ -13,4 +13,5 @@
 
 .article-date {
     color: gray;
+    flex-shrink: 0;
 }
