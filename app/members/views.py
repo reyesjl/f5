@@ -13,6 +13,11 @@ from health.models import Plan, Client, TrainerSessionRequest
 def member_list(request):
     members = CustomUser.objects.all()
 
+    # Filter by user type
+    type_query = request.GET.get('type', '')
+    if type_query and type_query == 'trainer':
+        members = members.filter(is_trainer=True)
+
     # Filter by search query
     search_query = request.GET.get('search', '')
     if search_query:

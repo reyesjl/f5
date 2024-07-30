@@ -27,24 +27,26 @@
                 <h2>Upcoming events</h2>
                 <p>Featured events have been <span class="highlight yellow">marked</span> in yellow.</p>
             </div>
-            <div class="type-filters filter-wrapper stack-small">
-                <div>
-                    Sort by type
+            <div class="filter-wrapper stack-small">
+                <div class="type-filter">
+                    <div class="fitler-title">
+                        Sort by type
+                    </div>
+                    <ul class="filter-list">
+                        <li class="filter-item">
+                            <a class="filter-link {% if type == 'all' %}active{% endif %}" href="?type=all">all</a>
+                        </li>
+                        <li class="filter-item">
+                            <a class="filter-link {% if type == 'camp' %}active{% endif %}" href="?type=camp">camps</a>
+                        </li>
+                        <li class="filter-item">
+                            <a class="filter-link {% if type == 'tournament' %}active{% endif %}" href="?type=tournament">tournaments</a>
+                        </li>
+                        <li class="filter-item">
+                            <a class="filter-link {% if type == 'game' %}active{% endif %}" href="?type=game">games</a>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="filter-list">
-                    <li class="filter-item">
-                        <a class="filter-link {% if type == 'all' %}active{% endif %}" href="?type=all">all</a>
-                    </li>
-                    <li class="filter-item">
-                        <a class="filter-link {% if type == 'camp' %}active{% endif %}" href="?type=camp">camps</a>
-                    </li>
-                    <li class="filter-item">
-                        <a class="filter-link {% if type == 'tournament' %}active{% endif %}" href="?type=tournament">tournaments</a>
-                    </li>
-                    <li class="filter-item">
-                        <a class="filter-link {% if type == 'game' %}active{% endif %}" href="?type=game">games</a>
-                    </li>
-                </ul>
             </div>
             <ul id="results" class="event-list">
                 {% for event in events %}

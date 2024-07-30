@@ -1,5 +1,7 @@
 .member-list {
     margin-top: 1.5rem;
+    border-top: 4px solid gray;
+    padding-top: 1rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;

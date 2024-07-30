@@ -43,6 +43,39 @@
                 <div class="section-header border">
                     <h2>All Members [{{ members|length }}]</h2>
                 </div>
+
+                <form class="filter-wrapper stack-small" method="GET" action="{% url 'member-list' %}">
+                    <div class="search-filter">
+                        <div class="filter-title">
+                            Search
+                        </div>
+                        <input type="text" name="search" value="{{ request.GET.search }}">
+                    </div>
+                    <div class="type-filter">
+                        <div class="filter-title">
+                            Sort by type
+                        </div>
+                        <ul class="radio-list">
+                            <li class="filter-item">
+                                <label>
+                                    <input type="radio" name="type" value="all" {% if request.GET.type == 'all' %}checked{% endif %}>
+                                    All
+                                </label>
+                            </li>
+                            <li class="filter-item">
+                                <label>
+                                    <input type="radio" name="type" value="trainer" {% if request.GET.type == 'trainer' %}checked{% endif %}>
+                                    Trainers
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="filter-buttons">
+                        <button type="submit">Apply</button>
+                        <button type="button" onclick="window.location.href='{% url 'member-list' %}'">Clear</button>
+                    </div>
+                </form>
+
                 <div class="member-list">
                     {% for member in members %}
                     <div class="member-item">

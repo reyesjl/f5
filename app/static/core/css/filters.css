@@ -1,64 +1,70 @@
-.filters {
-    margin-top: .5rem;
-    margin-bottom: 3rem;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+/* Filters */
+.filter-wrapper {
+  padding: .5rem;
+  border: 1px dotted gray;
 }
 
-.filtercategories {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.filter-list {
+  margin-top: .25rem;
+  display: flex;
+  flex-wrap: wrap;
+  padding: .25rem 0;
 }
 
-.filterstitle {
-    margin: 0;
+.radio-list {
+  margin-top: .25rem;
+  display: flex;
+  flex-wrap: wrap;
+  padding: .25rem 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.categorylabel {
-    margin-top: 0;
-    margin-bottom: .5rem;
-    color: gray;
-    font-style: italic;
-    font-size: .9rem;
-    font-weight: bold;
+.filter-wrapper input[type="text"] {
+  margin-top: .5rem;
+  padding: 5px;
+  outline: none;
+  border: none;
+  border-left: 4px solid black;
+  border-bottom: 1px dotted gray;
 }
 
-.filterlist {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-    list-style-type: none;
+.filter-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .5rem;
 }
 
-.filterlink {
-    font-size: .9rem;
-    color: black;
-    border: 1px solid black;
-    border-radius: 12px;
-    padding: .15rem .45rem;
-    text-decoration: none;
+.filter-buttons button {
+  border: 1px solid black;
+  padding: 0 8px;
+  text-decoration: none;
+  color: black;
+  border-radius: 20px;
+  font-size: .9rem;
 }
 
-.filterlink:hover {
-    background: black;
-    color: white;
+.filter-item {
+  margin: 0 .25rem .5rem 0;
 }
 
-.filterlink.active {
-    background: black;
-    color: white;
+.filter-link {
+  border: 1px solid black;
+  padding: 0 8px;
+  text-decoration: none;
+  color: black;
+  border-radius: 20px;
+  font-size: .9rem;
 }
 
-.searchbox {
-    border: 1px solid black; 
-    border-radius: 8px;
-    padding: .5rem;
+.filter-link.active {
+  background-color: black;
+  color: white;
 }
 
-.applybutton {
-    text-align: right;
+/* After smaller */
+@media screen and (max-width: 768px) {
+  .filter-buttons {
+    justify-content: flex-end;
+  }
 }
