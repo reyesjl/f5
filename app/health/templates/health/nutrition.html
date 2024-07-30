@@ -29,6 +29,7 @@
                     <a class="link red" href="{% url 'plan-list' %}">view all</a>
                 </div>
             </div>
+            {% if plans %}
             <ul class="plan-list">
                 {% for plan in plans %}
                 <li class="plan stack-small">
