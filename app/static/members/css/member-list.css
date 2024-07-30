@@ -3,6 +3,7 @@
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    margin-bottom: 2.5rem;
 }
 
 .member-item {
