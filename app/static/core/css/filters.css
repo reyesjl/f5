@@ -44,6 +44,11 @@
   font-size: .9rem;
 }
 
+.filter-buttons button:hover {
+    background: black;
+    color: white;
+}
+
 .filter-item {
   margin: 0 .25rem .5rem 0;
 }
