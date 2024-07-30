@@ -1,3 +1,7 @@
 .article-content {
     margin-bottom: 3rem;
 }
+
+.article-content li {
+    font-family: Arial, Helvetica, sans-serif;
+}
