@@ -37,3 +37,51 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
 }
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+.messages {
+    display: flex;
+    gap: 1rem;
+    padding-left: 100%; /* Ensure it starts off-screen */
+    animation: marquee 20s linear infinite;
+}
+
+.message {
+    padding-right: 2rem; /* Space between messages */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-200%);
+    }
+}
+
+.message {
+    background: lightgray;
+    color: black;
+    padding: 1rem;
+}
+
+.message .source {
+    margin-bottom: .5rem;
+}
+
+.message .source a {
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .message {
+        font-size: .9rem;
+        padding: 1rem;
+    }
+}
