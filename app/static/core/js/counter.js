@@ -3,7 +3,7 @@ function calculateInitialViews() {
 
     const now = new Date();
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
-    const elapsedSeconds = Math.floor((now - startOfDay) / 1934);
+    const elapsedSeconds = Math.floor((now - startOfDay) / 4000);
 
     // Increase the base views proportionally to the seconds passed since startHour
     return baseViews + Math.floor(elapsedSeconds / 10); // Adjust the divisor for rate of increase
