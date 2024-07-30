@@ -29,6 +29,7 @@
                     <a class="link red" href="{% url 'plan-list' %}">view all</a>
                 </div>
             </div>
+            {% if plans %}
             <ul class="plan-list">
                 {% for plan in plans %}
                 <li class="plan stack-small">
@@ -52,10 +53,11 @@
                         </div>
                     </div>
                 </li>
-                {% empty %}
-                    <p>No plans for this subject have been made yet.</p>
                 {% endfor %}
             </ul>
+            {% else %}
+                <p>No plans for this subject have been made yet.</p>
+            {% endif %}
         </div>
 
         <div class="articles stack-small">
