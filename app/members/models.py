@@ -13,23 +13,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-    
-    def save(self, *args, **kwargs):
-        if self.pk:
-            # Fetch old avatar for deletion if needed
-            old_avatar = CustomUser.objects.get(pk=self.pk).avatar
-
-        # Process image if a new avatar is being uploaded
-        if self.avatar:
-            image = AvatarService.process_avatar(self.avatar)
-            AvatarService.save_processed_avatar(image, self.avatar)
-
-        # Delete old avatar if a new one is uploaded
-        if self.pk and old_avatar and old_avatar != self.avatar:
-            AvatarService.delete_old_avatar(old_avatar)
-
-        # Continue with the normal save method
-        super(CustomUser, self).save(*args, **kwargs)
 
 class Avatar(models.Model):
     name = models.CharField(max_length=100)
