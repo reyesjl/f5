@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .services import AvatarService
+from PIL import Image
 
 class CustomUser(AbstractUser):
     is_trainer = models.BooleanField(
@@ -10,6 +11,27 @@ class CustomUser(AbstractUser):
     )
     bio = models.TextField(blank=True, null=True)
     avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True, default='members/images/default_avatar.jpg')
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.avatar:
+            avatar_path = self.avatar.path
+            img = Image.open(avatar_path)
+
+            # Ensure the image is a square
+            width, height = img.size
+            if width != height:
+                new_size = min(width, height)
+                left = (width - new_size) / 2
+                top = (height - new_size) / 2
+                right = (width + new_size) / 2
+                bottom = (height + new_size) / 2
+                img = img.crop((left, top, right, bottom))
+
+            # Resize the image to 400x400 pixels
+            img = img.resize((400, 400), Image.ANTIALIAS)
+            img.save(avatar_path)
 
     def __str__(self):
         return self.username
