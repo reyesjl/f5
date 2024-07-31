@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .services import AvatarService
@@ -13,6 +14,13 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True, default='members/images/default_avatar.jpg')
 
     def save(self, *args, **kwargs):
+        # Check if avatar is being updated
+        if self.pk:
+            old_avatar = CustomUser.objects.get(pk=self.pk).avatar
+            if old_avatar and old_avatar != self.avatar:
+                if os.path.isfile(old_avatar.path):
+                    os.remove(old_avatar.path)
+
         super().save(*args, **kwargs)
 
         if self.avatar:
@@ -30,8 +38,27 @@ class CustomUser(AbstractUser):
                 img = img.crop((left, top, right, bottom))
 
             # Resize the image to 400x400 pixels
-            img = img.resize((400, 400), Image.ANTIALIAS)
-            img.save(avatar_path)
+            img = img.resize((400, 400), Image.LANCZOS)
+
+            # Convert the image to RGB if it has an alpha channel
+            if img.mode in ("RGBA", "LA"):
+                img = img.convert("RGB")
+
+            # Rename the file to username_avatar
+            new_filename = f"{self.username}_avatar.jpg"
+            new_filepath = os.path.join(os.path.dirname(avatar_path), new_filename)
+
+            # Save the image with the new filename
+            img.save(new_filepath, format='JPEG')
+
+            # Update the avatar field to the new file
+            self.avatar.name = os.path.join('profiles/avatars/', new_filename)
+
+            # Remove the old file if it's different
+            if avatar_path != new_filepath:
+                os.remove(avatar_path)
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
