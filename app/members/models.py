@@ -1,7 +1,6 @@
 import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .services import AvatarService
 from PIL import Image
 
 class CustomUser(AbstractUser):
@@ -11,7 +10,7 @@ class CustomUser(AbstractUser):
         help_text='Designates whether this user is a trainer.'
     )
     bio = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True, default='members/images/default_avatar.jpg')
+    avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Check if avatar is being updated
