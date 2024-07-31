@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
         help_text='Designates whether this user is a trainer.'
     )
     bio = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='profiles/avatars/', null=True, blank=True, default='members/images/default_avatar.jpg')
 
     def __str__(self):
         return self.username

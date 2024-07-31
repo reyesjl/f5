@@ -29,7 +29,7 @@ def save_processed_avatar(image, avatar_field):
     image.save(temp_file, format='JPEG')
     temp_file.seek(0)
     avatar_field.save(avatar_field.name, ContentFile(temp_file.read()), save=False)
-
+    
 def delete_old_avatar(old_avatar):
     if old_avatar and old_avatar != 'default_avatar.png':
         old_avatar.delete(save=False)

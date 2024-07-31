@@ -183,6 +183,7 @@ customColorPalette = [
     },
 ]
 
+CKEDITOR_5_ALLOW_ALL_FILE_TYPES = True
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': ['heading', '|', 'bold', 'italic', 'link',
