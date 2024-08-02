@@ -18,3 +18,7 @@ def index(request):
         "plans": plans,
     }
     return render(request, 'core/index.html', context)
+
+def tours(request):
+    context = {}
+    return render(request, 'core/tours.html', context)

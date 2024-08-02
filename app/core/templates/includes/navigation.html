@@ -15,6 +15,7 @@
         <li class="navitem"><a class="navlink" href="/">Home</a></li>
         <li class="navitem"><a class="navlink" href="{% url 'event-list' %}">Events</a></li>
         <li class="navitem"><a class="navlink" href="{% url 'health-home' %}">Health</a></li>
+        <li class="navitem"><a class="navlink" href="{% url 'tours-home' %}">Tours</a></li>
         {% if user.is_authenticated %}
             <li class="navitem"><a class="navlink" href="{% url 'member-dashboard' %}">Account</a></li>
         {% else %}
