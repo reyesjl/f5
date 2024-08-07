@@ -1,0 +1,25 @@
+.feature-subtitle {
+    color: gray;
+    font-family: 'IBM-PLEX-SANS';
+    font-style: italic;
+}
+
+.feature-image {
+    width: 100%;
+}
+
+.feature-image img {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.feature-list {
+    font-family: 'IBM-PLEX-SANS';
+    list-style-type: circle;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

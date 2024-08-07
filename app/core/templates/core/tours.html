@@ -11,6 +11,7 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" type="text/css" href="{% static 'core/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/css/tours.css' %}">
     <script src="{% static 'core/js/base.js' %}" defer></script>
 
     <title>Rugby Tours</title>
@@ -28,16 +29,15 @@
 
         <div class="featured stack-small">
             <div class="section-header border">
-                <h2>Featured tour</h2>
+                <h2>Overview</h2>
             </div>
             <div class="flexbox">
                 <div class="column">
-                    <span class="title">Ireland 23'</span>
+                    <span class="title">Strong Lad Rugby Tours</span>
                 </div>
                 <div class="column">
                     <div class="stack-small">
-                        <p><span class="highlight">Strong Lad Rugby Tours</span>, our partners, have been organizing
-                            exceptional Ireland tours
+                        <p>Our partners, have been organizing exceptional Ireland tours
                             for schools since <span class="highlight">2010</span>. They have built long lasting
                             connections that allow them to provide the best Irish rugby tour experience for teams.</p>
 
@@ -47,46 +47,78 @@
             </div>
             <div class="content">
                 <div class="section-image">
-                    <img id="featured-image" src="{% static 'core/images/bg/tours-bg2.jpg' %}" />
-                    <p class="image-tagline">Sept 02, 2023; In Tours, France; The Ireland squad applaud 12,000 fans at the
+                    <img id="featured-image" src="{% static 'core/images/tours/tours-france.jpg' %}"
+                        alt="tours france welcomes irish rugby team before 2023 rugby world cup" />
+                    <p class="image-tagline">Sept 02, 2023; In Tours, France; The Ireland squad applaud 12,000 fans at
+                        the
                         open training session in Tours, France before the 2023 Rugby World Cup.<br />
                         <a class="link red" href="https://ppai.ie/photographer/dan-sheridan/">Credit: ©INPHO/Dan
                             Sheridan</a>
-                        <a class="link black"
-                            href="https://www.irishrugby.ie/">Source:
+                        <a class="link black" href="https://www.irishrugby.ie/">Source:
                             Irish Rugby</a>
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- <div class="section stack-small">
+        <div class="section stack-small">
             <div class="section-header">
-                <h2>Services</h2>
+                <h2>What we offer</h2>
             </div>
             <div class="section-wrapper flexbox gap">
                 <div class="column">
                     <div class="stack-small">
-                        <span class="title">Training</span>
-                        <p>We offer free gym and conditioning plans, and you can also book 1-on-1 sessions with our
-                            certified trainers.</p>
-                        <a class="section-link" href="{% url 'health-home' %}">Learn more</a>
+                        <span class="title">Overnight Stays in Top Student Housing</span>
+                        <p class="feature-subtitle">Stay in walkable town centers and explore Irish culture right
+                            outside your
+                            door.</p>
+                        <div class="feature-image">
+                            <img src="{% static 'core/images/tours/city.jpg' %}" alt="irish city">
+                        </div>
+                        <ul class="feature-list">
+                            <li>Explore Western Ireland with <span class="highlight">Galway</span> and <span
+                                    class="highlight">Connemara</span>.</li>
+                            <li>Discover Southern Ireland with <span class="highlight">Cork</span> and <span
+                                    class="highlight">Kilkenny</span>.</li>
+                            <li>Adventure through Rugby rich <span class="highlight">Dublin</span>.</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="column">
                     <div class="stack-small">
-                        <span class="title">Information</span>
-                        <p>We host public events, camps, and clinics for players and coaches. Reports and updates are
-                            posted in our blogs.</p>
-                        <a class="section-link" href="{% url 'blog-home' %}">Learn more</a>
+                        <span class="title">Local insight</span>
+                        <p class="feature-subtitle">Our bus drivers are all trained Irish History instructors.</p>
+                        <div class="feature-image">
+                            <img src="{% static 'core/images/tours/bus.jpg' %}" alt="Rugby players boarding tour bus">
+                        </div>
+                        <ul class="feature-list">
+                            <li>All motor coaches are of the <span class="highlight">highest standard</span>.</li>
+                            <li>We visit castles, museums, and include something <span
+                                    class="highlight">educational</span> every day for school groups.</li>
+                            <li>For rugby events, we get exclusive behind-the-scenes tours.</li>
+                            <li>Featured fixtures have included <span class="highlight">Munster</span>, <span
+                                    class="highlight">Connacht</span>, and <span class="highlight">Dublin
+                                    Schools</span>.</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="column">
                     <div class="stack-small">
-                        <span class="title">Recruiting</span>
-                        <p>We provide player metrics and development data to USA RUGBY, MLR, and clubs to create
-                            opportunities for players.</p>
-                        <a class="section-link" href="{% url 'member-signup' %}">Learn more</a>
+                        <span class="title">Discovering the past</span>
+                        <p class="feature-subtitle">Tours include visits to the following landmarks with exclusive
+                            access.</p>
+                        <div class="feature-image">
+                            <img src="{% static 'core/images/tours/castle.jpg' %}" alt="players at Irish castle ruins">
+                        </div>
+                        <ul class="feature-list">
+                            <li>The Connemara region, including a walking tour through Medieval Galway and a visit to
+                                Kylemore Abbey.</li>
+                            <li>St John's Castle, guided tour of <span class="highlight">Blarney Castle &
+                                    Gardens</span>, and a tour of University College Cork.</li>
+                            <li>The Irish Museum of Natural History and the <span class="highlight">Cliffs of
+                                    Moher</span>.</li>
+                            <li>Aviva Stadium Tour.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -94,20 +126,33 @@
 
         <div class="purpose stack-small">
             <div class="section-header border">
-                <h2>Start with the players</h2>
+                <h2>Rugby experience museum</h2>
             </div>
             <div class="flexbox">
                 <div class="column">
-                    <p>Our jobs start at the <span class="highlight">grassroot</span> levels because we know investing
-                        early
-                        allows players the greatest opportunity to succeed. Research shows that starting sports early
-                        enhances skill development, physical fitness, and cognitive and social growth. By focusing on
-                        young athletes, we help them build a strong foundation for future success.</p>
+                    <p>The Rugby Experience Museum is a unique and immersive attraction that brings the rich history and
+                        vibrant culture of rugby to life. Nestled within the heart of Ireland, this museum offers an
+                        unparalleled journey through the sport’s evolution, from its early beginnings to its current
+                        global status.</p>
+                </div>
+            </div>
+            <div class="content">
+                <div class="section-image">
+                    <img id="featured-image" src="{% static 'core/images/tours/museum.jpg' %}" />
+                    <p class="image-tagline">Niall McLaughlin Architects' stunning design of the International Rugby
+                        Experience in Limerick, Ireland, showcases modern architectural brilliance with a deep-rooted
+                        connection to rugby heritage. <br />
+                        <a class="link red" href="https://en.wikipedia.org/wiki/Niall_McLaughlin_Architects">Credit:
+                            Niall McLaughlin
+                        </a>
+                        <a class="link black" href="https://www.dezeen.com/">Source:
+                            Dezeen</a>
+                    </p>
                 </div>
             </div>
         </div>
 
-        <div class="testimonials stack-small">
+        <!-- <div class="testimonials stack-small">
             <div class="section-header">
                 <h2>Testimonials</h2>
             </div>
