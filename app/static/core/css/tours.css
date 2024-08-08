@@ -23,3 +23,15 @@
     flex-direction: column;
     gap: 1rem;
 }
+
+.stronglad-wrapper {
+    display: flex;
+}
+
+.logo-wrapper {
+    width: 30%;
+}
+
+.logo-wrapper img {
+    width: 100%;
+}
