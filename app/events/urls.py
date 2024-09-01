@@ -3,12 +3,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # events
-    path("", views.event_list, name="event-list"),
-    path("create/", views.event_create, name="event-create"),
-    path("<slug:slug>/", views.event_detail, name="event-detail"),
-    path("<slug:slug>/update/", views.event_update, name="event-update"),
-    path("<slug:slug>/delete/", views.event_delete, name="event-delete"),
+    #path("", views.event_list, name="event-list"),
+    #path("create/", views.event_create, name="event-create"),
+    #path("<slug:slug>/", views.event_detail, name="event-detail"),
+    #path("<slug:slug>/update/", views.event_update, name="event-update"),
+    #path("<slug:slug>/delete/", views.event_delete, name="event-delete"),
+
+    # events 2.0
+    path("", views.list_events, name="list-events"),
 
     # event roles
     path("<slug:event_slug>/roles/", views.role_list, name="role-list"),

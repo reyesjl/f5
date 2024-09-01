@@ -1,0 +1,31 @@
+{% load static %}
+<nav class="navbar">
+    <div class="navlogo">
+        <a href="{% url 'index' %}">
+            <img class="logo" src="{% static 'core/images/f5_v1.0.svg' %}" alt="First Five Logo" />
+        </a>
+    </div>
+    <div class="navmenu">
+        <!-- Only visible on mobile menu -->
+        <div class="close-button-wrapper">
+            <div id="toggle-close-menu" class="navlink closebutton">Close</div>
+        </div>
+
+        <a class="navlink {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
+        <a class="navlink {% if request.path == '/events/' %}active{% endif %}" href="{% url 'list-events' %}">Events</a>
+        <a class="navlink {% if request.path == '/health/' %}active{% endif %}" href="{% url 'health-index' %}">Health</a>
+        <a class="navlink {% if request.path == '/tours/' %}active{% endif %}" href="{% url 'tours-index' %}">Tours</a>
+        <a class="navlink {% if request.path == '/market/' %}active{% endif %}" href="#">Market</a>
+
+        <!-- Only visible on mobile menu -->
+        <div class="togglelinks">
+            <a class="navlink" href="#">Login</a>
+        </div>
+    </div>
+    <div class="navactions">
+        <!-- Menu option is only visible on mobile -->
+        <div id="toggle-open-menu" class="navlink togglebutton">Menu</div>
+        <!-- Login option is hidden on mobile "togglelinks" above is used instead -->
+        <a class="navlink actionlink" href="#">Login</a>
+    </div>
+</nav>

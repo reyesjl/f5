@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # health home
-    path("", views.index, name="health-home"),
+    path("", views.index, name="health-index"),
     path("strength/", views.strength_index, name="strength-home"),
     path("nutrition/", views.nutrition_index, name="nutrition-home"),
     path("mental/", views.mental_index, name="mental-home"),

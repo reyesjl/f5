@@ -1,93 +1,133 @@
-.navwrapper {
+/* Navigation bar */
+.navbar {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 1rem;
-    margin: 0 auto;
-    max-width: 1200px;
-}
-
-.footwrapper {
-    border-top: 4px solid gray;
-    padding: 1rem;
-    margin: 0 auto;
-    margin-top: 5rem;
-    max-width: 1200px;
-}
-
-.footerwrapper .title {
-    margin-bottom: 2rem;
-}
-
-.navlogo {
-    display: flex;
     align-items: center;
-    gap: 1rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.navlogo #text {
-    color: black;
-    text-decoration: none;
+/* Navigation logo */
+.navlogo {
+    max-width: 55px;
 }
 
-.navlogo #logo {
-    width: 40px;
-}
-
-.navlogo #logo img {
+.logo {
     width: 100%;
+    animation: spin 5s infinite linear;
+    transform-style: preserve-3d;
 }
 
-.navlist {
-    list-style-type: none;
+@keyframes spin {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+/* Navigation menu & links */
+.navmenu {
     display: flex;
-    gap: 1rem;
+    background-color: lightgray;
+    border-radius: 25px;
 }
 
 .navlink {
+    color: black;
+    font-weight: 600;
     text-decoration: none;
-    color: black;
+    border-radius: 25px;
+    padding: .5rem .75rem;
 }
 
-.footlist {
-    margin-bottom: 1.5rem;
-    gap: 1rem;
+.navlink.active {
+    background-color: black;
+    color: whitesmoke;
 }
 
-.footlist-link {
-    color: black;
+/* Toggle links : only visible on mobile menu for account things */
+.togglelinks {
+    display: none;
+    padding-top: 1rem;
 }
 
-.flexbox.gap {
-    gap: 1rem;
+.togglelinks .navlink {
+    display: block;
 }
 
-.lastline {
-    border-top: 1px solid black;
-    padding: .25rem 0;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+/* Navigation login action button */
+.actionlink {
+    border-radius: 25px;
+    background-color: black;
+    color: whitesmoke;
 }
 
-.lastline .footlist {
-    display: flex;
-    flex-wrap: wrap;
+/* Navigation toggle button */
+.togglebutton {
+    border-radius: 25px;
+    background-color: black;
+    color: whitesmoke;
+    display: none;
 }
 
-@media screen and (max-width: 768px) {
-    .navwrapper {
+.togglebutton:hover {
+    cursor: pointer;
+}
+
+/* Close toggle button */
+.close-button-wrapper {
+    display: none;
+    padding-bottom: 1rem;
+}
+
+.closebutton {
+    background-color: red;
+    color: white;
+    width: fit-content;
+}
+
+.closebutton:hover {
+    cursor: pointer;
+}
+
+/* Screen sizes under 768px */
+@media (max-width: 768px) {
+    .navmenu {
+        position: fixed;
+        left: 0;
+        top: 0;
+        transform: translateX(-101%);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
         flex-direction: column;
-        gap: .5rem;
+        width: 50%;
+        height: 100vh;
+        transition: transform 0.3s ease-in-out;
     }
 
-    .navlink {
-        font-size: .9rem;
+    .navmenu.open {
+        transform: translateX(0);
+        box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
     }
 
-    .navlogo #text {
-        font-size: .9rem;
+    .actionlink {
+        display: none;
+    }
+
+    .togglebutton {
+        display: block;
+    }
+
+    .togglelinks {
+       display: flex;
+       flex-direction: column;
+    }
+
+    .close-button-wrapper {
+        display: flex;
+        justify-content: flex-end;
     }
 }

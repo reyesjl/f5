@@ -1,135 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'core/base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}
+F5 Rugby
+{% endblock %}
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/index.css' %}">
-    <script src="{% static 'core/js/base.js' %}" defer></script>
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'core/css/index.css' %}" rel="stylesheet">
+{% endblock %}
 
-    <title>F5</title>
-</head>
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
 
-<body>
-    {% include 'includes/navigation.html' %}
-    <div class="container stack-large">
-        <div class="jumbotron stack-small">
-            <h1 class="jumbotron-title">We help develop <br /> better rugby <br /> experiences</h1>
-            <p class="jumbotron-subtitle">First Five is a rugby platform empowering players, coaches, and teams with top
-                resources, camps, tours, and recruiting tools.</p>
-        </div>
-
-        <div class="featured stack-small">
-            <div class="section-header border">
-                <h2>Featured work</h2>
-            </div>
-            <div class="flexbox">
-                <div class="column">
-                    <span class="title">Maryland Camp</span>
-                </div>
-                <div class="column">
-                    <div class="stack-small">
-                        <p>In Maryland, we hosted 2 rugby camps with <span class="highlight">100+ players</span> and
-                            world-class coaches. We collected
-                            testing <span class="highlight">data</span> to track player progress and established an
-                            <span class="highlight">infrastructure</span> for ongoing
-                            development. Players are paired with trainers on our platform and provided with free
-                            resources for continuous improvement.
-                        </p>
-                        <a class="link black" href="">Read the results</a>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <div class="section-image">
-                    <img id="featured-image" src="{% static 'core/images/home/maryland-skehan.jpg' %}"
-                        alt="Rugby players gather as Andy Skehan gives feedback on a rugby drill during a camp" />
-                    <p class="image-tagline">Jul 24, 2024; Layola Blakefield, Maryland, USA; The players gather around
-                        as Andy Skehan explains learnings
-                        and take-aways from a drill.<br />
-                        <a class="link red" href="https://www.instagram.com/jritt64/">Credit: Joseph Ritter</a>
-                        <a class="link black" href="https://www.f5rugby.com/">Source: F5 Rugby</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section stack-small">
-            <div class="section-header">
-                <h2>Services</h2>
-            </div>
-            <div class="section-wrapper flexbox gap">
-                <div class="column">
-                    <div class="stack-small">
-                        <span class="title">Training</span>
-                        <p>We offer free gym and conditioning plans, and you can also book 1-on-1 sessions with our
-                            certified trainers.</p>
-                        <a class="section-link" href="{% url 'health-home' %}">Learn more</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="stack-small">
-                        <span class="title">Information</span>
-                        <p>We host public events, camps, and clinics for players and coaches. Reports and updates are
-                            posted in our blogs.</p>
-                        <a class="section-link" href="{% url 'blog-home' %}">Learn more</a>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="stack-small">
-                        <span class="title">Recruiting</span>
-                        <p>We provide player metrics and development data to USA RUGBY, MLR, and clubs to create
-                            opportunities for players.</p>
-                        <a class="section-link" href="{% url 'member-signup' %}">Learn more</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="purpose stack-small">
-            <div class="section-header border">
-                <h2>Start with the players</h2>
-            </div>
-            <div class="flexbox">
-                <div class="column">
-                    <p>Our jobs start at the <span class="highlight">grassroot</span> levels because we know investing
-                        early
-                        allows players the greatest opportunity to succeed. Research shows that starting sports early
-                        enhances skill development, physical fitness, and cognitive and social growth. By focusing on
-                        young athletes, we help them build a strong foundation for future success.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="testimonials stack-small">
-            <div class="section-header">
-                <h2>Testimonials</h2>
-            </div>
-            <div class="section-wrapper flexbox gap">
-                <div class="column">
-                    <div class="stack-small">
-                        <span class="title">Ricky Slade</span>
-                        <p>"I really enjoyed the dedicated staff, I've been looking for a system like this for a while
-                            now."</p>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="stack-small">
-                        <span class="title">Coach Stephens</span>
-                        <p>"First Five provided us with access to a database of rising players to help us recruit and
-                            build a stronger team."</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% block content %}
+<div class="jumbotron">
+    <div class="jumbo-pretext">First Five Rugby</div>
+    <div class="jumbo-title">Modern Resources <br> for Modern Rugby.</div>
+    <div class="jumbo-posttext">Built for people like you.</div>
+    <div class="jumbo-button-group">
+        <a class="jumbo-button" href="https://forms.gle/zNw4kZCZtEpzAn429">Take survey</a>
+        <a class="jumbo-button white" href="#">Learn more</a>
     </div>
-    {% include 'includes/footer.html' %}
-</body>
-
-</html>
+</div>
+{% endblock %}

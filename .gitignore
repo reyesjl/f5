@@ -4,3 +4,4 @@ venv/
 .env
 staticfiles/
 private_key
+node_modules/

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="66.14579mm"
+   height="28.967224mm"
+   viewBox="0 0 66.14579 28.967224"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-23.864962,-196.36967)">
+    <ellipse
+       style="fill:#ff0000;stroke-width:0.830057"
+       id="path1-8-0"
+       cx="67.464729"
+       cy="-215.25108"
+       rx="10.199041"
+       ry="6.3033533"
+       transform="matrix(-0.89898494,0.43797954,-0.53707918,-0.84353183,0,0)"
+       inkscape:export-filename="f5_v1.0.svg"
+       inkscape:export-xdpi="224.29385"
+       inkscape:export-ydpi="224.29385" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:43.1704px;font-family:Ebrima;-inkscape-font-specification:Ebrima;fill:#000000;stroke-width:3.59753"
+       x="187.41496"
+       y="238.71472"
+       id="text12"
+       transform="matrix(1.0617068,0,-0.7489488,0.94187963,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan12"
+         style="font-weight:bold;stroke-width:3.59753"
+         x="187.41496"
+         y="238.71472">F5</tspan></text>
+  </g>
+</svg>

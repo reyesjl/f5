@@ -1,0 +1,19 @@
+/* app/static/core/css/main.css */
+
+@import url('normalize.css');
+@import url('navigation.css');
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    border: 1px solid lightgray;
+    border-radius: 25px;
+    padding: 1rem;
+}

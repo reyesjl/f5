@@ -37,15 +37,25 @@ def event_list(request):
     }
     return render(request, "events/event_list.html", context)
 
-def event_detail(request, slug):
-    event = get_object_or_error(request,Event, slug=slug)
-    roles = event.roles.all()
-
+def list_events(request):
+    events = Event.objects.all()
     context = {
-        "event": event, 
-        "roles": roles,
+        'events': events,
     }
-    return render(request, "events/event_detail.html", context)
+    return render(request, "events/list_events.html", context)
+
+def get_event(request):
+    context = {}
+    return render(request, "events/get_event.html", context)
+
+def create_event(request):
+    context = {}
+    return render(request, "events/create_event.html", context)
+
+def delete_event(request):
+    context = {}
+    return render(request, "events/delete_event.html", context)
+
 
 @is_staff
 def event_create(request):

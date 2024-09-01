@@ -1,15 +1,63 @@
-#featured-image {
-  filter: saturate(0);
-  transition: all .3s;
+.jumbotron {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3rem;
 }
 
-#featured-image:hover {
-  filter: saturate(1);
-  transition: all .3s;
-  cursor: crosshair;
+.jumbo-pretext {
+    text-transform: uppercase;
+    font-size: .9em;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: gray;
+    margin-bottom: 1rem;
+    color: red;
 }
 
-@media screen and (max-width: 768px) {
-  
+.jumbo-title {
+    font-size: 3em;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 1rem;
 }
 
+.jumbo-posttext {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.jumbo-button-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.jumbo-button {
+    border: 2px solid black;
+    padding: .5rem 3rem;
+    border-radius: 18px;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+}
+
+.jumbo-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.jumbo-button.white {
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+}
+
+@media (max-width: 480px) {
+    .jumbo-title {
+        font-size: 2.1em;
+    }
+}
