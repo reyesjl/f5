@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Request Trainer Success
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Submit event success -->
+<div id="submit-event-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Chat request submitted!</div>
+            <div class="section-subtitle">The trainer will contact you within 2-3 business days.</div>
+            <p><a href="{% url 'health-index' %}">View our Plans</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

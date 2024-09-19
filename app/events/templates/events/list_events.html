@@ -7,6 +7,7 @@ List of Events
 
 {% block custom_css %}
 <!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'events/css/event-list.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block custom_js %}
@@ -14,9 +15,61 @@ List of Events
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="header">
-        <div>Events home.</div>
+<!-- Event list -->
+<div id="event-list" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Upcoming Rugby Events</div>
+            <div class="link-group">
+                <a class="soft-link" href="{% url 'submit-event' %}">Submit event +</a>
+            </div>
+        </div>
+
+        <div class="event-list-module">
+            <div class="event-wrapper">
+                <div class="event-media">
+                    <img src="{% static 'events/images/test-event-01.jpg' %}"
+                        alt="womens french rugby test event image" />
+                </div>
+                <div class="event-content">
+                    <div class="event-title">Test Event</div>
+                    <div class="event-date">11/03/2024 1:00PM</div>
+                    <div class="event-desc">Experience high-paced action, fierce competition, and thrilling moments as
+                        top
+                        athletes showcase their skills. Whether you're a rugby fan or new to the game, this event
+                        promises to deliver intense sportsmanship and entertainment.</div>
+                    <a class="event-button" href="#">Learn more</a>
+                </div>
+            </div>
+            <div class="event-wrapper">
+                <div class="event-media">
+                    <img src="{% static 'events/images/test-event-02.jpg' %}" alt="eddie jones test event image" />
+                </div>
+                <div class="event-content">
+                    <div class="event-title">Test Event</div>
+                    <div class="event-date">11/03/2024 1:00PM</div>
+                    <div class="event-desc">Experience high-paced action, fierce competition, and thrilling moments as
+                        top
+                        athletes showcase their skills. Whether you're a rugby fan or new to the game, this event
+                        promises to deliver intense sportsmanship and entertainment.</div>
+                    <a class="event-button" href="#">Learn more</a>
+                </div>
+            </div>
+            <div class="event-wrapper">
+                <div class="event-media">
+                    <img src="{% static 'events/images/test-event-03.jpg' %}" alt="argentina rugby championship test event image" />
+                </div>
+                <div class="event-content">
+                    <div class="event-title">Test Event</div>
+                    <div class="event-date">11/03/2024 1:00PM</div>
+                    <div class="event-desc">Experience high-paced action, fierce competition, and thrilling moments as
+                        top
+                        athletes showcase their skills. Whether you're a rugby fan or new to the game, this event
+                        promises to deliver intense sportsmanship and entertainment.</div>
+                    <a class="event-button" href="#">Learn more</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

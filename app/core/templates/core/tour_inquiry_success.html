@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Tour Inquiry Success
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Tour inquiry success -->
+<div id="submit-event-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Tour Inquiry Sent!</div>
+            <div class="section-subtitle">Our tour manager will contact you within 48 hours.</div>
+            <p><a href="{% url 'index' %}">Back to Home</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

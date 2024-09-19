@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Site Map
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Document section -->
+<div id="site-map-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Site Map</div>
+        </div>
+        <div class="section-body">
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a> - The main landing page of our site.</li>
+                <li><a href="{% url 'list-events' %}">Events</a> - View upcoming events and rugby activities.</li>
+                <li><a href="{% url 'health-index' %}">Health</a> - Access health resources, including workout plans and
+                    nutrition advice.</li>
+                <li><a href="{% url 'tours-index' %}">Tours</a> - Explore rugby tour options and information.</li>
+                <li><a href="#">Market</a> - Visit our store for rugby-related merchandise and other items.</li>
+                <li><a href="{% url 'privacy' %}">Privacy Policy</a> - Details on how we handle and protect your
+                    personal data.</li>
+                <li><a href="{% url 'terms-of-use' %}">Terms of Use</a> - Rules and guidelines for using our website and
+                    services.</li>
+                <li><a href="{% url 'sales-and-refunds' %}">Sales and Refunds</a> - Information on our sales processes
+                    and refund policy.</li>
+                <li><a href="{% url 'legal' %}">Legal</a> - Legal notices and terms applicable to our site and services.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'members/css/dashboard.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard -->
+<div id="dashboard-section" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Dashboard</div>
+            <div class="section-subtitle">Welcome back, {{ user.username }}!</div>
+        </div>
+
+        <!-- Dashboard Widgets -->
+        <div class="dashboard-widgets">
+            <div class="widget">
+                <h3>Account</h3>
+                <p>View and update account settings.</p>
+                <a href="#" class="btn btn-primary">Settings</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

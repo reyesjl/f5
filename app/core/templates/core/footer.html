@@ -1,5 +1,37 @@
-<footer>
-    <div class="">
+<footer id="footer-section" class="section bg-light text-darkgray">
+    <div class="container">
+        <div class="statements-wrapper">
+            <div class="statement">
+                <span class="statement-title">1. Disclaimer:</span> The gym plans, workout routines, and meal plans provided on our website
+                are developed by certified experts and trainers, including NASM-certified professionals. While we aim to
+                provide accurate and well-researched information, all content is for educational purposes only and is
+                not a substitute for professional medical advice. The fitness and nutrition plans available are public
+                and free to use. By using our services, you acknowledge that you are responsible for your own health and
+                safety. We provide no guarantees or warranties, either express or implied, regarding the information
+                provided. Use of our website is entirely at your own risk.
+            </div>
 
+            <div class="statement">
+                <span class="statement-title">2. Risks and Liability:</span> Participation in any fitness or nutrition program involves
+                inherent risks, including potential injury or adverse health effects. We are not responsible or liable
+                for any injury, illness, or damages that may result from using the information on our website. All plans
+                and resources are offered free of charge and are to be used at your discretion. By accessing and using
+                our content, you agree to release us from any and all liability, claims, or demands arising from your
+                participation in any fitness or nutrition programs. It is strongly recommended that you consult with a
+                healthcare provider before beginning any fitness or nutrition regimen.
+            </div>
+        </div>
+
+        <hr />
+        <div class="copyright">
+            <div>2024 First Five Rugby LLC. All rights reserved.</div>
+            <div class="cpr-list">
+                <div class="cpr-item"><a href="{% url 'privacy' %}">Privacy Policy</a></div>
+                <div class="cpr-item"><a href="{% url 'terms-of-use' %}">Terms of Use</a></div>
+                <div class="cpr-item"><a href="{% url 'sales-and-refunds' %}">Sales and Refunds</a></div>
+                <div class="cpr-item"><a href="{% url 'legal' %}">Legal</a></div>
+                <div class="cpr-item"><a href="{% url 'sitemap' %}">Site Map</a></div>
+            </div>
+        </div>
     </div>
 </footer>

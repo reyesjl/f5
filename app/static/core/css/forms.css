@@ -1,0 +1,31 @@
+form p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+input {
+    border-radius: 15px;
+    padding: .5rem;
+    outline: none;
+    border: 1px solid black;
+    max-width: 275px;
+}
+
+textarea {
+    border-radius: 15px;
+    padding: .5rem;
+    outline: none;
+    border: 1px solid black;
+    max-width: 700px;
+}
+
+label {
+    font-size: 1.1em;
+    padding-left: .5rem;
+    padding-bottom: .5rem;
+}
+
+.full {
+    min-height: 70vh;
+}

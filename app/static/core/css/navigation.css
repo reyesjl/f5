@@ -6,6 +6,7 @@
     padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    gap: 1rem;
 }
 
 /* Navigation logo */
@@ -33,6 +34,7 @@
     display: flex;
     background-color: lightgray;
     border-radius: 25px;
+    flex-grow: 1;
 }
 
 .navlink {

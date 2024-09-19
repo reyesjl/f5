@@ -19,13 +19,22 @@
 
         <!-- Only visible on mobile menu -->
         <div class="togglelinks">
-            <a class="navlink" href="#">Login</a>
+            {% if user.is_authenticated %}
+            <a class="navlink {% if request.path == '/members/dashboard/' %}active{% endif %}" href="{% url 'dashboard' %}">{{ user.username }}</a>
+            <a class="navlink" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="navlink" href="{% url 'login' %}">Login</a>
+            {% endif %}
         </div>
     </div>
     <div class="navactions">
         <!-- Menu option is only visible on mobile -->
         <div id="toggle-open-menu" class="navlink togglebutton">Menu</div>
         <!-- Login option is hidden on mobile "togglelinks" above is used instead -->
-        <a class="navlink actionlink" href="#">Login</a>
+        {% if user.is_authenticated %}
+        <a class="navlink actionlink" href="{% url 'dashboard' %}">{{ user.username }}</a>
+        {% else %}
+        <a class="navlink actionlink" href="{% url 'login' %}">Login</a>
+        {% endif %}
     </div>
 </nav>

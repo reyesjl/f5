@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import Event, EventRole, Rsvp
+from .models import Event, EventSubmission
 
-# Register your models here.
 admin.site.register(Event)
-admin.site.register(EventRole)
-admin.site.register(Rsvp)
+admin.site.register(EventSubmission)

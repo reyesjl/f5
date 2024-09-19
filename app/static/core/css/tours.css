@@ -1,0 +1,91 @@
+/* Tour section */
+.tour-section-wrapper {
+    display: flex;
+    gap: 5rem;
+    margin-bottom: 3rem;
+}
+
+.tour-section-media {
+    width: 50%;
+}
+
+.tour-section-media img {
+    width: 100%;
+    border-radius: 18px;
+}
+
+.tour-section-content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tour-content-pretext {
+    text-transform: uppercase;
+    font-size: .9em;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: gray;
+    margin-bottom: 1rem;
+    color: darkorange;
+}
+
+.tour-content-title {
+    font-size: 1.6em;
+    font-weight: 600;
+    padding-bottom: 1rem;
+}
+
+.tour-content-desc {
+    font-size: 1.2em;
+    margin-bottom: 2em;
+}
+
+.tour-order-a {
+    order: 0;
+}
+
+.tour-order-b {
+    order: 1;
+}
+
+.tour-section-action-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tour-button {
+    padding: .5rem .75rem;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 18px;
+    border: 2px solid black;
+}
+
+.tour-button:hover {
+    background-color: white;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    /* Tour section */
+    .tour-section-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .tour-section-media {
+        width: 100%;
+    }
+
+    .tour-section-content {
+        width: 100%;
+    }
+
+    .tour-order-b {
+        order: 0;
+    }
+}

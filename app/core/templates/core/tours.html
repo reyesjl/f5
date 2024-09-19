@@ -7,6 +7,7 @@ Tours
 
 {% block custom_css %}
 <!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'core/css/tours.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block custom_js %}
@@ -14,9 +15,66 @@ Tours
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="header">
-        <div>Tours home.</div>
+<!-- Tours -->
+<div id="tours-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Ireland Tours at <br class="br-small"> an Incredible Price.</div>
+            <div class="section-subtitle text-darkorange">An unforgettable journey for every participant.</div>
+        </div>
+        <div class="tour-section-wrapper">
+            <div class="tour-section-media">
+                <img src="{% static 'core/images/index-tour-01.jpg' %}" alt="rugby training in ireland" />
+            </div>
+            <div class="tour-section-content">
+                <div class="tour-content-pretext">Included</div>
+                <div class="tour-content-title">Advanced Rugby Training</div>
+                <div class="tour-content-desc">
+                    Train in rugby-rich Dublin with exclusive behind-the-scenes access to top fixtures, including
+                    Munster, Connacht, and Dublin Schools, along with a tour of the iconic Aviva Stadium.
+                </div>
+                <div class="tour-section-action-group">
+                    <a class="tour-button"
+                        href="https://drive.google.com/drive/folders/1cn6YG7BfXWZD7w7wvVDL3homqDFD_Kz4">See Album</a>
+                    <a class="tour-button" href="{% url 'tour-inquiry' %}">Free Quote</a>
+                </div>
+            </div>
+        </div>
+        <div class="tour-section-wrapper">
+            <div class="tour-section-media tour-order-b">
+                <img src="{% static 'core/images/index-tour-02.jpg' %}" alt="rugby museum in ireland" />
+            </div>
+            <div class="tour-section-content">
+                <div class="tour-content-pretext">Included</div>
+                <div class="tour-content-title">Rich Cultural Experience</div>
+                <div class="tour-content-desc">Explore Ireland’s rich history with guided tours through Galway,
+                    Connemara, and Cork, including visits to Kylemore Abbey, St. John’s Castle, Blarney Castle, and the
+                    Cliffs of Moher.
+                </div>
+                <div class="tour-section-action-group">
+                    <a class="tour-button"
+                        href="https://drive.google.com/drive/folders/1cn6YG7BfXWZD7w7wvVDL3homqDFD_Kz4">See Album</a>
+                    <a class="tour-button" href="{% url 'tour-inquiry' %}">Free Quote</a>
+                </div>
+            </div>
+        </div>
+        <div class="tour-section-wrapper">
+            <div class="tour-section-media">
+                <img src="{% static 'core/images/index-tour-03.jpg' %}" alt="rugby team building" />
+            </div>
+            <div class="tour-section-content">
+                <div class="tour-content-pretext">Included</div>
+                <div class="tour-content-title">Team Building Activities</div>
+                <div class="tour-content-desc">Build team camaraderie while exploring Ireland’s scenic landscapes, with
+                    daily educational stops at castles and museums, all while traveling in top-quality motor coaches.
+                </div>
+                <div class="tour-section-action-group">
+                    <a class="tour-button"
+                        href="https://drive.google.com/drive/folders/1cn6YG7BfXWZD7w7wvVDL3homqDFD_Kz4">See Album</a>
+                    <a class="tour-button" href="{% url 'tour-inquiry' %}">Free Quote</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

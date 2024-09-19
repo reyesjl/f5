@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Submit event success
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Submit event success -->
+<div id="submit-event-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Event has been submitted!</div>
+            <div class="section-subtitle">Support will contact you within 2-3 business days regarding your event.</div>
+            <p><a href="{% url 'list-events' %}">Back to Events</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

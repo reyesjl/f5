@@ -1,86 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'core/base.html' %}
+{% load static %}
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'core/css/base.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" type="text/css" href="{% static 'members/css/profile.css' %}">
-    
-    <script src="{% static 'core/js/base.js' %}" defer></script>
-    <script src="{% static 'members/js/dashboard.js' %}" defer></script>
+{% block title %}
+Dashboard
+{% endblock %}
 
-    <title>Dashboard</title>
-</head>
-<body>
-    {% include 'includes/navigation.html' %}
-    <div class="container stack-large">
-        <div class="profile-wrapper">
-            {% if user.avatar %}
-                <div class="avatar"><a href="{% url 'update-avatar' %}"><img src="{{ user.avatar.url }}"></a></div>
-            {% else %}
-                <div class="avatar"><a href="{% url 'update-avatar' %}"><img src="https://place-hold.it/150x150"></a></div>
-            {% endif %}
-            <div class="metadata">
-                <div class="username">{{ user.username }}</div>
-                <div class="fullname">{{user.first_name}} {{user.last_name}}</div>
-                <div class="bio">{{ user.bio }}</div>
-            </div>
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'members/css/dashboard.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard -->
+<div id="dashboard-section" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Dashboard</div>
+            <div class="section-subtitle">Welcome back, {{ user.username }}!</div>
         </div>
 
-        <div class="actions-wrapper">
-            <div class="action-list">
-                <div class="action-item" onclick="openTab('settings', this)">Settings</div>
-                <div class="action-item" onclick="openTab('requests', this)">Training requests</div>
+        <!-- Dashboard Widgets -->
+        <div class="dashboard-widgets">
+            <div class="widget">
+                <h3>Events</h3>
+                <p>View and manage upcoming events.</p>
+                <a href="#" class="btn btn-primary">View Events</a>
             </div>
-            <div class="action-content">
-                <div id="settings" class="actions account-actions">
-                    <ul class="action-links">
-                        <li><a class="link red" href="{% url 'update-avatar' %}">edit avatar</a></li>
-                        <li><a class="link red" href="{% url 'update-profile' %}">edit profile</a></li>
-                        <li><a class="link red" href="{% url 'member-profile' user.username %}">view my profile</a></li>
-                        <li><a class="link red" href="{% url 'member-logout' %}">logout</a></li>
-                    </ul>
-                </div>
-                <div id="requests" class="actions content-actions">
-                    <div class="request-list">
-                        {% for request in requests %}
-                            <div class="request-item">
-                                <div class="request-user">
-                                    {% if request.trainer.avatar %}
-                                        <img src="{{ request.trainer.avatar.url }}" />
-                                    {% else %}
-                                        <img src="https://place-hold.it/48x48" />
-                                    {% endif %}
-                                </div>
-                                <div class="request-metadata">
-                                    <div class="request-header">
-                                        <div class="request-username">{{ request.trainer.username }}</div>
-                                        <div class="time-ago">&#x2022; {{ request.time_since_creation }}</div>
-                                        <div class="request-status {{ request.status|lower }}">
-                                            <i class="fa-regular fa-circle-dot"></i>
-                                        </div>
-                                    </div>
-                                    <div class="request-body">
-                                        {{ request.additional_details }}
-                                    </div>
-                                    <div class="request-datetime">
-                                        <i class="fa-regular fa-clock"></i> {{ request.requested_date }} @ {{ request.requested_time }}
-                                    </div>
-                                    <div class="request-actions">
-                                        <div class="action"><a class="link" href="mailto:{{ request.trainer.email }}"><i class="fa-regular fa-envelope"></i></a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% empty %}
-                            <div>No requests found. To request a trainer visit our <a class="link red" href="{% url 'health-home' %}">health</a> services.</div>
-                        {% endfor %}
-                    </div>
-                </div>
+            <div class="widget">
+                <h3>Event Submissions</h3>
+                <p>Review and manage event submissions.</p>
+                <a href="#" class="btn btn-primary">View Submissions</a>
+            </div>
+            <div class="widget">
+                <h3>Training Requests</h3>
+                <p>Handle training requests and inquiries.</p>
+                <a href="#" class="btn btn-primary">View Requests</a>
+            </div>
+            <div class="widget">
+                <h3>Tour Inquiries</h3>
+                <p>Handle tour inquiries & quotes.</p>
+                <a href="#" class="btn btn-primary">View Inquiries</a>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

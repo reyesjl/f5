@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Privacy Policy
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Document section -->
+<div id="privacy-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Privacy Policy</div>
+            <p><strong>Effective Date:</strong> September 17, 2024</p>
+            <p><strong>Last Updated:</strong> September 17, 2024</p>
+        </div>
+
+        <div class="section-body">
+            <h2>1. Introduction</h2>
+            <p>First Five Rugby LLC (“we,” “us,” or “our”) operates the website <a
+                    href="https://f5rugby.com">f5rugby.com</a> (“the Platform”). This Privacy Policy explains how we
+                collect, use, share, and protect your personal information. By accessing or using the Platform, you
+                agree to this Privacy Policy.</p>
+
+            <h2>2. Information We Collect</h2>
+            <p>We collect various types of personal information, but only with your consent during your engagement with
+                our services. Specifically, we collect:</p>
+            <ul>
+                <li><strong>Personal Information:</strong> Name, email address, phone number, and other contact details
+                    provided by you.</li>
+                <li><strong>Health Data:</strong> Information such as height, weight, gym metrics, workout routines,
+                    etc., which is collected with your approval and used internally to develop personalized health
+                    plans.</li>
+                <li><strong>Recruitment Data:</strong> Player information such as athletic performance and statistics,
+                    which is shared with universities, coaches, and recruiters only with your consent.</li>
+            </ul>
+            <p>We do not collect usage data such as IP addresses, browser types, or usage patterns.</p>
+
+            <h2>3. How We Use Your Information</h2>
+            <p>We use your personal information to:</p>
+            <ul>
+                <li>Provide and improve our services.</li>
+                <li>Facilitate communication between users and trainers.</li>
+                <li>Share data with internal personnel (e.g., trainers, staff) who need it to offer personalized plans.
+                </li>
+                <li>Provide recruitment services to universities and coaches.</li>
+                <li>Send newsletters and marketing information (with consent).</li>
+            </ul>
+
+            <h2>4. Sharing Your Information</h2>
+            <p>We may share your information in the following ways:</p>
+            <ul>
+                <li><strong>Internally:</strong> Trainers, staff, and other authorized personnel may access user health
+                    data to provide services.</li>
+                <li><strong>Externally:</strong> We share recruiting data with universities, coaches, and third parties
+                    who pay for access to this information.</li>
+                <li><strong>Legally Required:</strong> In case of legal obligations, we may disclose your information to
+                    law enforcement or regulatory bodies.</li>
+            </ul>
+
+            <h2>5. Security</h2>
+            <p>We take the security of your personal data seriously and implement various measures to protect it,
+                including:</p>
+            <ul>
+                <li>We use Django’s built-in security features, including <strong>CSRF protection</strong> to prevent
+                    cross-site request forgery, <strong>XSS prevention</strong> to protect against cross-site scripting
+                    attacks, and strong session management.</li>
+                <li>All user passwords are hashed securely, and we use Django's recommended password validators to
+                    ensure strong passwords are used.</li>
+                <li>Data transmission between our servers and your browser is encrypted using <strong>SSL/TLS
+                        certificates</strong>.</li>
+                <li>We regularly update our software and apply security patches to ensure that the platform is
+                    safeguarded against known vulnerabilities.</li>
+                <li>We restrict access to personal information to authorized personnel only, who are required to treat
+                    this information confidentially.</li>
+            </ul>
+            <p>However, no method of transmission over the internet is entirely secure, and while we strive to use
+                commercially acceptable means to protect your information, we cannot guarantee absolute security.</p>
+
+            <h2>6. Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access, update, or delete your personal data.</li>
+                <li>Withdraw consent for data processing (where applicable).</li>
+                <li>Contact us for inquiries about your privacy rights at <a
+                        href="mailto:support@f5rugby.com">support@f5rugby.com</a>.</li>
+            </ul>
+
+            <h2>7. Integrity and Respect for Internet Freedom</h2>
+            <p>At First Five Rugby, we are committed to upholding the highest standards of data integrity. Just as rugby
+                is a sport built on respect and teamwork, we strive to ensure that your data is handled with the utmost
+                respect and transparency. We understand the importance of internet freedom and work to protect your
+                personal information against misuse. Our commitment to these values reflects our dedication to both our
+                sport and our community of users.</p>
+
+            <h2>8. Changes to the Privacy Policy</h2>
+            <p>We may update this Privacy Policy from time to time. You will be notified of any material changes via
+                email or through a notice on our platform.</p>
+
+            <h2>9. Contact Information</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us at <a
+                    href="mailto:support@f5rugby.com">support@f5rugby.com</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

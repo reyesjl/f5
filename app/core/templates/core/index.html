@@ -15,13 +15,217 @@ F5 Rugby
 {% endblock %}
 
 {% block content %}
+
+<!-- Jumbotron header -->
 <div class="jumbotron">
     <div class="jumbo-pretext">First Five Rugby</div>
-    <div class="jumbo-title">Modern Resources <br> for Modern Rugby.</div>
+    <div class="jumbo-title">We Help Grow<br>Pathways Rugby.</div>
     <div class="jumbo-posttext">Built for people like you.</div>
     <div class="jumbo-button-group">
         <a class="jumbo-button" href="https://forms.gle/zNw4kZCZtEpzAn429">Take survey</a>
-        <a class="jumbo-button white" href="#">Learn more</a>
+        <a class="jumbo-button white" href="#event-section">Learn more</a>
+    </div>
+</div>
+
+<!-- Event product -->
+<div id="event-section" class="section bg-dark">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">All Public Events. <br class="br-small"> All in One Place.</div>
+            <div class="section-subtitle">Never miss another rugby event. High visibility and hassle free.</div>
+        </div>
+
+        <!-- Event product columns -->
+        <div class="event-columns">
+            <!-- Column 1 : Listings -->
+            <div class="event-column">
+                <div class="event-column-icon">
+                    <svg width="100" height="100" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M31.25 8.33335V4.16669M31.25 8.33335V12.5M31.25 8.33335H21.875M6.25 20.8334V39.5834C6.25 41.8846 8.11548 43.75 10.4167 43.75H39.5833C41.8846 43.75 43.75 41.8846 43.75 39.5834V20.8334H6.25Z"
+                            stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M6.25 20.8333V12.5C6.25 10.1988 8.11548 8.33331 10.4167 8.33331H14.5833"
+                            stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14.5833 4.16669V12.5" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M43.75 20.8333V12.5C43.75 10.1988 41.8846 8.33331 39.5834 8.33331H38.5417"
+                            stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="event-column-meta">
+                    <div class="event-column-title">Listing</div>
+                    <div class="event-column-desc">Easily list your rugby event on our site. We display all the details
+                        to ensure your event stands out.</div>
+                </div>
+                <div class="event-column-action">
+                    <a class="event-button" href="{% url 'submit-event' %}">Submit New Event</a>
+                </div>
+            </div>
+            <!-- Column 2 : Registration -->
+            <div class="event-column">
+                <div class="event-column-icon">
+                    <svg width="100" height="100" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M27.1267 12.1425L33.0193 6.24998L43.3312 16.562L37.4387 22.4545M27.1267 12.1425L6.79565 32.4736C6.60811 32.6611 6.50276 32.9155 6.50276 33.1807V43.0785H16.4005C16.6657 43.0785 16.9201 42.9731 17.1076 42.7856L37.4387 22.4545M27.1267 12.1425L37.4387 22.4545"
+                            stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="event-column-meta">
+                    <div class="event-column-title">Registration</div>
+                    <div class="event-column-desc">We manage event registration, making sign-ups quick and hassle-free
+                        for you and your participants.</div>
+                </div>
+                <div class="event-column-action">
+                    <a class="event-button" href="{% url 'list-events' %}">See All Events</a>
+                </div>
+            </div>
+            <!-- Column 3 : Payment -->
+            <div class="event-column">
+                <div class="event-column-icon">
+                    <svg width="100" height="100" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6.25 43.15V6.85C6.25 6.51863 6.51863 6.25 6.85 6.25H43.15C43.4814 6.25 43.75 6.51863 43.75 6.85V43.15C43.75 43.4814 43.4814 43.75 43.15 43.75H6.85C6.51863 43.75 6.25 43.4814 6.25 43.15Z"
+                            stroke="#FF0000" stroke-width="1.5" />
+                        <path
+                            d="M31.25 17.7083C29.8229 16.2812 27.3097 15.2886 25 15.2265M18.75 31.25C20.0927 33.0402 22.5891 34.0613 25 34.1479M25 15.2265C22.2518 15.1525 19.7917 16.3958 19.7917 19.7917C19.7917 26.0416 31.25 22.9167 31.25 29.1667C31.25 32.7313 28.2004 34.2629 25 34.1479M25 15.2265V11.4583M25 34.1479V38.5416"
+                            stroke="#FF0000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="event-column-meta">
+                    <div class="event-column-title">Payment</div>
+                    <div class="event-column-desc">We securely handle payments, streamlining the process so you can
+                        focus on your event.</div>
+                </div>
+                <div class="event-column-action">
+                    <a class="event-button" href="{% url 'contact' %}">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Health product -->
+<div id="health-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Unlimited Access <br class="br-small">to Fitness Plans.</div>
+            <div class="section-subtitle">Information should be free. For everyone. Forever.</div>
+        </div>
+        <div class="health-section-wrapper">
+            <div class="health-section-media">
+                <img src="{% static 'core/images/index-health-01.jpg' %}" alt="player doing dumbbell bench press" />
+            </div>
+            <div class="health-section-content">
+                <div class="health-content-pretext">Strength + Nutrition + Mental</div>
+                <div class="health-content-title">Your Body. Your Goals.</div>
+                <div class="health-content-desc">Crafted by certified trainers, for rugby players. Position specific
+                    skills and movements. Choose a trainer or
+                    a plan that fits your schedule and training needs. </div>
+
+                <div class="health-section-action-group">
+                    <a class="health-button" href="{% url 'health-index' %}">View Plans</a>
+                    <a class="health-button" href="#trainer-section">Find Trainers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trainers -->
+<div id="trainer-section" class="section bg-light">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Talk to an Expert.</div>
+            <div class="section-subtitle">Need help getting started or want an edge on the pitch?</div>
+        </div>
+        <div class="trainer-profiles">
+            <div class="trainer-profile-wrapper">
+                <div class="trainer-name">Asau Rodriguez</div>
+                <div class="trainer-image">
+                    <img src="{% static 'core/images/trainer-asau.jpg' %}" alt="Asau a trainer on our platform" />
+                </div>
+                <div class="trainer-bio">
+                    Experienced Co-Owner in the sports industry with skills in Time Management, Leadership, Public
+                    Speaking, Coaching, and Social Media. Holds a Bachelor's in Exercise Science from Black Hills State
+                    University.
+                </div>
+                <a class="trainer-button" href="{% url 'request-trainer' trainer_name='Asau' %}">Chat</a>
+            </div>
+            <div class="trainer-profile-wrapper">
+                <div class="trainer-name">Cuyler McCorkindale</div>
+                <div class="trainer-image">
+                    <img src="{% static 'core/images/trainer-cuyler.jpg' %}" alt="Cuyler a trainer on our platform" />
+                </div>
+                <div class="trainer-bio">
+                    NASM Certified Personal Trainer and Played Professional Rugby for New York. Studied at Mount St.
+                    Mary's University. Specializing in athletic performance, fitness training, and mental readiness.
+                </div>
+                <a class="trainer-button" href="{% url 'request-trainer' trainer_name='Cuyler' %}">Chat</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tours -->
+<div id="tours-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Ireland Tours at <br class="br-small"> an Incredible Price.</div>
+            <div class="section-subtitle text-darkorange">An unforgettable journey for every participant.</div>
+        </div>
+        <div class="tour-section-wrapper">
+            <div class="tour-section-media">
+                <img src="{% static 'core/images/index-tour-01.jpg' %}" alt="rugby training in ireland" />
+            </div>
+            <div class="tour-section-content">
+                <div class="tour-content-pretext">Included</div>
+                <div class="tour-content-title">Advanced Rugby Training</div>
+                <div class="tour-content-desc">
+                    Train in rugby-rich Dublin with exclusive behind-the-scenes access to top fixtures, including
+                    Munster, Connacht, and Dublin Schools, along with a tour of the iconic Aviva Stadium.
+                </div>
+                <div class="tour-section-action-group">
+                    <a class="tour-button"
+                        href="https://drive.google.com/drive/folders/1cn6YG7BfXWZD7w7wvVDL3homqDFD_Kz4">See Album</a>
+                    <a class="tour-button" href="{% url 'tour-inquiry' %}">Free Quote</a>
+                </div>
+            </div>
+        </div>
+        <div class="tour-section-wrapper">
+            <div class="tour-section-media tour-order-b">
+                <img src="{% static 'core/images/index-tour-02.jpg' %}" alt="rugby museum in ireland" />
+            </div>
+            <div class="tour-section-content">
+                <div class="tour-content-pretext">Included</div>
+                <div class="tour-content-title">Rich Cultural Experience</div>
+                <div class="tour-content-desc">Explore Ireland’s rich history with guided tours through Galway,
+                    Connemara, and Cork, including visits to Kylemore Abbey, St. John’s Castle, Blarney Castle, and the
+                    Cliffs of Moher.
+                </div>
+                <div class="tour-section-action-group">
+                    <a class="tour-button"
+                        href="https://drive.google.com/drive/folders/1cn6YG7BfXWZD7w7wvVDL3homqDFD_Kz4">See Album</a>
+                    <a class="tour-button" href="{% url 'tour-inquiry' %}">Free Quote</a>
+                </div>
+            </div>
+        </div>
+        <div class="tour-section-wrapper">
+            <div class="tour-section-media">
+                <img src="{% static 'core/images/index-tour-03.jpg' %}" alt="rugby team building" />
+            </div>
+            <div class="tour-section-content">
+                <div class="tour-content-pretext">Included</div>
+                <div class="tour-content-title">Team Building Activities</div>
+                <div class="tour-content-desc">Build team camaraderie while exploring Ireland’s scenic landscapes, with
+                    daily educational stops at castles and museums, all while traveling in top-quality motor coaches.
+                </div>
+                <div class="tour-section-action-group">
+                    <a class="tour-button"
+                        href="https://drive.google.com/drive/folders/1cn6YG7BfXWZD7w7wvVDL3homqDFD_Kz4">See Album</a>
+                    <a class="tour-button" href="{% url 'tour-inquiry' %}">Free Quote</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

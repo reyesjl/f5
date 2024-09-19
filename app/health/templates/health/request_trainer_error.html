@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Request Trainer Error
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Submit event success -->
+<div id="submit-event-section" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Trainer Not Found</div>
+            <div class="section-subtitle">The trainer you requested does not exist.</div>
+            <p><a href="{% url 'index' %}#trainer-section">View our Trainers</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
