@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
+<style>
+   @font-face {
+   font-family: 'Ebrima';
+   src: url('../fonts/Ebrima.ttf') format('truetype'); /* Adjust path */
+   }
+
+   text {
+   font-family: 'Ebrima', sans-serif;
+   font-size: 43.1704px;
+   fill: #000000;
+   font-weight: bold;
+   }
+</style>
+
 <svg
    width="66.14579mm"
    height="28.967224mm"
