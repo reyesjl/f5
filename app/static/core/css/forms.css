@@ -29,3 +29,11 @@ label {
 .full {
     min-height: 70vh;
 }
+
+select {
+    text-transform: none;
+    padding: .5rem;
+    border-radius: 15px;
+    background-color: black;
+    color: white;
+}

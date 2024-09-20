@@ -1,0 +1,116 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Event submissions
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'core/css/tables.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+<script src="{% static 'events/js/list_submissions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Event submissions header -->
+<div id="event-submissions-list" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Event submissions</div>
+        </div>
+
+        <div class="filter-section">
+            <input type="text" id="search-input" placeholder="Search by event name..." onkeyup="filterTable()">
+            <select id="status-filter" onchange="filterTable()">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+                <option value="complete">Complete</option>
+            </select>
+        </div>
+
+        <!-- Scrollable table on mobile -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Description</th>
+                        <th>Event Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Status</th>
+                        <th>Submitted At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for submission in submissions %}
+                    <tr>
+                        <td>{{ submission.event_name }}</td>
+                        <td>
+                            <span class="description" id="description-{{ submission.id }}"></span>
+                                {{ submission.event_description|truncatewords:20 }} 
+                                {% if submission.event_description|length > 100 %} 
+                                    <a href="#" class="read-more" onclick="toggleDescription('{{ submission.id }}'); return false;">Read More</a>
+                                {% endif %}
+                            </span>
+                            <span class="full-description" id="full-description-{{ submission.id }}" style="display: none;">
+                                {{ submission.event_description }} 
+                                <a href="#" class="read-less" onclick="toggleDescription('{{ submission.id }}'); return false;">Read Less</a>
+                            </span>
+                        </td>
+                        <td>{{ submission.event_date }}</td>
+                        <td>{{ submission.name }}</td>
+                        <td>{{ submission.email }}</td>
+                        <td>{{ submission.phone_number }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'update_submission_status' submission.id 'change' %}">
+                                {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()">
+                                    {% for key, value in submission.SUBMISSION_STATUS_CHOICES %}
+                                        <option value="{{ key }}" {% if submission.internal_status == key %}selected{% endif %}>
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </td>
+                        <td>{{ submission.submitted_at }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="{% if request.user.is_staff %}9{% else %}8{% endif %}">No submissions found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if submissions.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ submissions.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ submissions.number }} of {{ submissions.paginator.num_pages }}.
+                </span>
+
+                {% if submissions.has_next %}
+                    <a href="?page={{ submissions.next_page_number }}">next</a>
+                    <a href="?page={{ submissions.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -23,6 +23,7 @@ class EventSubmission(models.Model):
         ('pending', 'Pending'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
+        ('complete', 'Complete'),
     )
 
     event_name = models.CharField(max_length=255)

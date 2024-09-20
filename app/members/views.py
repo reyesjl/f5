@@ -13,7 +13,6 @@ def dashboard(request):
     else:
         return render(request, "members/user_dashboard.html")
 
-
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)

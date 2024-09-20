@@ -12,10 +12,10 @@
         </div>
 
         <a class="navlink {% if request.path == '/' %}active{% endif %}" href="{% url 'index' %}">Home</a>
-        <a class="navlink {% if request.path == '/events/' %}active{% endif %}" href="{% url 'list-events' %}">Events</a>
-        <a class="navlink {% if request.path == '/health/' %}active{% endif %}" href="{% url 'health-index' %}">Health</a>
-        <a class="navlink {% if request.path == '/tours/' %}active{% endif %}" href="{% url 'tours-index' %}">Tours</a>
-        <a class="navlink {% if request.path == '/market/' %}active{% endif %}" href="{% url 'market-index' %}">Market</a>
+        <a class="navlink {% if request.path == '/events/' %}active{% endif %}" href="{% url 'list_events' %}">Events</a>
+        <a class="navlink {% if request.path == '/health/' %}active{% endif %}" href="{% url 'health_index' %}">Health</a>
+        <a class="navlink {% if request.path == '/tours/' %}active{% endif %}" href="{% url 'tours_index' %}">Tours</a>
+        <a class="navlink {% if request.path == '/market/' %}active{% endif %}" href="{% url 'market_index' %}">Market</a>
 
         <!-- Only visible on mobile menu -->
         <div class="togglelinks">
