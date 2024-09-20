@@ -26,9 +26,20 @@ Dashboard
         <!-- Dashboard Widgets -->
         <div class="dashboard-widgets">
             <div class="widget">
+                <h3>My Events</h3>
+                <p>See the status of your events.</p>
+                <a href="#" class="btn btn-primary">View events</a>
+            </div>
+            <div class="widget">
+                <h3>My Health</h3>
+                <p>See the status of your training requests.</p>
+                <a href="#" class="btn btn-primary">View requests</a>
+            </div>
+            <div class="widget">
                 <h3>Account</h3>
-                <p>View and update account settings.</p>
+                <p>View and update account information.</p>
                 <a href="#" class="btn btn-primary">Settings</a>
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
             </div>
         </div>
     </div>
