@@ -109,6 +109,13 @@
     display: none;
 }
 
+/* Errors */
+.errorlist {
+    padding: 0;
+    list-style-type: none;
+    color: rgb(211, 0, 0);
+}
+
 /* Buttons */
 .button {
     padding: .5rem .75rem;
