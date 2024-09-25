@@ -7,19 +7,57 @@ Health services
 
 {% block custom_css %}
 <!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'health/css/index.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/forms.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/filters.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block custom_js %}
 <!-- Include any specific JavaScript files needed for this page -->
+<script src="{% static 'health/js/index.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<!-- Plan list -->
-<div id="plan-list" class="section">
+<!-- Fitness header -->
+<div id="fitness-header" class="section">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header align-left">
             <div class="section-title">Unlimited Fitness Plans</div>
             <div class="section-subtitle">Training information should be free. For everyone. Forever.</div>
+        </div>
+
+        <div class="filter-section">
+            <input type="text" id="search-input" placeholder="Search by plan name..." onkeyup="filterPlans()">
+            <select id="goal-filter" onchange="filterPlans()">
+                <option value="">All Goals</option>
+                <option value="speed">Speed</option>
+                <option value="strength">Strength</option>
+                <option value="conditioning">Conditioning</option>
+                <option value="endurance">Endurance</option>
+                <option value="recovery">Recovery</option>
+            </select>
+        </div>
+
+        <!-- Plan list -->
+        <div class="plan-list-module">
+            {% for plan in plans %}
+            <div class="plan-wrapper" data-name="{{ plan.name }}" data-goal="{{ plan.goal }}">
+                <div class="plan-trainer">By {{ plan.trainer_name}}</div>
+                <div class="plan-name">{{ plan.name }}</div>
+                <div class="plan-updated">Updated: {{ plan.updated_at|date:"m/d/Y" }}</div>
+                <div class="plan-link">
+                    <a class="download-link" href="{{ plan.pdf.url }}">
+                        <svg width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M43.75 31.25V39.5833C43.75 40.6884 43.311 41.7482 42.5296 42.5296C41.7482 43.311 40.6884 43.75 39.5833 43.75H10.4167C9.3116 43.75 8.25179 43.311 7.47039 42.5296C6.68899 41.7482 6.25 40.6884 6.25 39.5833V31.25M14.5833 20.8333L25 31.25M25 31.25L35.4167 20.8333M25 31.25V6.25"
+                                stroke="#1E1E1E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div>No plans found.</div>
+            {% endfor %}
         </div>
     </div>
 </div>

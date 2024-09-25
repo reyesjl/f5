@@ -1,13 +1,19 @@
-from django.shortcuts import render
+from .models import Plan
+from django.shortcuts import redirect, render
+from core.decorators import is_admin
+from .forms import TrainerRequestForm, CreatePlanForm
 from django.core.mail import send_mail, EmailMessage
-from .forms import TrainerRequestForm
-from .models import TrainerRequest
+from django.contrib.auth.decorators import user_passes_test
 
 # Trainers
 VALID_TRAINERS = ['Cuyler', 'Asau']
 
 def index(request):
-    context = {}
+    plans = Plan.objects.all()
+
+    context = {
+        'plans': plans
+    }
     return render(request, "health/index.html", context)
 
 def request_trainer(request, trainer_name):
@@ -42,3 +48,18 @@ def request_trainer(request, trainer_name):
     }
 
     return render(request, 'health/request_trainer.html', context)
+
+@user_passes_test(is_admin)
+def create_plan(request):
+    if request.method == "POST":
+        form = CreatePlanForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('health_index')
+    else:
+        form = CreatePlanForm()
+    
+    context = {
+        'form': form
+    }
+    return render(request, "health/create_plan.html", context)

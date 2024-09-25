@@ -19,3 +19,22 @@ class TrainerRequest(models.Model):
 
     def __str__(self):
         return f"{self.name} requested {self.trainer_name} - {self.status}"
+    
+class Plan(models.Model):
+    GOAL_CHOICES = [
+        ('strength', 'Strength'),
+        ('conditioning', 'Conditioning'),
+        ('speed', 'Speed'),
+        ('endurance', 'Endurance'),
+        ('recovery', 'Recovery'),
+    ]
+
+    name = models.CharField(max_length=100)
+    trainer_name = models.CharField(max_length=100, blank=True)
+    pdf = models.FileField(upload_to='health/fitness_plans/')
+    goal = models.CharField(max_length=50, choices=GOAL_CHOICES, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name} by {self.trainer_name}"

@@ -35,6 +35,7 @@
     background-color: lightgray;
     border-radius: 25px;
     flex-grow: 1;
+    z-index: 99;
 }
 
 .navlink {
