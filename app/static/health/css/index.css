@@ -1,0 +1,39 @@
+.plan-wrapper {
+    padding: 1rem;
+    color: white;
+    background: black;
+    border-radius: 24px;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.plan-link {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    background: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plan-name {
+    margin-top: 1rem;
+    font-size: 1.5em;
+}
+
+.plan-updated {
+    margin-top: 1rem;
+    text-align: left;
+    font-size: .9rem;
+}
+
+@media (max-width: 768px) {
+    .plan-wrapper {
+        max-width: 100%;
+    }
+}
