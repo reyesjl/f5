@@ -11,6 +11,9 @@
     padding: 16px;
     background-color: #fff;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-image-wrapper {
