@@ -7,6 +7,7 @@ Market
 
 {% block custom_css %}
 <!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'market/css/index.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block custom_js %}
@@ -20,6 +21,22 @@ Market
         <div class="section-header">
             <div class="section-title">Open Market</div>
             <div class="section-subtitle">Cool rugby jerseys and seasonal collections.</div>
+        </div>
+
+        <!-- Products list -->
+        <div class="product-list-module">
+            {% for product in products %}
+            <div class="product-wrapper">
+                <div class="product-image-wrapper">
+                    <img src="{{ product.image.url }}" alt="product image for {{ product.name }}"/>
+                </div>
+                <div class="product-meta">
+                    <div class="product-name">{{ product.name }}</div>
+                </div>
+            </div>
+            {% empty %}
+            <div>No products found.</div>
+            {% endfor %}
         </div>
     </div>
 </div>

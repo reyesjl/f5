@@ -1,0 +1,31 @@
+.product-list-module {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 2 items side by side by default */
+    gap: 16px;  /* Spacing between grid items */
+    padding: 16px;
+}
+
+.product-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    padding: 16px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.product-image-wrapper {
+    max-width: 200px;
+    margin: 0 auto;  /* Center the image wrapper */
+}
+
+.product-image-wrapper img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Media query for desktop screens */
+@media (min-width: 768px) {
+    .product-list-module {
+        grid-template-columns: repeat(4, 1fr);  /* 4 items per row on desktop */
+    }
+}

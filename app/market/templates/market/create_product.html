@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Create product
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'core/css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Create product -->
+<div id="submit-product-section" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Create new product</div>
+            <div class="section-subtitle">This product will be added to the market.</div>
+        </div>
+
+        <!-- Form wrapper -->
+        <div class="form-wrapper">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="button submit" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
