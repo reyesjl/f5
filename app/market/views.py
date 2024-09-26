@@ -17,7 +17,7 @@ def create_product(request):
         form = CreateProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('market-index')
+            return redirect('market_index')
     else:
         form = CreateProductForm()
     
