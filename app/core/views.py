@@ -50,15 +50,16 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             # Create email
-            email = EmailMessage(
-                subject=f"Message from {form.cleaned_data['name']}",
-                body=form.cleaned_data['message'],
-                from_email='support@f5rugby.com',
-                to=['support@f5rugby.com'],
-                reply_to=[form.cleaned_data['email']],
-            )
-            # Send notification email
-            email.send()
+            # TO FIX : EMAIL SHIT
+            # email = EmailMessage(
+            #     subject=f"Message from {form.cleaned_data['name']}",
+            #     body=form.cleaned_data['message'],
+            #     from_email='support@f5rugby.com',
+            #     to=['support@f5rugby.com'],
+            #     reply_to=[form.cleaned_data['email']],
+            # )
+            # # Send notification email
+            # email.send()
             return render(request, 'core/contact_success.html')
     else:
         form = ContactForm()

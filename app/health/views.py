@@ -29,15 +29,16 @@ def request_trainer(request, trainer_name):
             trainer_request.save()
 
             # Create email
-            email = EmailMessage(
-                subject=f"New Trainer Request for {trainer_name}",
-                body=f"{trainer_request.name} ({trainer_request.email}) has requested to chat with {trainer_name}. Message: {trainer_request.message}",
-                from_email='support@f5rugby.com',
-                to=['support@f5rugby.com'],
-                reply_to=[trainer_request.email],
-            )
-            # Send notification email
-            email.send()
+            # TO FIX : EMAIL SHIT
+            # email = EmailMessage(
+            #     subject=f"New Trainer Request for {trainer_name}",
+            #     body=f"{trainer_request.name} ({trainer_request.email}) has requested to chat with {trainer_name}. Message: {trainer_request.message}",
+            #     from_email='support@f5rugby.com',
+            #     to=['support@f5rugby.com'],
+            #     reply_to=[trainer_request.email],
+            # )
+            # # Send notification email
+            # email.send()
             return render(request, 'health/request_trainer_success.html')
     else:
         form = TrainerRequestForm()
