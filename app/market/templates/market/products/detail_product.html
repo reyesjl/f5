@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Products
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'market/css/detail_product.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+{% if user.is_staff %}
+<div class="container">
+    <div class="actions-title">Admin controls: 
+        <a class="text-black" href="{% url 'update_product' product.id %}">Update</a>
+        <a class="text-black" href="{% url 'delete_product' product.id %}">Delete</a>
+    </div>
+</div>
+{% endif %}
+<!-- Product detail -->
+<div id="product-detail" class="section">
+    <div class="container">
+        <div class="section-header">    
+            <div class="product-title">{{ product.name }}</div>
+            <div class="product-image-wrapper">
+                <img src="{{ product.image.url }}" alt="product image for {{ product.name }}"/>
+            </div>
+            <div class="product-description">{{ product.description }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

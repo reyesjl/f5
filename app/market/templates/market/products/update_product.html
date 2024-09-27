@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Update product
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'core/css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Update product -->
+<div id="update-product-section" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Update Product: {{ object.name }}</div>
+        </div>
+
+        <!-- Form wrapper -->
+        <div class="form-wrapper">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="button submit" type="submit">Update Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

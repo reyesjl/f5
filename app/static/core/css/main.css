@@ -91,6 +91,14 @@
     color: rgb(112, 112, 112);
 }
 
+.text-black {
+    color: black;
+}
+
+.text-red {
+    color: red;
+}
+
 /* Alignment */
 .align-left {
     text-align: left;

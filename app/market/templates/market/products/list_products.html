@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Products
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'market/css/list_products.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Product list -->
+<div id="product-list" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">Open Market</div>
+            <div class="section-subtitle">Cool rugby jerseys and seasonal collections.</div>
+        </div>
+
+        <!-- Products list -->
+        <div class="product-list-module">
+            {% for product in products %}
+            <div class="product-wrapper">
+                <div class="product-image-wrapper">
+                    <a href="{% url 'detail_product' product.id %}">
+                        <img src="{{ product.image.url }}" alt="product image for {{ product.name }}"/>
+                    </a>
+                </div>
+                <div class="product-meta">
+                    <div class="product-name">{{ product.name }}</div>
+                </div>
+            </div>
+            {% empty %}
+            <div>No products found.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

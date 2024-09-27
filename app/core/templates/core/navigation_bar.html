@@ -15,7 +15,7 @@
         <a class="navlink {% if request.path == '/events/' %}active{% endif %}" href="{% url 'list_events' %}">Events</a>
         <a class="navlink {% if request.path == '/health/' %}active{% endif %}" href="{% url 'health_index' %}">Health</a>
         <a class="navlink {% if request.path == '/tours/' %}active{% endif %}" href="{% url 'tours_index' %}">Tours</a>
-        <a class="navlink {% if request.path == '/market/' %}active{% endif %}" href="{% url 'market_index' %}">Market</a>
+        <a class="navlink {% if request.path == '/market/products/' %}active{% endif %}" href="{% url 'list_products' %}">Market</a>
 
         <!-- Only visible on mobile menu -->
         <div class="togglelinks">

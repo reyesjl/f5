@@ -1,3 +1,7 @@
+form {
+    margin-bottom: 1rem;
+}
+
 form p {
     display: flex;
     flex-direction: column;
