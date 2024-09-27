@@ -27,6 +27,11 @@ Products
         <div class="product-list-module">
             {% for product in products %}
             <div class="product-wrapper">
+                <div class="split">
+                    <div class="product-stock">Qty:{{ product.stock_quantity }}</div>
+                    <div class="product-price">${{ product.price|floatformat:0 }}</div>
+                </div>
+                
                 <div class="product-image-wrapper">
                     <a href="{% url 'detail_product' product.id %}">
                         <img src="{{ product.image.url }}" alt="product image for {{ product.name }}"/>
