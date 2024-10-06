@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Create product
+Submit event
 {% endblock %}
 
 {% block custom_css %}
@@ -15,20 +15,20 @@ Create product
 {% endblock %}
 
 {% block content %}
-<!-- Create product -->
-<div id="submit-product-section" class="section">
+<!-- Submit event -->
+<div id="submit-event-section" class="section">
     <div class="container">
         <div class="section-header align-left">
-            <div class="section-title">Create new product</div>
-            <div class="section-subtitle">This product will be added to the market.</div>
+            <div class="section-title">Submit new event</div>
+            <div class="section-subtitle">Support will contact you within 48 business hours regarding your event.</div>
         </div>
 
         <!-- Form wrapper -->
         <div class="form-wrapper">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button class="button submit" type="submit">Create</button>
+                <button class="button submit" type="submit">Submit</button>
             </form>
         </div>
     </div>

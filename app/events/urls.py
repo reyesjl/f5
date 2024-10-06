@@ -1,12 +1,18 @@
 from django.urls import path
 
-from . import views
+from .views.event_views import EventListView, EventDetailView, EventCreateView, EventUpdateView, EventDeleteView
+from .views.event_submission_views import EventSubmissionListView, EventSubmissionCreateView
+
 
 urlpatterns = [
-    path("", views.list_events, name="list_events"),
-    path("submit_event/", views.submit_event, name="submit_event"),
+    # Event URLs
+    path('', EventListView.as_view(), name='list_events'),
+    path('<int:pk>/', EventDetailView.as_view(), name='detail_event'),
+    path('create/', EventCreateView.as_view(), name='create_event'),
+    path('update/<int:pk>/', EventUpdateView.as_view(), name='update_event'),
+    path('delete/<int:pk>/', EventDeleteView.as_view(), name='delete_event'),
 
-    # Submissions
-    path("submissions/", views.list_submissions, name="list_submissions"),
-    path('submissions/<int:submission_id>/<str:action>/', views.update_submission_status, name='update_submission_status'),
+    # EventSubmission URLs
+    path('submissions/', EventSubmissionListView.as_view(), name='list_event_submissions'),
+    path('submissions/create/', EventSubmissionCreateView.as_view(), name='create_event_submission'),
 ]
