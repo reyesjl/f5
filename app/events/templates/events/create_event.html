@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}
+Create an event
+{% endblock %}
+
+{% block custom_css %}
+<!-- Include any specific CSS files needed for this page -->
+<link href="{% static 'core/css/forms.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block custom_js %}
+<!-- Include any specific JavaScript files needed for this page -->
+{% endblock %}
+
+{% block content %}
+<!-- Create event -->
+<div id="create-event-section" class="section">
+    <div class="container">
+        <div class="section-header align-left">
+            <div class="section-title">Create an event</div>
+            <div class="section-subtitle">This event will be added to the event list.</div>
+        </div>
+
+        <!-- Form wrapper -->
+        <div class="form-wrapper">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="button submit" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
