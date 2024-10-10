@@ -8,10 +8,12 @@ Dashboard
 {% block custom_css %}
 <!-- Include any specific CSS files needed for this page -->
 <link href="{% static 'members/css/dashboard.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/tabs.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block custom_js %}
 <!-- Include any specific JavaScript files needed for this page -->
+<script type="module" src="{% static 'core/js/tabs.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -23,23 +25,47 @@ Dashboard
             <div class="section-subtitle">Welcome back, {{ user.username }}!</div>
         </div>
 
-        <!-- Dashboard Widgets -->
-        <div class="dashboard-widgets">
-            <div class="widget">
-                <h3>My Events</h3>
-                <p>See the status of your events.</p>
-                <a href="#" class="btn btn-primary">View events</a>
+        <!-- Tabs -->
+        <div class="tabs">
+            <div id="account-tab" class="button tab-button active" data-content="account-content">Account</div>
+            <div id="events-tab" class="button tab-button" data-content="events-content">Events</div>
+            <div id="health-tab" class="button tab-button" data-content="health-content">Health</div>
+        </div>
+
+        <!-- Tab content -->
+        <div class="panes">
+            <!-- Account Content -->
+            <div id="account-content" class="tab-content active">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>Account</h3>
+                        <p>View and update account information.</p>
+                        <a href="#" class="btn btn-primary">Settings</a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                    </div>
+                </div>
             </div>
-            <div class="widget">
-                <h3>My Health</h3>
-                <p>See the status of your training requests.</p>
-                <a href="#" class="btn btn-primary">View requests</a>
+
+            <!-- Events Content -->
+            <div id="events-content" class="tab-content">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>My Events</h3>
+                        <p>See the status of your events.</p>
+                        <a href="#" class="btn btn-primary">View events</a>
+                    </div>
+                </div>
             </div>
-            <div class="widget">
-                <h3>Account</h3>
-                <p>View and update account information.</p>
-                <a href="#" class="btn btn-primary">Settings</a>
-                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+
+            <!-- Health Content -->
+            <div id="health-content" class="tab-content">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>My Health</h3>
+                        <p>See the status of your training requests.</p>
+                        <a href="#" class="btn btn-primary">View requests</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
