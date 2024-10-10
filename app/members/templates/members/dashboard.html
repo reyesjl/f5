@@ -8,58 +8,97 @@ Dashboard
 {% block custom_css %}
 <!-- Include any specific CSS files needed for this page -->
 <link href="{% static 'members/css/dashboard.css' %}" rel="stylesheet">
+<link href="{% static 'core/css/tabs.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block custom_js %}
 <!-- Include any specific JavaScript files needed for this page -->
+<script type="module" src="{% static 'core/js/tabs.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
 <!-- Dashboard -->
 <div id="dashboard-section" class="section">
-    <div class="container">
+    <div class="container full-height">
         <div class="section-header align-left">
             <div class="section-title">Dashboard</div>
             <div class="section-subtitle">Welcome back, {{ user.username }}!</div>
         </div>
 
-        <!-- Dashboard Widgets -->
-        <div class="dashboard-widgets">
-            <div class="widget">
-                <h3>Events</h3>
-                <p>View and manage upcoming events.</p>
-                <a href="#" class="btn btn-primary">View Events</a>
+        <!-- Tabs -->
+        <div class="tabs">
+            <div id="account-tab" class="button tab-button active" data-content="account-content">Account</div>
+            <div id="events-tab" class="button tab-button" data-content="events-content">Events</div>
+            <div id="health-tab" class="button tab-button" data-content="health-content">Health</div>
+            <div id="market-tab" class="button tab-button" data-content="market-content">Market</div>
+            <div id="tours-tab" class="button tab-button" data-content="tours-content">Tours</div>
+        </div>
+
+        <!-- Tab content -->
+        <div class="panes">
+            <div id="account-content" class="tab-content active">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>Account</h3>
+                        <p>View and update account information.</p>
+                        <a href="#" class="btn btn-primary">Settings</a>
+                    </div>
+                    <div class="widget">
+                        <h3>Logout</h3>
+                        <p>Sign out of your account.</p>
+                        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                    </div>
+                </div>
             </div>
-            <div class="widget">
-                <h3>Event Submissions</h3>
-                <p>Review and manage event submissions.</p>
-                <a href="{% url 'list_event_submissions' %}" class="btn btn-primary">View Submissions</a>
+
+            <div id="events-content" class="tab-content">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>Events</h3>
+                        <p>View and manage upcoming events.</p>
+                        <a href="#" class="btn btn-primary">View Events</a>
+                    </div>
+                    <div class="widget">
+                        <h3>Event Submissions</h3>
+                        <p>Review and manage event submissions.</p>
+                        <a href="{% url 'list_event_submissions' %}" class="btn btn-primary">View Submissions</a>
+                    </div>
+                </div>
             </div>
-            <div class="widget">
-                <h3>Health Plans</h3>
-                <p>Create a new fitness plan for health.</p>
-                <a href="{% url 'create_plan' %}" class="btn btn-primary">Create Plan</a>
+
+            <div id="health-content" class="tab-content">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>Health Plans</h3>
+                        <p>Create a new fitness plan for health.</p>
+                        <a href="{% url 'create_plan' %}" class="btn btn-primary">Create Plan</a>
+                    </div>
+                    <div class="widget">
+                        <h3>Training Requests</h3>
+                        <p>Handle training requests and inquiries.</p>
+                        <a href="#" class="btn btn-primary">View Requests</a>
+                    </div>
+                </div>
             </div>
-            <div class="widget">
-                <h3>Training Requests</h3>
-                <p>Handle training requests and inquiries.</p>
-                <a href="#" class="btn btn-primary">View Requests</a>
+
+            <div id="market-content" class="tab-content">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>Products</h3>
+                        <p>Create a new product for the market.</p>
+                        <a href="{% url 'create_product' %}" class="btn btn-primary">Create Product</a>
+                    </div>
+                </div>
             </div>
-            <div class="widget">
-                <h3>Products</h3>
-                <p>Create a new product for the market.</p>
-                <a href="{% url 'create_product' %}" class="btn btn-primary">Create Product</a>
-            </div>
-            <div class="widget">
-                <h3>Tour Inquiries</h3>
-                <p>Handle tour inquiries & quotes.</p>
-                <a href="#" class="btn btn-primary">View Inquiries</a>
-            </div>
-            <div class="widget">
-                <h3>Account</h3>
-                <p>View and update account information.</p>
-                <a href="#" class="btn btn-primary">Settings</a>
-                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+
+            <div id="tours-content" class="tab-content">
+                <div class="dashboard-widgets">
+                    <div class="widget">
+                        <h3>Tour Inquiries</h3>
+                        <p>Handle tour inquiries & quotes.</p>
+                        <a href="#" class="btn btn-primary">View Inquiries</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

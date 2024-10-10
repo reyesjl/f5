@@ -19,6 +19,10 @@
     padding: 1rem;
 }
 
+.full-height {
+    min-height: 60vh;
+}
+
 .split {
     display: flex;
     justify-content: space-between;
