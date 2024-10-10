@@ -39,18 +39,34 @@ jobs:
         SSH_USERNAME: f5local
       run: |
         ssh -i private_key -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST << 'EOF'
+          # Navigate to the application directory
           cd /var/www/f5
+
+          # Reset, clean, and pull the latest changes
           git reset --hard
           git clean -fd
           git pull origin main
+
+          # Activate virtual environment
           source venv/bin/activate
+
+          # Ensure the static files directory is writable
+          sudo chown -R $SSH_USERNAME:www-data /var/www/f5/app/staticfiles
+
           pip install -r requirements.txt
           cd app/
           set -a  # Automatically export all variables
           source ../.env  # Source the .env file
           set +a
+
+          # Collect static files and run migrations
           python manage.py collectstatic --noinput
           python manage.py migrate
+
+          # Restart services
           sudo systemctl restart gunicorn
           sudo systemctl restart nginx
+
+          # Clean up
+          rm -f private_key
         EOF
